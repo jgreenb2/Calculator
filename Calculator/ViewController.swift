@@ -36,6 +36,8 @@ class ViewController: UIViewController {
         userIsInTheMiddleOfTypingANumber = false
         decimalPointEntered = false
         operandStack.append(displayValue)
+        history.lineBreakMode = NSLineBreakMode.ByClipping
+        history.clipsToBounds = true
         history.text = history.text! + "\(displayValue)\n"
         println("operandStack = \(operandStack)")
     }
@@ -63,6 +65,10 @@ class ViewController: UIViewController {
             case "π":
                 displayValue = 3.1415926
                 enter()
+            case "C":
+                history.text = ""
+                display.text = "0"
+                operandStack.removeAll(keepCapacity: false)
         default: break
         }
     }
@@ -89,10 +95,5 @@ class ViewController: UIViewController {
             display.text = "\(newValue)"
             userIsInTheMiddleOfTypingANumber = false
         }
-    }
-    
-    override func viewDidLayoutSubviews() {
-        history.sizeToFit()
-        history.lineBreakMode = NSLineBreakMode.ByClipping
     }
 }
