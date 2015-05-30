@@ -37,7 +37,6 @@ class ViewController: UIViewController {
         decimalPointEntered = false
         operandStack.append(displayValue)
         history.text = history.text! + "\(displayValue)\n"
-        history.sizeToFit()
         println("operandStack = \(operandStack)")
     }
     
@@ -47,7 +46,6 @@ class ViewController: UIViewController {
             enter()
         }
         history.text = history.text! + operation + "\n"
-        history.sizeToFit()
         switch operation {
             case "×":
                 performOperation {$1 * $0}
@@ -92,5 +90,9 @@ class ViewController: UIViewController {
             userIsInTheMiddleOfTypingANumber = false
         }
     }
-
+    
+    override func viewDidLayoutSubviews() {
+        history.sizeToFit()
+        history.lineBreakMode = NSLineBreakMode.ByClipping
+    }
 }
