@@ -223,16 +223,25 @@
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9nH-Iq-w5p"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="" textAlignment="right" lineBreakMode="headTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uHQ-0B-dFW">
+                                <rect key="frame" x="214" y="70" width="378" height="126"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="StR-rR-igr" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="Hez-Cc-9uA"/>
                             <constraint firstItem="StR-rR-igr" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="OCI-hJ-Cnd"/>
                             <constraint firstItem="StR-rR-igr" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="piG-m9-uz4"/>
+                            <constraint firstItem="uHQ-0B-dFW" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="198" id="vHX-9r-1hl"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="uHQ-0B-dFW" secondAttribute="trailing" constant="-8" id="zSL-4N-gFx"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="display" destination="StR-rR-igr" id="F8h-aQ-YP1"/>
+                        <outlet property="history" destination="uHQ-0B-dFW" id="ETv-mk-CTg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

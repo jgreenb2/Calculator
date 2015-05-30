@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var display: UILabel!
     var userIsInTheMiddleOfTypingANumber = false
     var decimalPointEntered = false
+    @IBOutlet weak var history: UILabel!
     
     @IBAction func appendDigit(sender: UIButton) {
         let digit = sender.currentTitle!
@@ -35,6 +36,8 @@ class ViewController: UIViewController {
         userIsInTheMiddleOfTypingANumber = false
         decimalPointEntered = false
         operandStack.append(displayValue)
+        history.text = history.text! + "\(displayValue)\n"
+        history.sizeToFit()
         println("operandStack = \(operandStack)")
     }
     
@@ -43,6 +46,8 @@ class ViewController: UIViewController {
         if userIsInTheMiddleOfTypingANumber {
             enter()
         }
+        history.text = history.text! + operation + "\n"
+        history.sizeToFit()
         switch operation {
             case "×":
                 performOperation {$1 * $0}
