@@ -31,8 +31,6 @@ class ViewController: UIViewController {
     @IBAction func enter() {
         userIsInTheMiddleOfTypingANumber = false
         operandStack.append(displayValue)
-        history.lineBreakMode = NSLineBreakMode.ByClipping
-        history.clipsToBounds = true
         history.text = history.text! + "\(displayValue)\n"
         println("operandStack = \(operandStack)")
     }
