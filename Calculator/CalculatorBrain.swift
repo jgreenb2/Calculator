@@ -56,6 +56,9 @@ class CalculatorBrain {
         return M_PI
     }
 
+    func clear() {
+        opStack.removeAll(keepCapacity: false)
+    }
 
     func pushOperand(operand: Double) -> Double? {
         opStack.append(Op.Operand(operand))
