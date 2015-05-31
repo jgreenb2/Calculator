@@ -17,11 +17,7 @@ class ViewController: UIViewController {
     
     @IBAction func appendDigit(sender: UIButton) {
         let digit = sender.currentTitle!
-        if digit == "." && !decimalPointEntered {
-            decimalPointEntered = true
-        } else if digit == "." {
-            return
-        }
+        if digit=="."  && display.text!.rangeOfString(".") != nil { return }
         if userIsInTheMiddleOfTypingANumber {
             display.text = display.text! + digit
         } else {
@@ -34,7 +30,6 @@ class ViewController: UIViewController {
 
     @IBAction func enter() {
         userIsInTheMiddleOfTypingANumber = false
-        decimalPointEntered = false
         operandStack.append(displayValue)
         history.lineBreakMode = NSLineBreakMode.ByClipping
         history.clipsToBounds = true
@@ -63,7 +58,7 @@ class ViewController: UIViewController {
             case "cos":
                 performOperation { cos($0) }
             case "π":
-                displayValue = 3.1415926
+                displayValue = M_PI
                 enter()
             case "C":
                 history.text = ""
