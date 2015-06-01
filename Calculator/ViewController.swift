@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var display: UILabel!
+    @IBOutlet weak var history: UILabel!
     var userIsInTheMiddleOfTypingANumber = false
     var brain = CalculatorBrain()
     
@@ -83,6 +84,7 @@ class ViewController: UIViewController {
         set {
             display.text = "\(newValue)"
             userIsInTheMiddleOfTypingANumber = false
+            history.text = brain.showStack()
         }
     }
 }

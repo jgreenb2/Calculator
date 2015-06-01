@@ -102,4 +102,9 @@ class CalculatorBrain {
         println("\(opStack) = \(result) with \(remainder) left over")
         return result
     }
+    
+    // not my implementation but it seems to do the job
+    func showStack() -> String? {
+        return " ".join(opStack.map{"\($0)"})
+    }
 }
