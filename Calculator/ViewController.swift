@@ -29,7 +29,8 @@ class ViewController: UIViewController {
         if userIsInTheMiddleOfTypingANumber {
             display.text = "-" + display.text!
         } else if abs(displayValue) > 0.0 {
-            displayValue = -displayValue
+            displayValue = brain.performOperation("±")!
+
         }
     }
     
