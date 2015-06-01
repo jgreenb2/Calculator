@@ -43,8 +43,9 @@ class ViewController: UIViewController {
                 default:
                     display.text = dropLast(display.text!)
             }
-        } else {
+        } else if displayValue != 0 {
             displayValue = 0
+            enter()
         }
     }
     
