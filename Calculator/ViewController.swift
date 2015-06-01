@@ -25,6 +25,27 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func changeSign() {
+        if userIsInTheMiddleOfTypingANumber {
+            display.text = "-" + display.text!
+        } else if abs(displayValue) > 0.0 {
+            displayValue = -displayValue
+        }
+    }
+    
+    @IBAction func backspace() {
+        if userIsInTheMiddleOfTypingANumber {
+            switch count(display.text!) {
+                case 1:
+                    displayValue=0
+                default:
+                    display.text = dropLast(display.text!)
+            }
+        } else {
+            displayValue = 0
+        }
+    }
+    
     @IBAction func clear() {
         brain.clear()
         displayValue=0

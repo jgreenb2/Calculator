@@ -49,11 +49,7 @@ class CalculatorBrain {
         learnOp(Op.UnaryOperation("√", sqrt))
         learnOp(Op.UnaryOperation("sin", sin))
         learnOp(Op.UnaryOperation("cos", cos))
-        learnOp(Op.NullaryOperation("π", pi))
-    }
-
-    private func pi() -> Double {
-        return M_PI
+        learnOp(Op.NullaryOperation("π") {M_PI})
     }
 
     func clear() {
