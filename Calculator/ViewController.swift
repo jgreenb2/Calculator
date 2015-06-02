@@ -29,7 +29,7 @@ class ViewController: UIViewController {
     @IBAction func changeSign() {
         if userIsInTheMiddleOfTypingANumber {
             display.text = "-" + display.text!
-        } else if abs(displayValue) > 0.0 {
+        } else if abs(displayValue!) > 0.0 {
             displayValue = brain.performOperation("±")!
 
         }
@@ -59,24 +59,15 @@ class ViewController: UIViewController {
             enter()
         }
         if let operation = sender.currentTitle {
-            if let result = brain.performOperation(operation) {
-                displayValue = result
-            } else {
-                displayValue = 0
-            }
+            displayValue = brain.performOperation(operation)
         }
     }
 
 
     @IBAction func enter() {
         userIsInTheMiddleOfTypingANumber = false
-        if let result = brain.pushOperand(displayValue) {
-            displayValue = result
-        } else {
-            displayValue = 0
-        }
+        displayValue = brain.pushOperand(displayValue!)
     }
-    
     
     var displayValue: Double? {
         get {
@@ -88,9 +79,13 @@ class ViewController: UIViewController {
             //return NSNumberFormatter().numberFromString(display.text!)!.doubleValue
         }
         set {
-            display.text = "\(newValue)"
-            userIsInTheMiddleOfTypingANumber = false
-            history.text = brain.showStack()
+            if let v = newValue {
+                display.text = "\(v)"
+                userIsInTheMiddleOfTypingANumber = false
+                history.text = brain.showStack()
+            } else {
+                display.text = "#Error"
+            }
         }
     }
 }
