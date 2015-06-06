@@ -12,6 +12,7 @@ class CalculatorBrain {
 
     private enum Op: Printable {
         case Operand(Double)
+        case Symbol(String)
         case NullaryOperation(String,() -> Double)
         case UnaryOperation(String, Double -> Double)
         case BinaryOperation(String, (Double, Double) -> Double)
@@ -21,6 +22,8 @@ class CalculatorBrain {
                 switch self {
                 case Operand(let operand):
                     return "\(operand)"
+                case Symbol(let symbol):
+                    return symbol
                 case .NullaryOperation(let symbol,_):
                     return symbol
                 case .UnaryOperation(let symbol,_):
@@ -37,6 +40,7 @@ class CalculatorBrain {
     private var opStack = [Op]()            // same as above
     //var knownOps = Dictionary<String, Op>()
     private var knownOps = [String:Op]()
+    var variableValues = [String:Double]()
     
     init() {
         func learnOp(op: Op) {
@@ -62,6 +66,11 @@ class CalculatorBrain {
         return evaluate()
     }
     
+    func pushOperand(symbol: String) -> Double? {
+        opStack.append(Op.Symbol(symbol))
+        return evaluate()
+    }
+    
     func performOperation(symbol: String) -> Double? {
         if let operation = knownOps[symbol] {
             opStack.append(operation)
@@ -70,13 +79,14 @@ class CalculatorBrain {
     }
     
     private func evaluate(ops: [Op]) -> (result: Double?, remainingOps: [Op]) {
-        
         if !ops.isEmpty {
             var remainingOps = ops
             let op = remainingOps.removeLast()
             switch op {
             case .Operand(let operand):
                 return (operand, remainingOps)
+            case .Symbol(let symbol):
+                return (variableValues[symbol],remainingOps)
             case .NullaryOperation(_, let value):
                 return (value(), remainingOps)
             case .UnaryOperation(_, let operation):
@@ -94,6 +104,7 @@ class CalculatorBrain {
                 }
             }
         }
+    
         return (nil, ops)
     }
     
@@ -107,4 +118,5 @@ class CalculatorBrain {
     func showStack() -> String? {
         return " ".join(opStack.map{"\($0)"})
     }
+    
 }

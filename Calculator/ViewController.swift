@@ -84,7 +84,7 @@ class ViewController: UIViewController {
                 userIsInTheMiddleOfTypingANumber = false
                 history.text = brain.showStack()
             } else {
-                display.text = "#Error"
+                display.text = " "
             }
         }
     }
