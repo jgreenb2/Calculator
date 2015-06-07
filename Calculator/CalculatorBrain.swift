@@ -125,7 +125,11 @@ class CalculatorBrain {
         while !stack.isEmpty {
             let expression = nextExpression(stack)
             stack = expression.remainingStack
-            display = expression.result + "," + display
+            if display == "" {
+                display = expression.result
+            } else {
+                display = expression.result + "," + display
+            }
         }
         return display
     }
