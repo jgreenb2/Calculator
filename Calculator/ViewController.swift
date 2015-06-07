@@ -82,7 +82,7 @@ class ViewController: UIViewController {
             if let v = newValue {
                 display.text = "\(v)"
                 userIsInTheMiddleOfTypingANumber = false
-                history.text = brain.showStack()
+                history.text = brain.description
             } else {
                 display.text = " "
             }

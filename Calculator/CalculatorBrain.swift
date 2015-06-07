@@ -115,8 +115,42 @@ class CalculatorBrain {
     }
     
     // not my implementation but it seems to do the job
-    func showStack() -> String? {
-        return " ".join(opStack.map{"\($0)"})
+//    func showStack() -> String? {
+//        return " ".join(opStack.map{"\($0)"})
+//    }
+
+    private func parseStack(fullStack: [Op]) -> String {
+        var display=""
+        var stack = fullStack
+        while !stack.isEmpty {
+            let expression = nextExpression(stack)
+            stack = expression.remainingStack
+            display = expression.result + "," + display
+        }
+        return display
     }
     
+    private func nextExpression(var stack: [Op]) -> (result: String, remainingStack: [Op]) {
+        var token = stack.removeLast()
+        switch token {
+            case .Operand(let value):
+                return ("\(value)", stack)
+            case .NullaryOperation(let symbol,_):
+                return (symbol, stack)
+            case .Symbol(let symbol):
+                return (symbol, stack)
+            case .UnaryOperation(let operation,_):
+                let expression = nextExpression(stack)
+                return (operation+"("+expression.result+")", expression.remainingStack)
+            case .BinaryOperation(let operation, _):
+                let expression2 = nextExpression(stack)
+                let expression1 = nextExpression(expression2.remainingStack)
+                return ("("+expression1.result+operation+expression2.result+")", expression1.remainingStack)
+        }
+        
+    }
+    var description: String {
+        let desc = parseStack(opStack)
+        return desc
+    }
 }
