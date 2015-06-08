@@ -65,7 +65,7 @@ class ViewController: UIViewController {
 
     @IBAction func memSet() {
         userIsInTheMiddleOfTypingANumber=false
-        brain.setVariable("M", value: displayValue)
+        displayValue = brain.setVariable("M", value: displayValue)
     }
 
     @IBAction func memGet() {

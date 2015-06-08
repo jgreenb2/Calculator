@@ -82,6 +82,7 @@ class CalculatorBrain {
 
     func clear() {
         opStack.removeAll(keepCapacity: false)
+        variableValues.removeAll(keepCapacity: false)
     }
 
     func pushOperand(operand: Double) -> Double? {
@@ -94,8 +95,9 @@ class CalculatorBrain {
         return evaluate()
     }
     
-    func setVariable(symbol: String, value: Double?) {
+    func setVariable(symbol: String, value: Double?) -> Double? {
         variableValues[symbol] = value
+        return evaluate()
     }
     
     func performOperation(symbol: String) -> Double? {
