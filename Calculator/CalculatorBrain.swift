@@ -48,10 +48,11 @@ class CalculatorBrain {
                         case "÷":
                             return 200
                         default:
-                            return Int.max
+                            return 0
                         }
                 default:
-                    return Int.max                }
+                    return Int.max
+                }
             }
         }
     }
@@ -158,26 +159,32 @@ class CalculatorBrain {
         return display
     }
     
-    private func nextExpression(var stack: [Op]) -> (result: String, remainingStack: [Op]) {
+    private func nextExpression(var stack: [Op]) -> (result: String, remainingStack: [Op], precedence: Int) {
         if !stack.isEmpty {
             var token = stack.removeLast()
             switch token {
                 case .Operand(let value):
-                    return ("\(value)", stack)
-                case .Symbol(let symbol,_):
-                    return (symbol, stack)
+                    return ("\(value)", stack,token.precedence)
+                case .Symbol(let symbol, _):
+                    return (symbol, stack, token.precedence)
                 case .Constant(let constant, _):
-                    return (constant, stack)
+                    return (constant, stack, token.precedence)
                 case .UnaryOperation(let operation,_):
                     let expression = nextExpression(stack)
-                    return (operation+"("+expression.result+")", expression.remainingStack)
+                    return (operation+"("+expression.result+")", expression.remainingStack, expression.precedence)
                 case .BinaryOperation(let operation, _):
                     let expression2 = nextExpression(stack)
                     let expression1 = nextExpression(expression2.remainingStack)
-                    return ("("+expression1.result+operation+expression2.result+")", expression1.remainingStack)
+                    var expression: String
+                    if expression1.precedence < token.precedence {
+                        expression = addParens(expression1.result)+operation+expression2.result
+                    } else {
+                        expression = expression1.result+operation+expression2.result
+                    }
+                    return (expression, expression1.remainingStack, token.precedence)
             }
         } else {
-            return ("?",stack)
+            return ("?",stack,0)
         }
         
     }
