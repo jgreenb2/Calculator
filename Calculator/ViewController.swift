@@ -78,8 +78,8 @@ class ViewController: UIViewController {
             } else {
                 return nil
             }
-            //return NSNumberFormatter().numberFromString(display.text!)!.doubleValue
         }
+        
         set {
             if let v = newValue {
                 display.text = "\(v)"

@@ -77,7 +77,6 @@ class CalculatorBrain {
     }
     
     private func evaluate(ops: [Op]) -> (result: Double?, remainingOps: [Op]) {
-        var missingOperandIndex = 0
         if !ops.isEmpty {
             var remainingOps = ops
             let op = remainingOps.removeLast()
@@ -98,12 +97,10 @@ class CalculatorBrain {
                     if let operand2 = op2Evaluation.result {
                         return (operation(operand1,operand2),op2Evaluation.remainingOps)
                     } else {
-                        missingOperandIndex = ops.count - 2
                         opStack.insert(knownOps["?"]!, atIndex: ops.count - 2 )
                         println("op2 missing=\(ops.count - 2)")
                     }
                 } else {
-                    missingOperandIndex = ops.count - 1
                     opStack.insert(knownOps["?"]!, atIndex: ops.count - 1 )
                     println("op1 missing=\(ops.count - 1)")
                 }
@@ -119,10 +116,6 @@ class CalculatorBrain {
         return result
     }
     
-    // not my implementation but it seems to do the job
-//    func showStack() -> String? {
-//        return " ".join(opStack.map{"\($0)"})
-//    }
 
     private func parseStack(fullStack: [Op]) -> String {
         var display=""
