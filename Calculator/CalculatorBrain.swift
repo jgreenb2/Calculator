@@ -186,7 +186,7 @@ class CalculatorBrain {
                     return (expression, expression1.remainingStack, token.precedence)
             }
         } else {
-            return ("?",stack,0)
+            return ("?",stack,Int.max)
         }
         
     }
