@@ -12,6 +12,7 @@ class CalculatorBrain {
 
     private enum Op: Printable {
         case Operand(Double)
+        case Constant(String,()->Double)
         case Symbol(String,(String)-> Double?)
         case UnaryOperation(String, Double -> Double)
         case BinaryOperation(String, (Double, Double) -> Double)
@@ -21,6 +22,8 @@ class CalculatorBrain {
                 switch self {
                 case Operand(let operand):
                     return "\(operand)"
+                case .Constant(let constant, _):
+                    return constant
                 case Symbol(let symbol,_):
                     return symbol
                 case .UnaryOperation(let symbol,_):
@@ -28,6 +31,27 @@ class CalculatorBrain {
                 case .BinaryOperation(let symbol, _):
                     return symbol
                 }
+            }
+        }
+        
+        var precedence: Int {
+            get {
+                switch self {
+                case .BinaryOperation(let operation, _):
+                    switch operation {
+                        case "+":
+                            return 100
+                        case "-":
+                            return 100
+                        case "×":
+                            return 200
+                        case "÷":
+                            return 200
+                        default:
+                            return Int.max
+                        }
+                default:
+                    return Int.max                }
             }
         }
     }
@@ -50,7 +74,7 @@ class CalculatorBrain {
         learnOp(Op.UnaryOperation("√", sqrt))
         learnOp(Op.UnaryOperation("sin", sin))
         learnOp(Op.UnaryOperation("cos", cos))
-        learnOp(Op.Symbol("π", {s1 in M_PI}))
+        learnOp(Op.Constant("π") {M_PI})
         learnOp(Op.Symbol("?", {s1 in nil}))
         learnOp(Op.UnaryOperation("±") { -1 * $0 })
     }
@@ -85,6 +109,8 @@ class CalculatorBrain {
                 return (operand, remainingOps)
             case .Symbol(let symbol, let value):
                 return (value(symbol), remainingOps)
+            case .Constant(let constant, let value):
+                return (value(), remainingOps)
             case .UnaryOperation(_, let operation):
                 let operandEvaluation = evaluate(remainingOps)
                 if let operand = operandEvaluation.result {
@@ -140,6 +166,8 @@ class CalculatorBrain {
                     return ("\(value)", stack)
                 case .Symbol(let symbol,_):
                     return (symbol, stack)
+                case .Constant(let constant, _):
+                    return (constant, stack)
                 case .UnaryOperation(let operation,_):
                     let expression = nextExpression(stack)
                     return (operation+"("+expression.result+")", expression.remainingStack)
@@ -153,6 +181,11 @@ class CalculatorBrain {
         }
         
     }
+    
+    func addParens(s: String) -> String {
+        return "("+s+")"
+    }
+    
     var description: String {
         let desc = parseStack(opStack)
         return desc
