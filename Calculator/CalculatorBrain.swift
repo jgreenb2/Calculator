@@ -41,7 +41,7 @@ class CalculatorBrain {
                     switch operation {
                         case "+":
                             return 100
-                        case "-":
+                        case "−":
                             return 100
                         case "×":
                             return 200
@@ -171,7 +171,7 @@ class CalculatorBrain {
                     return (constant, stack, token.precedence)
                 case .UnaryOperation(let operation,_):
                     let expression = nextExpression(stack)
-                    return (operation+"("+expression.result+")", expression.remainingStack, expression.precedence)
+                    return (operation+addParens(expression.result), expression.remainingStack, expression.precedence)
                 case .BinaryOperation(let operation, _):
                     let expression2 = nextExpression(stack)
                     let expression1 = nextExpression(expression2.remainingStack)
