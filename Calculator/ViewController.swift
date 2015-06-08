@@ -66,7 +66,9 @@ class ViewController: UIViewController {
 
     @IBAction func enter() {
         userIsInTheMiddleOfTypingANumber = false
-        displayValue = brain.pushOperand(displayValue!)
+        if displayValue != nil {
+            displayValue = brain.pushOperand(displayValue!)
+        }
     }
     
     var displayValue: Double? {
@@ -82,10 +84,10 @@ class ViewController: UIViewController {
             if let v = newValue {
                 display.text = "\(v)"
                 userIsInTheMiddleOfTypingANumber = false
-                history.text = brain.description
             } else {
                 display.text = " "
             }
+            history.text = brain.description
         }
     }
 }

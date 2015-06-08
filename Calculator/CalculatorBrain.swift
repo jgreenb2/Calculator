@@ -12,8 +12,7 @@ class CalculatorBrain {
 
     private enum Op: Printable {
         case Operand(Double)
-        case Symbol(String)
-        case NullaryOperation(String,() -> Double)
+        case Symbol(String,(String)-> Double?)
         case UnaryOperation(String, Double -> Double)
         case BinaryOperation(String, (Double, Double) -> Double)
         
@@ -22,9 +21,7 @@ class CalculatorBrain {
                 switch self {
                 case Operand(let operand):
                     return "\(operand)"
-                case Symbol(let symbol):
-                    return symbol
-                case .NullaryOperation(let symbol,_):
+                case Symbol(let symbol,_):
                     return symbol
                 case .UnaryOperation(let symbol,_):
                     return symbol
@@ -53,7 +50,8 @@ class CalculatorBrain {
         learnOp(Op.UnaryOperation("√", sqrt))
         learnOp(Op.UnaryOperation("sin", sin))
         learnOp(Op.UnaryOperation("cos", cos))
-        learnOp(Op.NullaryOperation("π") {M_PI})
+        learnOp(Op.Symbol("π", {s1 in M_PI}))
+        learnOp(Op.Symbol("?", {s1 in nil}))
         learnOp(Op.UnaryOperation("±") { -1 * $0 })
     }
 
@@ -67,7 +65,7 @@ class CalculatorBrain {
     }
     
     func pushOperand(symbol: String) -> Double? {
-        opStack.append(Op.Symbol(symbol))
+        opStack.append(Op.Symbol(symbol,{self.variableValues[$0]}))
         return evaluate()
     }
     
@@ -79,16 +77,15 @@ class CalculatorBrain {
     }
     
     private func evaluate(ops: [Op]) -> (result: Double?, remainingOps: [Op]) {
+        var missingOperandIndex = 0
         if !ops.isEmpty {
             var remainingOps = ops
             let op = remainingOps.removeLast()
             switch op {
             case .Operand(let operand):
                 return (operand, remainingOps)
-            case .Symbol(let symbol):
-                return (variableValues[symbol],remainingOps)
-            case .NullaryOperation(_, let value):
-                return (value(), remainingOps)
+            case .Symbol(let symbol, let value):
+                return (value(symbol), remainingOps)
             case .UnaryOperation(_, let operation):
                 let operandEvaluation = evaluate(remainingOps)
                 if let operand = operandEvaluation.result {
@@ -100,11 +97,19 @@ class CalculatorBrain {
                     let op2Evaluation = evaluate(op1Evaluation.remainingOps)
                     if let operand2 = op2Evaluation.result {
                         return (operation(operand1,operand2),op2Evaluation.remainingOps)
+                    } else {
+                        missingOperandIndex = ops.count - 2
+                        opStack.insert(knownOps["?"]!, atIndex: ops.count - 2 )
+                        println("op2 missing=\(ops.count - 2)")
                     }
+                } else {
+                    missingOperandIndex = ops.count - 1
+                    opStack.insert(knownOps["?"]!, atIndex: ops.count - 1 )
+                    println("op1 missing=\(ops.count - 1)")
                 }
             }
         }
-    
+
         return (nil, ops)
     }
     
@@ -135,21 +140,23 @@ class CalculatorBrain {
     }
     
     private func nextExpression(var stack: [Op]) -> (result: String, remainingStack: [Op]) {
-        var token = stack.removeLast()
-        switch token {
-            case .Operand(let value):
-                return ("\(value)", stack)
-            case .NullaryOperation(let symbol,_):
-                return (symbol, stack)
-            case .Symbol(let symbol):
-                return (symbol, stack)
-            case .UnaryOperation(let operation,_):
-                let expression = nextExpression(stack)
-                return (operation+"("+expression.result+")", expression.remainingStack)
-            case .BinaryOperation(let operation, _):
-                let expression2 = nextExpression(stack)
-                let expression1 = nextExpression(expression2.remainingStack)
-                return ("("+expression1.result+operation+expression2.result+")", expression1.remainingStack)
+        if !stack.isEmpty {
+            var token = stack.removeLast()
+            switch token {
+                case .Operand(let value):
+                    return ("\(value)", stack)
+                case .Symbol(let symbol,_):
+                    return (symbol, stack)
+                case .UnaryOperation(let operation,_):
+                    let expression = nextExpression(stack)
+                    return (operation+"("+expression.result+")", expression.remainingStack)
+                case .BinaryOperation(let operation, _):
+                    let expression2 = nextExpression(stack)
+                    let expression1 = nextExpression(expression2.remainingStack)
+                    return ("("+expression1.result+operation+expression2.result+")", expression1.remainingStack)
+            }
+        } else {
+            return ("?",stack)
         }
         
     }
