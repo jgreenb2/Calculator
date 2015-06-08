@@ -63,7 +63,19 @@ class ViewController: UIViewController {
         }
     }
 
+    @IBAction func memSet() {
+        userIsInTheMiddleOfTypingANumber=false
+        brain.setVariable("M", value: displayValue)
+    }
 
+    @IBAction func memGet() {
+        if userIsInTheMiddleOfTypingANumber {
+            userIsInTheMiddleOfTypingANumber=false
+            //enter()
+        }
+        displayValue = brain.pushOperand("M")
+    }
+    
     @IBAction func enter() {
         userIsInTheMiddleOfTypingANumber = false
         if displayValue != nil {
