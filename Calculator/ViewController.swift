@@ -87,7 +87,7 @@ class ViewController: UIViewController {
             } else {
                 display.text = " "
             }
-            history.text = brain.description
+            history.text = brain.description + "="
         }
     }
 }
