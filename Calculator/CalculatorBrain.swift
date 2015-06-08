@@ -127,13 +127,7 @@ class CalculatorBrain {
                     let op2Evaluation = evaluate(op1Evaluation.remainingOps)
                     if let operand2 = op2Evaluation.result {
                         return (operation(operand1,operand2),op2Evaluation.remainingOps)
-                    } else {
-                        opStack.insert(knownOps["?"]!, atIndex: ops.count - 2 )
-                        println("op2 missing=\(ops.count - 2)")
                     }
-                } else {
-                    opStack.insert(knownOps["?"]!, atIndex: ops.count - 1 )
-                    println("op1 missing=\(ops.count - 1)")
                 }
             }
         }
@@ -169,8 +163,12 @@ class CalculatorBrain {
             switch token {
                 case .Operand(let value):
                     return ("\(value)", stack,token.precedence)
-                case .Symbol(let symbol, _):
-                    return (symbol, stack, token.precedence)
+                case .Symbol(let symbol,_):
+                    if let value = variableValues[symbol] {
+                        return (symbol, stack, token.precedence)
+                    } else {
+                        return (symbol+"?",stack,token.precedence)
+                    }
                 case .Constant(let constant, _):
                     return (constant, stack, token.precedence)
                 case .UnaryOperation(let operation,_):

@@ -71,7 +71,7 @@ class ViewController: UIViewController {
     @IBAction func memGet() {
         if userIsInTheMiddleOfTypingANumber {
             userIsInTheMiddleOfTypingANumber=false
-            //enter()
+            enter()
         }
         displayValue = brain.pushOperand("M")
     }
