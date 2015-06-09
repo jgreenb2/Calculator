@@ -40,16 +40,18 @@ class CalculatorBrain {
                 case .BinaryOperation(let operation, _):
                     switch operation {
                         case "+":
-                            return 100
+                            return 200
                         case "−":
-                            return 100
+                            return 200
                         case "×":
-                            return 200
+                            return 300
                         case "÷":
-                            return 200
+                            return 300
                         default:
                             return 0
                         }
+                case .UnaryOperation(_, _):
+                    return 400
                 default:
                     return Int.max
                 }
@@ -175,13 +177,15 @@ class CalculatorBrain {
                     return (constant, stack, token.precedence)
                 case .UnaryOperation(let operation,_):
                     let expression = nextExpression(stack)
-                    return (operation+addParens(expression.result), expression.remainingStack, expression.precedence)
+                    return (operation+addParens(expression.result), expression.remainingStack, token.precedence)
                 case .BinaryOperation(let operation, _):
                     let expression2 = nextExpression(stack)
                     let expression1 = nextExpression(expression2.remainingStack)
                     var expression: String
                     if expression1.precedence < token.precedence {
                         expression = addParens(expression1.result)+operation+expression2.result
+                    } else if expression2.precedence < token.precedence {
+                        expression = expression1.result+operation+addParens(expression2.result)
                     } else {
                         expression = expression1.result+operation+expression2.result
                     }
