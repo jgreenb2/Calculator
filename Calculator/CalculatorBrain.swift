@@ -78,7 +78,6 @@ class CalculatorBrain {
         learnOp(Op.UnaryOperation("sin", sin))
         learnOp(Op.UnaryOperation("cos", cos))
         learnOp(Op.Constant("π") {M_PI})
-        learnOp(Op.Symbol("?", {s1 in nil}))
         learnOp(Op.UnaryOperation("±") { -1 * $0 })
     }
 
