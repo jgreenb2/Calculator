@@ -9,6 +9,11 @@
 import Foundation
 
 class CalculatorBrain {
+    
+    /*  the basic operator type
+        includes a computed variable that can be referenced
+        to return the precedence level of the operation
+    */
 
     private enum Op: Printable {
         case Operand(Double)
@@ -59,13 +64,13 @@ class CalculatorBrain {
         }
     }
   
-    //var opStack: Array<Op> = Array<Op()
-    //var opStack = Array<Op>()     // same as above
-    private var opStack = [Op]()            // same as above
-    //var knownOps = Dictionary<String, Op>()
+    // the operator stack, operator and variable dictionarys
+    private var opStack = [Op]()
     private var knownOps = [String:Op]()
     var variableValues = [String:Double]()
     
+    // initialize by setting all of the operations
+    // that the calculator can do
     init() {
         func learnOp(op: Op) {
             knownOps[op.description] = op
@@ -81,26 +86,33 @@ class CalculatorBrain {
         learnOp(Op.UnaryOperation("±") { -1 * $0 })
     }
 
+    // clear the stack and variable memory
     func clear() {
         opStack.removeAll(keepCapacity: false)
         variableValues.removeAll(keepCapacity: false)
     }
-
+    
+    // push an operand on the stack and return the
+    // new evaluation
     func pushOperand(operand: Double) -> Double? {
         opStack.append(Op.Operand(operand))
         return evaluate()
     }
     
+    // push a variable on the stack and return the
+    // new evaluation
     func pushOperand(symbol: String) -> Double? {
         opStack.append(Op.Symbol(symbol,{self.variableValues[$0]}))
         return evaluate()
     }
     
+    // set a variable to a value and re-evaluate the stack
     func setVariable(symbol: String, value: Double?) -> Double? {
         variableValues[symbol] = value
         return evaluate()
     }
     
+    // perform an operation and re-evaluate the stack
     func performOperation(symbol: String) -> Double? {
         if let operation = knownOps[symbol] {
             opStack.append(operation)
@@ -108,6 +120,14 @@ class CalculatorBrain {
         return evaluate()
     }
     
+    // function that evaluates the gloal opStack
+    func evaluate() -> Double? {
+        let (result, remainder) = evaluate(opStack)
+        println("\(opStack) = \(result) with \(remainder) left over")
+        return result
+    }
+    
+    // helper function that evaluates an arbitrary stack
     private func evaluate(ops: [Op]) -> (result: Double?, remainingOps: [Op]) {
         if !ops.isEmpty {
             var remainingOps = ops
@@ -137,14 +157,8 @@ class CalculatorBrain {
 
         return (nil, ops)
     }
-    
-    func evaluate() -> Double? {
-        let (result, remainder) = evaluate(opStack)
-        println("\(opStack) = \(result) with \(remainder) left over")
-        return result
-    }
-    
-
+ 
+    // turn a stack into an infix string representation
     private func parseStack(fullStack: [Op]) -> String {
         var display=""
         var stack = fullStack
@@ -160,6 +174,11 @@ class CalculatorBrain {
         return display
     }
     
+    // pull an expression off the stack and return an infix string rep
+    //
+    // precedence is an int returning the precedence of the expression.
+    // Expression precedence is defined as the precedence of the operator enclosed in the expression
+    // It's used to determine when parens are needed in the infix rep
     private func nextExpression(var stack: [Op]) -> (result: String, remainingStack: [Op], precedence: Int) {
         if !stack.isEmpty {
             var token = stack.removeLast()
@@ -196,10 +215,12 @@ class CalculatorBrain {
         
     }
     
+    // utility function to add parentheses
     func addParens(s: String) -> String {
         return "("+s+")"
     }
     
+    // computed variable returning the infix rep of the entire global stack
     var description: String {
         let desc = parseStack(opStack)
         return desc
