@@ -85,6 +85,24 @@ class CalculatorBrain {
         learnOp(Op.Constant("π") {M_PI})
         learnOp(Op.UnaryOperation("±") { -1 * $0 })
     }
+    
+    var program: AnyObject {
+        get {
+            return opStack.map {$0.description}
+        }
+        set {
+            if let opSymbols = newValue as? Array<String> {
+                var newOpStack = [Op]()
+                for opSymbol in opSymbols {
+                    if let op = knownOps[opSymbol] {
+                        newOpStack.append(op)
+                    } else if let operand = NSNumberFormatter().numberFromString(opSymbol)?.doubleValue {
+                        newOpStack.append(Op.Operand(operand))
+                    }
+                }
+            }
+        }
+    }
 
     // clear the stack and variable memory
     func clear() {
@@ -225,4 +243,5 @@ class CalculatorBrain {
         let desc = parseStack(opStack)
         return desc
     }
+    
 }
