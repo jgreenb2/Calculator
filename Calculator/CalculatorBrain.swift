@@ -25,11 +25,11 @@ class CalculatorBrain {
         var description: String {
             get {
                 switch self {
-                case Operand(let operand):
+                case .Operand(let operand):
                     return "\(operand)"
                 case .Constant(let constant, _):
                     return constant
-                case Symbol(let symbol,_):
+                case .Symbol(let symbol,_):
                     return symbol
                 case .UnaryOperation(let symbol,_):
                     return symbol
@@ -97,7 +97,7 @@ class CalculatorBrain {
                     if let op = knownOps[opSymbol] {
                         newOpStack.append(op)
                     } else if let operand = NSNumberFormatter().numberFromString(opSymbol)?.doubleValue {
-                        newOpStack.append(Op.Operand(operand))
+                        newOpStack.append(.Operand(operand))
                     }
                 }
             }
