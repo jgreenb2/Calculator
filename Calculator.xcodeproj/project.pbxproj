@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		75937F411B2BC0B500229CFA /* AxesDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75937F401B2BC0B500229CFA /* AxesDrawer.swift */; };
 		75E72ED61B1A18390014FCD3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E72ED51B1A18390014FCD3 /* AppDelegate.swift */; };
 		75E72ED81B1A18390014FCD3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E72ED71B1A18390014FCD3 /* ViewController.swift */; };
 		75E72EDB1B1A18390014FCD3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75E72ED91B1A18390014FCD3 /* Main.storyboard */; };
@@ -27,6 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		75937F401B2BC0B500229CFA /* AxesDrawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AxesDrawer.swift; sourceTree = "<group>"; };
 		75E72ED01B1A18390014FCD3 /* Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Calculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75E72ED41B1A18390014FCD3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		75E72ED51B1A18390014FCD3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 				75E72EF51B1B5C680014FCD3 /* CalculatorBrain.swift */,
 				75E72ED71B1A18390014FCD3 /* ViewController.swift */,
 				75E72ED91B1A18390014FCD3 /* Main.storyboard */,
+				75937F401B2BC0B500229CFA /* AxesDrawer.swift */,
 				75E72ED31B1A18390014FCD3 /* Supporting Files */,
 			);
 			path = Calculator;
@@ -217,6 +220,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				75E72EF61B1B5C680014FCD3 /* CalculatorBrain.swift in Sources */,
+				75937F411B2BC0B500229CFA /* AxesDrawer.swift in Sources */,
 				75E72ED81B1A18390014FCD3 /* ViewController.swift in Sources */,
 				75E72ED61B1A18390014FCD3 /* AppDelegate.swift in Sources */,
 			);
