@@ -228,7 +228,7 @@
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WoJ-Pz-xtU"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gcL-Yw-NRy">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gcL-Yw-NRy">
                                 <rect key="frame" x="317" y="137" width="83" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <state key="normal" title="cos">
@@ -238,7 +238,7 @@
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gjS-vA-W2y"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dWs-1y-vst">
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dWs-1y-vst">
                                 <rect key="frame" x="317" y="102" width="83" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <state key="normal" title="sin">
@@ -286,7 +286,7 @@
                                     <action selector="changeSign" destination="BYZ-38-t0r" eventType="touchUpInside" id="y8M-v7-lUA"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hr1-4U-MoZ">
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hr1-4U-MoZ">
                                 <rect key="frame" x="408" y="102" width="84" height="41"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="38" id="cK8-XW-wqd"/>
@@ -304,7 +304,7 @@
                                     <action selector="memSet" destination="BYZ-38-t0r" eventType="touchUpInside" id="Saz-T1-r5d"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LhY-1s-0hr">
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LhY-1s-0hr">
                                 <rect key="frame" x="408" y="137" width="84" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="M">
@@ -314,7 +314,7 @@
                                     <action selector="memGet" destination="BYZ-38-t0r" eventType="touchUpInside" id="eIx-vI-X8t"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="byw-Ns-T3A">
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="byw-Ns-T3A">
                                 <rect key="frame" x="500" y="137" width="83" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal">
