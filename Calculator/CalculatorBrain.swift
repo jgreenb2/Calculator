@@ -149,6 +149,10 @@ class CalculatorBrain {
         return evaluate()
     }
     
+    func changeSign() -> Double? {
+        return performOperation(OperatorSymbols.PlusMinus)
+    }
+    
     // function that evaluates the gloal opStack
     func evaluate() -> Double? {
         let (result, remainder) = evaluate(opStack)
@@ -218,7 +222,7 @@ class CalculatorBrain {
                     if let value = variableValues[symbol] {
                         return (symbol, stack, token.precedence)
                     } else {
-                        return (symbol+"?",stack,token.precedence)
+                        return (symbol,stack,token.precedence)
                     }
                 case .Constant(let constant, _):
                     return (constant, stack, token.precedence)

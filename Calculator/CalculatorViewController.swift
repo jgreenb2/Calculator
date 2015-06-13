@@ -30,7 +30,7 @@ class CalculatorViewController: UIViewController {
         if userIsInTheMiddleOfTypingANumber {
             display.text = "-" + display.text!
         } else if abs(displayValue!) > 0.0 {
-            displayValue = brain.performOperation("±")!
+            displayValue = brain.changeSign()!
 
         }
     }
