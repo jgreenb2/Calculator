@@ -14,7 +14,18 @@ class CalculatorBrain {
         includes a computed variable that can be referenced
         to return the precedence level of the operation
     */
-
+    private struct OperatorSymbols {
+        static let Addition = "+"
+        static let Subtraction = "−"
+        static let Multiplication = "×"
+        static let Division = "÷"
+        static let SquareRoot = "√"
+        static let Pi = "π"
+        static let PlusMinus = "±"
+        static let Sin = "sin"
+        static let Cos = "cos"
+    }
+    
     private enum Op: Printable {
         case Operand(Double)
         case Constant(String,()->Double)
@@ -44,13 +55,13 @@ class CalculatorBrain {
                 switch self {
                 case .BinaryOperation(let operation, _):
                     switch operation {
-                        case "+":
+                        case OperatorSymbols.Addition:
                             return 200
-                        case "−":
+                        case OperatorSymbols.Subtraction:
                             return 200
-                        case "×":
+                        case OperatorSymbols.Multiplication:
                             return 300
-                        case "÷":
+                        case OperatorSymbols.Division:
                             return 300
                         default:
                             return 0
@@ -75,15 +86,15 @@ class CalculatorBrain {
         func learnOp(op: Op) {
             knownOps[op.description] = op
         }
-        learnOp(Op.BinaryOperation("×", *))
-        learnOp(Op.BinaryOperation("−") {$1 - $0})
-        learnOp(Op.BinaryOperation("+",+))
-        learnOp(Op.BinaryOperation("÷") {$1 / $0})
-        learnOp(Op.UnaryOperation("√", sqrt))
-        learnOp(Op.UnaryOperation("sin", sin))
-        learnOp(Op.UnaryOperation("cos", cos))
-        learnOp(Op.Constant("π") {M_PI})
-        learnOp(Op.UnaryOperation("±") { -1 * $0 })
+        learnOp(Op.BinaryOperation(OperatorSymbols.Multiplication, *))
+        learnOp(Op.BinaryOperation(OperatorSymbols.Subtraction) {$1 - $0})
+        learnOp(Op.BinaryOperation(OperatorSymbols.Addition,+))
+        learnOp(Op.BinaryOperation(OperatorSymbols.Division) {$1 / $0})
+        learnOp(Op.UnaryOperation(OperatorSymbols.SquareRoot, sqrt))
+        learnOp(Op.UnaryOperation(OperatorSymbols.Sin, sin))
+        learnOp(Op.UnaryOperation(OperatorSymbols.Cos, cos))
+        learnOp(Op.Constant(OperatorSymbols.Pi) {M_PI})
+        learnOp(Op.UnaryOperation(OperatorSymbols.PlusMinus) { -1 * $0 })
     }
     
     var program: AnyObject {
