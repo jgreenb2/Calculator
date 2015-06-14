@@ -77,7 +77,6 @@ class GraphView: UIView {
 
     func plotFunction() {
         var prevValueUndefined = true
-        //let startPt = CGPoint(x: 0, y: graphCenter.y)
         let curve = UIBezierPath()
         
         let delta = Double(1.0/density)
@@ -122,6 +121,19 @@ class GraphView: UIView {
             setNeedsDisplay()
         default:
             break
+        }
+    }
+    
+    func scaleGraph(gesture: UIPinchGestureRecognizer) {
+        if gesture.state == .Changed {
+            density *= gesture.scale
+            gesture.scale=1
+        }
+    }
+    
+    func jumpToOrigin(gesture: UITapGestureRecognizer) {
+        if gesture.state == .Ended {
+            graphOrigin = gesture.locationInView(self)
         }
     }
 }
