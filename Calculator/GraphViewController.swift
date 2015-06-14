@@ -8,7 +8,8 @@
 
 import UIKit
 
-class GraphViewController: UIViewController {
+class GraphViewController: UIViewController, GraphViewDataSource {
+    
     var program: AnyObject? {
         didSet {
             println("program set! \(program)")
@@ -17,7 +18,11 @@ class GraphViewController: UIViewController {
     
     @IBOutlet weak var graphView: GraphView! {
         didSet {
-            
+            graphView.dataSource = self
         }
+    }
+    
+    func functionValue(sender: GraphView, atXEquals: Double) -> Double? {
+        return sin(atXEquals)
     }
 }

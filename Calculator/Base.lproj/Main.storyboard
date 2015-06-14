@@ -716,7 +716,7 @@
                         <barButtonItem key="backBarButtonItem" title="Back" id="ySS-Ur-6UQ"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="graphView" destination="Z8f-h9-V5G" id="w07-yY-yIa"/>
+                        <outlet property="graphView" destination="Z8f-h9-V5G" id="9F6-nG-Cwn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xGq-J8-LZ5" userLabel="First Responder" sceneMemberID="firstResponder"/>
