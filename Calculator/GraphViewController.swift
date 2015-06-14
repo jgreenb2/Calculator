@@ -19,6 +19,7 @@ class GraphViewController: UIViewController, GraphViewDataSource {
     @IBOutlet weak var graphView: GraphView! {
         didSet {
             graphView.dataSource = self
+            graphView.addGestureRecognizer(UIPanGestureRecognizer(target: graphView, action: "moveOrigin:"))
         }
     }
     

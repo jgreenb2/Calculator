@@ -14,11 +14,20 @@ protocol GraphViewDataSource: class {
 
 @IBDesignable
 class GraphView: UIView {
-
-    var graphCenter: CGPoint {
-        return convertPoint(center, fromCoordinateSpace: superview!)
-    }
     
+    var graphOrigin:CGPoint? = nil {
+        didSet {
+            (minX,maxX) = newXRange(density, origin: graphCenter)
+            setNeedsDisplay()
+        }
+    }
+    var graphCenter: CGPoint {
+        if let newOrigin = graphOrigin {
+            return newOrigin
+        } else {
+            return convertPoint(center, fromCoordinateSpace: superview!)
+        }
+    }
 
     @IBInspectable
     var lineWidth: CGFloat = 1 { didSet { setNeedsDisplay() } }
@@ -42,7 +51,7 @@ class GraphView: UIView {
     
     var density: CGFloat=100 {
         didSet {
-            (minY,maxY) = newYRange(density, origin: graphCenter)
+            (minX,maxX) = newXRange(density, origin: graphCenter)
             setNeedsDisplay()
         }
     }
@@ -56,14 +65,11 @@ class GraphView: UIView {
     }
     
     weak var dataSource: GraphViewDataSource?
-    
-    var Xrange: Double {
-        return maxX - minX + 1
-    }
+
     
     override func drawRect(rect: CGRect) {
         let axes = AxesDrawer(color: axesColor, contentScaleFactor: scaleFactor)
-        density = bounds.width/CGFloat(Xrange)
+        density = bounds.width/CGFloat(maxX-minX)
         axes.drawAxesInRect(bounds, origin: graphCenter, pointsPerUnit: density)
     
         plotFunction()
@@ -75,7 +81,6 @@ class GraphView: UIView {
         let curve = UIBezierPath()
         
         let delta = Double(1.0/density)
-
         for (var i:CGFloat=0,x:Double=minX;i<bounds.width;i=i+1,x=x+delta) {
             if let y = dataSource?.functionValue(self, atXEquals: x) {
                 if !prevValueUndefined {
@@ -99,5 +104,24 @@ class GraphView: UIView {
         point.y = CGFloat(y)*density + origin.y
 
         return point
+    }
+    
+    func moveOrigin(gesture: UIPanGestureRecognizer) {
+        switch gesture.state {
+        case .Ended: fallthrough
+        case .Changed:
+            let translation = gesture.translationInView(self)
+            if graphOrigin != nil {
+                graphOrigin!.x = graphOrigin!.x + translation.x
+                graphOrigin!.y = graphOrigin!.y + translation.y
+            } else {
+                let newOrigin = CGPoint(x:graphCenter.x + translation.x, y: graphCenter.y + translation.y)
+                graphOrigin = newOrigin
+            }
+            gesture.setTranslation(CGPointZero, inView: self)
+            setNeedsDisplay()
+        default:
+            break
+        }
     }
 }
