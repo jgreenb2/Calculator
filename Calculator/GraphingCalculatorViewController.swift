@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 class GraphingCalculatorViewController: CalculatorViewController {
 
@@ -25,10 +26,16 @@ class GraphingCalculatorViewController: CalculatorViewController {
                 switch identifier {
                 case Segues.segueToGraph:
                     graphViewController.program = brain.program
-
+                    var infixRep = brain.description
+                    let lastComma = infixRep.rangeOfString(",", options: NSStringCompareOptions.BackwardsSearch)
+                    if let lastCommaIndex = lastComma?.endIndex {
+                        let funcRep = infixRep.substringFromIndex(lastCommaIndex)
+                        graphViewController.title = funcRep
+                    } else {
+                        graphViewController.title = infixRep
+                    }
                 default: break
                 }
-
             }
         }
     }

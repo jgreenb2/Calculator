@@ -113,6 +113,7 @@ class CalculatorBrain {
                         newOpStack.append(.Operand(operand))
                     }
                 }
+                opStack = newOpStack
             }
         }
     }
@@ -158,7 +159,7 @@ class CalculatorBrain {
     // function that evaluates the gloal opStack
     func evaluate() -> Double? {
         let (result, remainder) = evaluate(opStack)
-        println("\(opStack) = \(result) with \(remainder) left over")
+        //println("\(opStack) = \(result) with \(remainder) left over")
         return result
     }
     

@@ -16,6 +16,8 @@ class GraphViewController: UIViewController, GraphViewDataSource {
         }
     }
     
+    var graphBrain = CalculatorBrain()
+    
     @IBOutlet weak var graphView: GraphView! {
         didSet {
             graphView.dataSource = self
@@ -28,6 +30,16 @@ class GraphViewController: UIViewController, GraphViewDataSource {
     }
     
     func functionValue(sender: GraphView, atXEquals: Double) -> Double? {
-        return sin(atXEquals)
+        if var stack = program as? Array<String> {
+            for (var i=0;i<stack.count;i++) {
+                if stack[i]=="M" {
+                    stack[i]="\(atXEquals)"
+                }
+            }
+            graphBrain.program = stack
+            return graphBrain.evaluate()
+        } else {
+            return nil
+        }
     }
 }
