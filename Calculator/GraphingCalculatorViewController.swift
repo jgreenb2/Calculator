@@ -11,7 +11,6 @@ import Foundation
 
 class GraphingCalculatorViewController: CalculatorViewController {
 
-    
     private struct Segues {
         static let segueToGraph = "Show Graph"
     }
