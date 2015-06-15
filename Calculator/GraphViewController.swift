@@ -10,12 +10,6 @@ import UIKit
 
 class GraphViewController: UIViewController, GraphViewDataSource {
     
-    var program: AnyObject? {
-        didSet {
-            println("program set! \(program)")
-        }
-    }
-    
     var graphBrain = CalculatorBrain()
     
     @IBOutlet weak var graphView: GraphView! {
@@ -30,9 +24,6 @@ class GraphViewController: UIViewController, GraphViewDataSource {
     }
     
     func functionValue(sender: GraphView, atXEquals: Double) -> Double? {
-        if program != nil {
-            graphBrain.program=program!
-        }
         if let result = graphBrain.setVariable("M", value: atXEquals) {
             if result.isNormal || result.isZero {
                 return result

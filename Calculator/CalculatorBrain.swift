@@ -79,6 +79,7 @@ class CalculatorBrain {
     private var opStack = [Op]()
     private var knownOps = [String:Op]()
     var variableValues = [String:Double]()
+    private var preserveStack: Bool = false
     
     // initialize by setting all of the operations
     // that the calculator can do
@@ -107,10 +108,10 @@ class CalculatorBrain {
                 for opSymbol in opSymbols {
                     if let op = knownOps[opSymbol] {
                         newOpStack.append(op)
-                    } else if let op = variableValues[opSymbol] {
-                        newOpStack.append(Op.Symbol(opSymbol,{self.variableValues[$0]}))
                     } else if let operand = NSNumberFormatter().numberFromString(opSymbol)?.doubleValue {
                         newOpStack.append(.Operand(operand))
+                    } else {
+                        newOpStack.append(Op.Symbol(opSymbol,{self.variableValues[$0]}))
                     }
                 }
                 opStack = newOpStack
@@ -158,9 +159,20 @@ class CalculatorBrain {
     
     // function that evaluates the gloal opStack
     func evaluate() -> Double? {
-        let (result, remainder) = evaluate(opStack)
-        //println("\(opStack) = \(result) with \(remainder) left over")
-        return result
+        if preserveStack {
+            var saveStack = [Op]()
+            saveStack = opStack
+            let (result, remainder) = evaluate(opStack)
+            opStack=saveStack
+            return result
+        } else {
+            let (result, remainder) = evaluate(opStack)
+            return result
+        }
+    }
+    
+    func setPreserveStackMode(mode: Bool) {
+        preserveStack = mode
     }
     
     // helper function that evaluates an arbitrary stack

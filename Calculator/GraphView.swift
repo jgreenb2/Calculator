@@ -38,14 +38,10 @@ class GraphView: UIView {
     @IBInspectable
     var lineColor: UIColor = UIColor.redColor() { didSet { setNeedsDisplay() } }
     
-
     @IBInspectable
     var minX:Double = -10
     @IBInspectable
     var maxX:Double = 10
-    
-    var minY:Double = -10
-    var maxY:Double = 10
     
     var density: CGFloat=100 {
         didSet {
@@ -64,7 +60,6 @@ class GraphView: UIView {
     
     weak var dataSource: GraphViewDataSource?
 
-    
     override func drawRect(rect: CGRect) {
         let axes = AxesDrawer(color: axesColor, contentScaleFactor: contentScaleFactor)
         density = bounds.width/CGFloat(maxX-minX)
@@ -76,8 +71,6 @@ class GraphView: UIView {
     func plotFunction() {
         var prevValueUndefined = true
         let curve = UIBezierPath()
-        
-        let delta = 1.0/Double(density)
         for (var i:CGFloat=0;i<bounds.width;i=i+1/contentScaleFactor) {
             var x = ScreenToX(i)
             if let y = dataSource?.functionValue(self, atXEquals: x) {

@@ -24,8 +24,9 @@ class GraphingCalculatorViewController: CalculatorViewController {
             if let identifier = segue.identifier {
                 switch identifier {
                 case Segues.segueToGraph:
-                    graphViewController.program = brain.program
-                    var infixRep = brain.description
+                    graphViewController.graphBrain.program = brain.program
+                    graphViewController.graphBrain.setPreserveStackMode(true)
+                    var infixRep = graphViewController.graphBrain.description
                     let lastComma = infixRep.rangeOfString(",", options: NSStringCompareOptions.BackwardsSearch)
                     if let lastCommaIndex = lastComma?.endIndex {
                         infixRep = infixRep.substringFromIndex(lastCommaIndex)
