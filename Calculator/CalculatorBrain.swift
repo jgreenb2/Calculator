@@ -107,6 +107,8 @@ class CalculatorBrain {
                 for opSymbol in opSymbols {
                     if let op = knownOps[opSymbol] {
                         newOpStack.append(op)
+                    } else if let op = variableValues[opSymbol] {
+                        newOpStack.append(Op.Symbol(opSymbol,{self.variableValues[$0]}))
                     } else if let operand = NSNumberFormatter().numberFromString(opSymbol)?.doubleValue {
                         newOpStack.append(.Operand(operand))
                     }
