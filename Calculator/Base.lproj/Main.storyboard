@@ -682,7 +682,7 @@
                         <viewControllerLayoutGuide type="bottom" id="DBW-Wk-UgG"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8Iu-8v-E9R">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Z8f-h9-V5G" customClass="GraphView" customModule="Calculator" customModuleProvider="target">

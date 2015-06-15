@@ -29,11 +29,11 @@ class GraphingCalculatorViewController: CalculatorViewController {
                     var infixRep = brain.description
                     let lastComma = infixRep.rangeOfString(",", options: NSStringCompareOptions.BackwardsSearch)
                     if let lastCommaIndex = lastComma?.endIndex {
-                        let funcRep = infixRep.substringFromIndex(lastCommaIndex)
-                        graphViewController.title = funcRep
-                    } else {
-                        graphViewController.title = infixRep
+                        infixRep = infixRep.substringFromIndex(lastCommaIndex)
+
                     }
+                    graphViewController.title = infixRep
+
                 default: break
                 }
             }
