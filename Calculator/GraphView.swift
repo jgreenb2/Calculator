@@ -128,8 +128,35 @@ class GraphView: UIView {
         }
     }
     
+    private struct scaleZones {
+        static let scaleXYZoneMin = -67.5
+        static let scaleXYZoneMax = 67.5
+        static let scaleXZoneMin = -22.5
+        static let scaleXZoneMax = 22.5
+    }
     func scaleGraph(gesture: UIPinchGestureRecognizer) {
         if gesture.state == .Changed {
+//            // get the first (hopefully only!) touchpoints
+//            let touch1 = gesture.locationOfTouch(0, inView: self)
+//            let touch2 = gesture.locationOfTouch(1, inView: self)
+//            
+//            // compute the slope of the line
+//            let rise = Double(touch1.y - touch2.y)
+//            let run = Double(touch1.x - touch2.x)
+//            var theta = atan2(rise,run) * (180.0/M_PI)
+//            if theta > 90.0 {
+//                theta -= 180.0
+//            } else if theta < -90.0 {
+//                theta += 180.0
+//            }
+//            
+//            if theta > scaleZones.scaleXZoneMin && theta <= scaleZones.scaleXZoneMax {
+//                println("X scaling")
+//            } else if theta > scaleZones.scaleXYZoneMin && theta <= scaleZones.scaleXYZoneMax {
+//                println("Uniform scaling")
+//            } else {
+//                println("Y scaling")
+//            }
             density *= gesture.scale
             gesture.scale=1
         }
