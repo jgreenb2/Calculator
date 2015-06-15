@@ -38,8 +38,6 @@ class GraphView: UIView {
     @IBInspectable
     var lineColor: UIColor = UIColor.redColor() { didSet { setNeedsDisplay() } }
     
-    @IBInspectable
-    var scaleFactor: CGFloat = 1 {didSet {setNeedsDisplay()}}
 
     @IBInspectable
     var minX:Double = -10
@@ -68,7 +66,7 @@ class GraphView: UIView {
 
     
     override func drawRect(rect: CGRect) {
-        let axes = AxesDrawer(color: axesColor, contentScaleFactor: scaleFactor)
+        let axes = AxesDrawer(color: axesColor, contentScaleFactor: contentScaleFactor)
         density = bounds.width/CGFloat(maxX-minX)
         axes.drawAxesInRect(bounds, origin: graphCenter, pointsPerUnit: density)
     
@@ -79,13 +77,14 @@ class GraphView: UIView {
         var prevValueUndefined = true
         let curve = UIBezierPath()
         
-        let delta = Double(1.0/density)
-        for (var i:CGFloat=0,x:Double=minX;i<bounds.width;i=i+1,x=x+delta) {
+        let delta = 1.0/Double(density)
+        for (var i:CGFloat=0;i<bounds.width;i=i+1/contentScaleFactor) {
+            var x = ScreenToX(i)
             if let y = dataSource?.functionValue(self, atXEquals: x) {
                 if !prevValueUndefined {
-                    curve.addLineToPoint(XYToPoint(x,y,density: density, origin: graphCenter))
+                    curve.addLineToPoint(XYToPoint(x,y))
                 } else {
-                    curve.moveToPoint(XYToPoint(x,y,density: density, origin: graphCenter))
+                    curve.moveToPoint(XYToPoint(x,y))
                 }
                 prevValueUndefined = false
             } else {
@@ -97,12 +96,24 @@ class GraphView: UIView {
         curve.stroke()
     }
     
-    func XYToPoint(x: Double, _ y: Double, density: CGFloat, origin: CGPoint) -> CGPoint {
+    func XYToPoint(x: Double, _ y: Double) -> CGPoint {
         var point = CGPoint()
-        point.x = CGFloat(x)*density + origin.x
-        point.y = -CGFloat(y)*density + origin.y
+        point.x = XToScreen(x)
+        point.y = YToScreen(y)
 
         return point
+    }
+    
+    func XToScreen(x: Double) -> CGFloat {
+        return CGFloat(x)*density + graphCenter.x
+    }
+    
+    func ScreenToX(i: CGFloat) -> Double {
+        return Double((i - graphCenter.x)/density)
+    }
+    
+    func YToScreen(y: Double) -> CGFloat {
+        return -CGFloat(y)*density + graphCenter.y
     }
     
     func moveOrigin(gesture: UIPanGestureRecognizer) {

@@ -29,7 +29,6 @@ class GraphingCalculatorViewController: CalculatorViewController {
                     let lastComma = infixRep.rangeOfString(",", options: NSStringCompareOptions.BackwardsSearch)
                     if let lastCommaIndex = lastComma?.endIndex {
                         infixRep = infixRep.substringFromIndex(lastCommaIndex)
-
                     }
                     graphViewController.title = infixRep
 

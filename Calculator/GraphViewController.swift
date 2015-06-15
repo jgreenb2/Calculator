@@ -33,6 +33,11 @@ class GraphViewController: UIViewController, GraphViewDataSource {
         if program != nil {
             graphBrain.program=program!
         }
-        return graphBrain.setVariable("M", value: atXEquals)
+        if let result = graphBrain.setVariable("M", value: atXEquals) {
+            if result.isNormal || result.isZero {
+                return result
+            }
+        }
+        return nil
     }
 }
