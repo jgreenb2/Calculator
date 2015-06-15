@@ -100,7 +100,7 @@ class GraphView: UIView {
     func XYToPoint(x: Double, _ y: Double, density: CGFloat, origin: CGPoint) -> CGPoint {
         var point = CGPoint()
         point.x = CGFloat(x)*density + origin.x
-        point.y = CGFloat(y)*density + origin.y
+        point.y = -CGFloat(y)*density + origin.y
 
         return point
     }
