@@ -72,7 +72,7 @@ class AxesDrawer
             var startingHashmarkR = startingHashmarkRadii(bounds,origin: origin,pointsPerHashmarkX: pointsPerHashmarkX,pointsPerHashmarkY: pointsPerHashmarkY)
             
             // now create a bounding box inside whose edges those four hashmarks lie
-            var bbox = CGRect(center: origin, size: CGSize(width: pointsPerHashmarkX*startingHashmarkR.x, height: pointsPerHashmarkY*startingHashmarkR.y))
+            var bbox = CGRect(center: origin, size: CGSize(width: 2*pointsPerHashmarkX*startingHashmarkR.x, height: 2*pointsPerHashmarkY*startingHashmarkR.y))
 
             // formatter for the hashmark labels
             let formatterX = labelFormatter(unitsPerHashmarkX)
