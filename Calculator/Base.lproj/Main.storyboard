@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E26a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="arj-xa-VpZ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="arj-xa-VpZ">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
@@ -653,12 +653,6 @@
                                 <exclude reference="aRd-Z3-eTA"/>
                                 <exclude reference="gxy-AH-guC"/>
                                 <exclude reference="nva-If-JhS"/>
-                                <exclude reference="Hni-ww-gHR"/>
-                                <exclude reference="IAS-Pc-B3h"/>
-                                <exclude reference="K1W-3e-RNo"/>
-                                <exclude reference="jwc-8a-p1A"/>
-                                <exclude reference="uds-j5-yMe"/>
-                                <exclude reference="wQS-Jb-a2D"/>
                                 <exclude reference="6yE-j8-hoe"/>
                                 <exclude reference="NJW-86-9Ip"/>
                                 <exclude reference="Peu-8c-chM"/>
@@ -666,6 +660,12 @@
                                 <exclude reference="fan-vD-QDp"/>
                                 <exclude reference="fqH-yw-h5m"/>
                                 <exclude reference="vo8-wm-Fep"/>
+                                <exclude reference="Hni-ww-gHR"/>
+                                <exclude reference="IAS-Pc-B3h"/>
+                                <exclude reference="K1W-3e-RNo"/>
+                                <exclude reference="jwc-8a-p1A"/>
+                                <exclude reference="uds-j5-yMe"/>
+                                <exclude reference="wQS-Jb-a2D"/>
                                 <exclude reference="YTf-xs-WNG"/>
                                 <exclude reference="ZPw-Sh-dmv"/>
                                 <exclude reference="fbe-2p-bbo"/>
@@ -684,13 +684,13 @@
                                 <exclude reference="eIb-y9-29p"/>
                                 <exclude reference="pMd-tc-6UQ"/>
                                 <exclude reference="yjF-xS-kbz"/>
+                                <exclude reference="0hQ-8x-hbT"/>
                                 <exclude reference="A5U-0B-BKA"/>
                                 <exclude reference="Dp8-6m-kc4"/>
                                 <exclude reference="O4N-E4-Xq1"/>
                                 <exclude reference="d2F-aE-0tt"/>
                                 <exclude reference="kTg-Kw-A4U"/>
                                 <exclude reference="mbu-rb-GPt"/>
-                                <exclude reference="0hQ-8x-hbT"/>
                                 <exclude reference="3Ke-VM-Sa1"/>
                                 <exclude reference="Bdj-NJ-T0M"/>
                                 <exclude reference="IAV-E6-0NZ"/>

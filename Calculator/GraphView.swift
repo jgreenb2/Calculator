@@ -122,7 +122,6 @@ class GraphView: UIView {
                 graphOrigin = newOrigin
             }
             gesture.setTranslation(CGPointZero, inView: self)
-            setNeedsDisplay()
         default:
             break
         }
