@@ -5,6 +5,8 @@
 //  Created by CS193p Instructor.
 //  Copyright (c) 2015 Stanford University. All rights reserved.
 //
+//  modified by Jeff Greenberg to allow different x/y densities
+//
 
 import UIKit
 
@@ -41,7 +43,7 @@ class AxesDrawer
     // e.g. if you wanted there to be 100 points along an axis between -1 and 1,
     //    you'd set pointsPerUnit to 50
 
-    func drawAxesInRect(bounds: CGRect, origin: CGPoint, pointsPerUnit: CGFloat)
+    func drawAxesInRect(bounds: CGRect, origin: CGPoint, pointsPerUnitX: CGFloat, pointsPerUnitY: CGFloat)
     {
         CGContextSaveGState(UIGraphicsGetCurrentContext())
         color.set()
@@ -51,70 +53,92 @@ class AxesDrawer
         path.moveToPoint(CGPoint(x: align(origin.x), y: bounds.minY))
         path.addLineToPoint(CGPoint(x: align(origin.x), y: bounds.maxY))
         path.stroke()
-        drawHashmarksInRect(bounds, origin: origin, pointsPerUnit: abs(pointsPerUnit))
+        drawHashmarksInRect(bounds, origin: origin, pointsPerUnitX: abs(pointsPerUnitX), pointsPerUnitY: abs(pointsPerUnitY))
         CGContextRestoreGState(UIGraphicsGetCurrentContext())
     }
 
     // the rest of this class is private
 
-    private func drawHashmarksInRect(bounds: CGRect, origin: CGPoint, pointsPerUnit: CGFloat)
+    private func drawHashmarksInRect(bounds: CGRect, origin: CGPoint, pointsPerUnitX: CGFloat, pointsPerUnitY: CGFloat)
     {
         if ((origin.x >= bounds.minX) && (origin.x <= bounds.maxX)) || ((origin.y >= bounds.minY) && (origin.y <= bounds.maxY))
         {
-            // figure out how many units each hashmark must represent
-            // to respect both pointsPerUnit and minimumPointsPerHashmark
-            var unitsPerHashmark = minimumPointsPerHashmark / pointsPerUnit
-            if unitsPerHashmark < 1 {
-                unitsPerHashmark = pow(10, ceil(log10(unitsPerHashmark)))
-            } else {
-                unitsPerHashmark = floor(unitsPerHashmark)
-            }
 
-            let pointsPerHashmark = pointsPerUnit * unitsPerHashmark
+            let unitsPerHashmarkX = unitsPerHashmark(minimumPointsPerHashmark, pointsPerUnit: pointsPerUnitX)
+            let unitsPerHashmarkY = unitsPerHashmark(minimumPointsPerHashmark, pointsPerUnit: pointsPerUnitY)
+            let pointsPerHashmarkX = unitsPerHashmarkX * pointsPerUnitX
+            let pointsPerHashmarkY = unitsPerHashmarkY * pointsPerUnitY
             
-            // figure out which is the closest set of hashmarks (radiating out from the origin) that are in bounds
-            var startingHashmarkRadius: CGFloat = 1
-            if !CGRectContainsPoint(bounds, origin) {
-                if origin.x > bounds.maxX {
-                    startingHashmarkRadius = (origin.x - bounds.maxX) / pointsPerHashmark + 1
-                } else if origin.x < bounds.minX {
-                    startingHashmarkRadius = (bounds.minX - origin.x) / pointsPerHashmark + 1
-                } else if origin.y > bounds.maxY {
-                    startingHashmarkRadius = (origin.y - bounds.maxY) / pointsPerHashmark + 1
-                } else {
-                    startingHashmarkRadius = (bounds.minY - origin.y) / pointsPerHashmark + 1
-                }
-                startingHashmarkRadius = floor(startingHashmarkRadius)
-            }
+            var startingHashmarkR = startingHashmarkRadii(bounds,origin: origin,pointsPerHashmarkX: pointsPerHashmarkX,pointsPerHashmarkY: pointsPerHashmarkY)
             
             // now create a bounding box inside whose edges those four hashmarks lie
-            let bboxSize = pointsPerHashmark * startingHashmarkRadius * 2
-            var bbox = CGRect(center: origin, size: CGSize(width: bboxSize, height: bboxSize))
+            var bbox = CGRect(center: origin, size: CGSize(width: pointsPerHashmarkX*startingHashmarkR.x, height: pointsPerHashmarkY*startingHashmarkR.y))
 
             // formatter for the hashmark labels
-            let formatter = NSNumberFormatter()
-            formatter.maximumFractionDigits = Int(-log10(Double(unitsPerHashmark)))
-            formatter.minimumIntegerDigits = 1
+            let formatterX = labelFormatter(unitsPerHashmarkX)
+            let formatterY = labelFormatter(unitsPerHashmarkY)
+    
 
             // radiate the bbox out until the hashmarks are further out than the bounds
             while !CGRectContainsRect(bbox, bounds)
             {
-                let label = formatter.stringFromNumber((origin.x-bbox.minX)/pointsPerUnit)!
+                let labelX = formatterX.stringFromNumber((origin.x-bbox.minX)/pointsPerUnitX)!
                 if let leftHashmarkPoint = alignedPoint(x: bbox.minX, y: origin.y, insideBounds:bounds) {
-                    drawHashmarkAtLocation(leftHashmarkPoint, .Top("-\(label)"))
+                    drawHashmarkAtLocation(leftHashmarkPoint, .Top("-\(labelX)"))
                 }
                 if let rightHashmarkPoint = alignedPoint(x: bbox.maxX, y: origin.y, insideBounds:bounds) {
-                    drawHashmarkAtLocation(rightHashmarkPoint, .Top(label))
+                    drawHashmarkAtLocation(rightHashmarkPoint, .Top(labelX))
                 }
+                let labelY = formatterY.stringFromNumber((origin.y-bbox.minY)/pointsPerUnitY)!
                 if let topHashmarkPoint = alignedPoint(x: origin.x, y: bbox.minY, insideBounds:bounds) {
-                    drawHashmarkAtLocation(topHashmarkPoint, .Left(label))
+                    drawHashmarkAtLocation(topHashmarkPoint, .Left(labelY))
                 }
                 if let bottomHashmarkPoint = alignedPoint(x: origin.x, y: bbox.maxY, insideBounds:bounds) {
-                    drawHashmarkAtLocation(bottomHashmarkPoint, .Left("-\(label)"))
+                    drawHashmarkAtLocation(bottomHashmarkPoint, .Left("-\(labelY)"))
                 }
-                bbox.inset(dx: -pointsPerHashmark, dy: -pointsPerHashmark)
+                bbox.inset(dx: -pointsPerHashmarkX, dy: -pointsPerHashmarkY)
             }
         }
+    }
+    
+    private func labelFormatter(unitsPerHashmark: CGFloat) -> NSNumberFormatter {
+        // formatter for the hashmark labels
+        let formatter = NSNumberFormatter()
+        formatter.maximumFractionDigits = Int(-log10(Double(unitsPerHashmark)))
+        formatter.minimumIntegerDigits = 1
+        return formatter
+    }
+    
+    private func startingHashmarkRadii(bounds: CGRect,origin: CGPoint, pointsPerHashmarkX: CGFloat, pointsPerHashmarkY: CGFloat) -> (x: CGFloat, y: CGFloat) {
+        // figure out which is the closest set of hashmarks (radiating out from the origin) that are in bounds
+        var startingHashmarkRadiusX: CGFloat = 1
+        var startingHashmarkRadiusY: CGFloat = 1
+        if !CGRectContainsPoint(bounds, origin) {
+            if origin.x > bounds.maxX {
+                startingHashmarkRadiusX = (origin.x - bounds.maxX) / pointsPerHashmarkX + 1
+            } else if origin.x < bounds.minX {
+                startingHashmarkRadiusX = (bounds.minX - origin.x) / pointsPerHashmarkX + 1
+            }
+            if origin.y > bounds.maxY {
+                startingHashmarkRadiusY = (origin.y - bounds.maxY) / pointsPerHashmarkY + 1
+            } else {
+                startingHashmarkRadiusY = (bounds.minY - origin.y) / pointsPerHashmarkY + 1
+            }
+        }
+        return (floor(startingHashmarkRadiusX), floor(startingHashmarkRadiusY))
+    }
+    
+    private func unitsPerHashmark(minimumPointsPerHashmark: CGFloat, pointsPerUnit: CGFloat) -> CGFloat {
+        // figure out how many units each hashmark must represent
+        // to respect both pointsPerUnit and minimumPointsPerHashmark
+        var unitsPerHashmark = minimumPointsPerHashmark / pointsPerUnit
+        if unitsPerHashmark < 1 {
+            unitsPerHashmark = pow(10, ceil(log10(unitsPerHashmark)))
+        } else {
+            unitsPerHashmark = floor(unitsPerHashmark)
+        }
+        
+        return unitsPerHashmark
     }
     
     private func drawHashmarkAtLocation(location: CGPoint, _ text: AnchoredText)

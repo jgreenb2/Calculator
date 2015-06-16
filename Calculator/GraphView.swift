@@ -17,7 +17,7 @@ class GraphView: UIView {
     
     var graphOrigin:CGPoint? = nil {
         didSet {
-            (minX,maxX) = newXRange(density, origin: graphCenter)
+            (minX,maxX) = newXRange(density.x, origin: graphCenter)
             setNeedsDisplay()
         }
     }
@@ -42,10 +42,15 @@ class GraphView: UIView {
     var minX:Double = -10
     @IBInspectable
     var maxX:Double = 10
+    @IBInspectable
+    var minY:Double = -10
+    @IBInspectable
+    var maxY:Double = 10
     
-    var density: CGFloat=100 {
+    var density: (x: CGFloat, y: CGFloat) = (100,100) {
         didSet {
-            (minX,maxX) = newXRange(density, origin: graphCenter)
+            (minX,maxX) = newXRange(density.x, origin: graphCenter)
+            (minY,maxY) = newYRange(density.y, origin: graphCenter)
             setNeedsDisplay()
         }
     }
@@ -62,8 +67,8 @@ class GraphView: UIView {
 
     override func drawRect(rect: CGRect) {
         let axes = AxesDrawer(color: axesColor, contentScaleFactor: contentScaleFactor)
-        density = bounds.width/CGFloat(maxX-minX)
-        axes.drawAxesInRect(bounds, origin: graphCenter, pointsPerUnit: density)
+        density = (bounds.width/CGFloat(maxX-minX),bounds.height/CGFloat(maxY-minY))
+        axes.drawAxesInRect(bounds, origin: graphCenter, pointsPerUnitX: density.x, pointsPerUnitY: density.y)
     
         plotFunction()
     }
@@ -98,15 +103,15 @@ class GraphView: UIView {
     }
     
     func XToScreen(x: Double) -> CGFloat {
-        return CGFloat(x)*density + graphCenter.x
+        return CGFloat(x)*density.x + graphCenter.x
     }
     
     func ScreenToX(i: CGFloat) -> Double {
-        return Double((i - graphCenter.x)/density)
+        return Double((i - graphCenter.x)/density.x)
     }
     
     func YToScreen(y: Double) -> CGFloat {
-        return -CGFloat(y)*density + graphCenter.y
+        return -CGFloat(y)*density.y + graphCenter.y
     }
     
     func moveOrigin(gesture: UIPanGestureRecognizer) {
@@ -135,28 +140,33 @@ class GraphView: UIView {
     }
     func scaleGraph(gesture: UIPinchGestureRecognizer) {
         if gesture.state == .Changed {
-//            // get the first (hopefully only!) touchpoints
-//            let touch1 = gesture.locationOfTouch(0, inView: self)
-//            let touch2 = gesture.locationOfTouch(1, inView: self)
-//            
-//            // compute the slope of the line
-//            let rise = Double(touch1.y - touch2.y)
-//            let run = Double(touch1.x - touch2.x)
-//            var theta = atan2(rise,run) * (180.0/M_PI)
-//            if theta > 90.0 {
-//                theta -= 180.0
-//            } else if theta < -90.0 {
-//                theta += 180.0
-//            }
-//            
-//            if theta > scaleZones.scaleXZoneMin && theta <= scaleZones.scaleXZoneMax {
-//                println("X scaling")
-//            } else if theta > scaleZones.scaleXYZoneMin && theta <= scaleZones.scaleXYZoneMax {
-//                println("Uniform scaling")
-//            } else {
-//                println("Y scaling")
-//            }
-            density *= gesture.scale
+            // get the first (hopefully only!) touchpoints
+            let touch1 = gesture.locationOfTouch(0, inView: self)
+            let touch2 = gesture.locationOfTouch(1, inView: self)
+            
+            var densityX = density.x
+            var densityY = density.y
+            
+            // compute the slope of the line
+            let rise = Double(touch1.y - touch2.y)
+            let run = Double(touch1.x - touch2.x)
+            var theta = atan2(rise,run) * (180.0/M_PI)
+            if theta > 90.0 {
+                theta -= 180.0
+            } else if theta < -90.0 {
+                theta += 180.0
+            }
+            
+            if theta > scaleZones.scaleXZoneMin && theta <= scaleZones.scaleXZoneMax {
+                densityX *= gesture.scale
+            } else if theta > scaleZones.scaleXYZoneMin && theta <= scaleZones.scaleXYZoneMax {
+                densityX *= gesture.scale
+                densityY *= gesture.scale
+            } else {
+                densityY *= gesture.scale
+            }
+            density = (densityX, densityY)
+
             gesture.scale=1
         }
     }
