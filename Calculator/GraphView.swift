@@ -14,6 +14,10 @@ protocol GraphViewDataSource: class {
 
 @IBDesignable
 class GraphView: UIView {
+
+    // viewCenter must be set by the controller to the center
+    // before it gets used
+    var viewCenter: CGPoint?
     
     var graphOrigin:CGPoint? = nil {
         didSet {
@@ -119,12 +123,11 @@ class GraphView: UIView {
         case .Ended: fallthrough
         case .Changed:
             let translation = gesture.translationInView(self)
-            if graphOrigin != nil {
+            if graphOrigin == nil {
+                graphOrigin = CGPoint(x:graphCenter.x + translation.x, y: graphCenter.y + translation.y)
+            } else {
                 graphOrigin!.x = graphOrigin!.x + translation.x
                 graphOrigin!.y = graphOrigin!.y + translation.y
-            } else {
-                let newOrigin = CGPoint(x:graphCenter.x + translation.x, y: graphCenter.y + translation.y)
-                graphOrigin = newOrigin
             }
             gesture.setTranslation(CGPointZero, inView: self)
         default:
@@ -140,35 +143,43 @@ class GraphView: UIView {
     }
     func scaleGraph(gesture: UIPinchGestureRecognizer) {
         if gesture.state == .Changed {
-            // get the first (hopefully only!) touchpoints
-            let touch1 = gesture.locationOfTouch(0, inView: self)
-            let touch2 = gesture.locationOfTouch(1, inView: self)
-            
-            var densityX = density.x
-            var densityY = density.y
-            
-            // compute the slope of the line
-            let rise = Double(touch1.y - touch2.y)
-            let run = Double(touch1.x - touch2.x)
-            var theta = atan2(rise,run) * (180.0/M_PI)
-            if theta > 90.0 {
-                theta -= 180.0
-            } else if theta < -90.0 {
-                theta += 180.0
-            }
-            
-            if theta > scaleZones.scaleXZoneMin && theta <= scaleZones.scaleXZoneMax {
-                densityX *= gesture.scale
-            } else if theta > scaleZones.scaleXYZoneMin && theta <= scaleZones.scaleXYZoneMax {
-                densityX *= gesture.scale
-                densityY *= gesture.scale
-            } else {
-                densityY *= gesture.scale
-            }
-            density = (densityX, densityY)
+            // if we don't have exactly 2 touchpoints we
+            // don't know what's going on
+            if gesture.numberOfTouches() == 2 {
+                // get the touchpoints
+                let touch1 = gesture.locationOfTouch(0, inView: self)
+                let touch2 = gesture.locationOfTouch(1, inView: self)
+                
+                var densityX = density.x
+                var densityY = density.y
+                
+                // compute the slope of the line
+                let rise = Double(touch1.y - touch2.y)
+                let run = Double(touch1.x - touch2.x)
+                var theta = atan2(rise,run) * (180.0/M_PI)
+                if theta > 90.0 {
+                    theta -= 180.0
+                } else if theta < -90.0 {
+                    theta += 180.0
+                }
+                
+                if theta > scaleZones.scaleXZoneMin && theta <= scaleZones.scaleXZoneMax {
+                    densityX *= gesture.scale
+                } else if theta > scaleZones.scaleXYZoneMin && theta <= scaleZones.scaleXYZoneMax {
+                    densityX *= gesture.scale
+                    densityY *= gesture.scale
+                } else {
+                    densityY *= gesture.scale
+                }
+                density = (densityX, densityY)
 
-            gesture.scale=1
+                gesture.scale=1
+            }
         }
+    }
+    
+    func defaultGraphCenter() {
+        viewCenter = convertPoint(center, fromCoordinateSpace: superview!)
     }
     
     func jumpToOrigin(gesture: UITapGestureRecognizer) {

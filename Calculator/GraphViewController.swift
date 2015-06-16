@@ -12,6 +12,11 @@ class GraphViewController: UIViewController, GraphViewDataSource {
     
     var graphBrain = CalculatorBrain()
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        graphView.defaultGraphCenter()
+    }
+    
     @IBOutlet weak var graphView: GraphView! {
         didSet {
             graphView.dataSource = self
