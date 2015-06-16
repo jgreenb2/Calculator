@@ -180,6 +180,7 @@ class GraphView: UIView {
     
     func defaultGraphCenter() {
         viewCenter = convertPoint(center, fromCoordinateSpace: superview!)
+        density = (bounds.width/CGFloat(maxX-minX),bounds.height/CGFloat(maxY-minY))
     }
     
     func jumpToOrigin(gesture: UITapGestureRecognizer) {
