@@ -76,8 +76,8 @@ class GraphView: UIView {
     func plotFunction() {
         var prevValueUndefined = true
         let curve = UIBezierPath()
-        for (var i:CGFloat=0;i<bounds.width;i=i+1/contentScaleFactor) {
-            var x = ScreenToX(i)
+        for (var i:CGFloat=0;i<bounds.width;i+=1/contentScaleFactor) {
+            let x = ScreenToX(i)
             if let y = dataSource?.functionValue(self, atXEquals: x) {
                 if !prevValueUndefined {
                     curve.addLineToPoint(XYToPoint(x,y))
@@ -95,11 +95,7 @@ class GraphView: UIView {
     }
     
     func XYToPoint(x: Double, _ y: Double) -> CGPoint {
-        var point = CGPoint()
-        point.x = XToScreen(x)
-        point.y = YToScreen(y)
-
-        return point
+        return CGPoint(x: XToScreen(x), y: YToScreen(y))
     }
     
     func XToScreen(x: Double) -> CGFloat {
