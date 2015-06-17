@@ -12,9 +12,10 @@ class GraphViewController: UIViewController, GraphViewDataSource {
     
     var graphBrain = CalculatorBrain()
     
+    // reset the origin on a layout change
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        graphView.defaultGraphCenter()
+        graphView.graphOrigin = nil
     }
     
     @IBOutlet weak var graphView: GraphView! {

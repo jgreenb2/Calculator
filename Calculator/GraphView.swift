@@ -14,23 +14,19 @@ protocol GraphViewDataSource: class {
 
 @IBDesignable
 class GraphView: UIView {
-
-    // viewCenter must be set by the controller to the center
-    // before it gets used
-    var viewCenter: CGPoint?
     
-    var graphOrigin:CGPoint? = nil {
+    var graphOrigin:CGPoint? {
         didSet {
-            (minX,maxX) = newXRange(density.x, origin: graphCenter)
-            setNeedsDisplay()
+            if graphOrigin != nil {
+                (minX,maxX) = newXRange(density.x, origin: graphCenter)
+                (minY,maxY) = newYRange(density.y, origin: graphCenter)
+                setNeedsDisplay()
+            }
         }
     }
+    
     var graphCenter: CGPoint {
-        if let newOrigin = graphOrigin {
-            return newOrigin
-        } else {
-            return convertPoint(center, fromCoordinateSpace: superview!)
-        }
+        return graphOrigin ?? convertPoint(center, fromCoordinateSpace: superview!)
     }
 
     @IBInspectable
@@ -176,11 +172,6 @@ class GraphView: UIView {
                 gesture.scale=1
             }
         }
-    }
-    
-    func defaultGraphCenter() {
-        viewCenter = convertPoint(center, fromCoordinateSpace: superview!)
-        density = (bounds.width/CGFloat(maxX-minX),bounds.height/CGFloat(maxY-minY))
     }
     
     func jumpToOrigin(gesture: UITapGestureRecognizer) {
