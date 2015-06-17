@@ -15,6 +15,11 @@ protocol GraphViewDataSource: class {
 @IBDesignable
 class GraphView: UIView {
     
+    // the intersection of the x & y axes expressed in screen coordinates
+    // optional because it will be nil when a new GraphView is created
+    //
+    // used indirectly by graphCenter. This value is set directly when
+    // moving the origin through dragging or tapping
     var graphOrigin:CGPoint? {
         didSet {
             if graphOrigin != nil {
@@ -25,6 +30,9 @@ class GraphView: UIView {
         }
     }
     
+    // a computed version of the origin that returns the default center position
+    // OR the graphOrigin if it's been set. Whenever anyone wants to know what
+    // the current origin is, this is what you pass them
     var graphCenter: CGPoint {
         return graphOrigin ?? convertPoint(center, fromCoordinateSpace: superview!)
     }
@@ -62,16 +70,19 @@ class GraphView: UIView {
     func newXRange(density: CGFloat, origin: CGPoint) -> (xMin:Double, xMax:Double) {
         return (Double(-origin.x/density), Double((bounds.maxX-origin.x)/density))
     }
-    
-    weak var dataSource: GraphViewDataSource?
 
     override func drawRect(rect: CGRect) {
         let axes = AxesDrawer(color: axesColor, contentScaleFactor: contentScaleFactor)
         density = (bounds.width/CGFloat(maxX-minX),bounds.height/CGFloat(maxY-minY))
-        axes.drawAxesInRect(bounds, origin: graphCenter, pointsPerUnitX: density.x, pointsPerUnitY: density.y)
+        axes.drawAxesInRect(bounds, origin: graphCenter, pointsPerUnit: density)
     
         plotFunction()
     }
+    
+    // plot the function using the appropriate protocol
+    // We are careful NOT to draw lines to or from 
+    // undefined points
+    weak var dataSource: GraphViewDataSource?
 
     func plotFunction() {
         var prevValueUndefined = true
@@ -94,6 +105,8 @@ class GraphView: UIView {
         curve.stroke()
     }
     
+    // coord transform functions
+    
     func XYToPoint(x: Double, _ y: Double) -> CGPoint {
         return CGPoint(x: XToScreen(x), y: YToScreen(y))
     }
@@ -109,6 +122,8 @@ class GraphView: UIView {
     func YToScreen(y: Double) -> CGFloat {
         return -CGFloat(y)*density.y + graphCenter.y
     }
+    
+    // gesture handling functions
     
     func moveOrigin(gesture: UIPanGestureRecognizer) {
         switch gesture.state {

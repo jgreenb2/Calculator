@@ -43,8 +43,9 @@ class AxesDrawer
     // e.g. if you wanted there to be 100 points along an axis between -1 and 1,
     //    you'd set pointsPerUnit to 50
 
-    func drawAxesInRect(bounds: CGRect, origin: CGPoint, pointsPerUnitX: CGFloat, pointsPerUnitY: CGFloat)
+    func drawAxesInRect(bounds: CGRect, origin: CGPoint, pointsPerUnit: (x: CGFloat, y: CGFloat))
     {
+        let pointsPerUnitX = pointsPerUnit.x; let pointsPerUnitY = pointsPerUnit.y
         CGContextSaveGState(UIGraphicsGetCurrentContext())
         color.set()
         let path = UIBezierPath()
