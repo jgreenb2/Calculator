@@ -119,12 +119,7 @@ class GraphView: UIView {
         case .Ended: fallthrough
         case .Changed:
             let translation = gesture.translationInView(self)
-            if graphOrigin == nil {
-                graphOrigin = CGPoint(x:graphCenter.x + translation.x, y: graphCenter.y + translation.y)
-            } else {
-                graphOrigin!.x = graphOrigin!.x + translation.x
-                graphOrigin!.y = graphOrigin!.y + translation.y
-            }
+            graphOrigin = graphCenter + translation
             gesture.setTranslation(CGPointZero, inView: self)
         default:
             break
@@ -179,4 +174,9 @@ class GraphView: UIView {
             graphOrigin = gesture.locationInView(self)
         }
     }
+}
+
+// add two CGpoints
+private func + (left: CGPoint, right: CGPoint) -> CGPoint {
+    return CGPoint(x: left.x+right.x, y: left.y+right.y)
 }
