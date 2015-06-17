@@ -729,10 +729,10 @@
             </objects>
             <point key="canvasLocation" x="1873" y="17"/>
         </scene>
-        <!--Split View Controller-->
+        <!--GlobalUI Split View Controller-->
         <scene sceneID="YuV-6k-IgV">
             <objects>
-                <splitViewController id="arj-xa-VpZ" sceneMemberID="viewController">
+                <splitViewController id="arj-xa-VpZ" customClass="GlobalUISplitViewController" customModule="Calculator" customModuleProvider="target" sceneMemberID="viewController">
                     <connections>
                         <segue destination="SsP-id-Bfq" kind="relationship" relationship="masterViewController" id="TDP-gG-Ki8"/>
                         <segue destination="8sW-2x-1PR" kind="relationship" relationship="detailViewController" id="PVX-BG-eFI"/>
@@ -821,7 +821,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="lAq-Od-IPV"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="hsR-T2-4JG"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rdS-6y-yFp" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -830,6 +830,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="6Gm-Ii-cs3"/>
+        <segue reference="PVX-BG-eFI"/>
     </inferredMetricsTieBreakers>
 </document>
