@@ -89,7 +89,7 @@ class CalculatorViewController: UIViewController {
             enter()
         }
         brain.swapXY()
-        history.text = brain.description + "="
+        displayValue = brain.evaluate()
     }
     
     var displayValue: Double? {

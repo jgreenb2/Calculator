@@ -175,8 +175,8 @@ class CalculatorBrain {
         
     // helper function that evaluates an arbitrary stack
     private func evaluate(ops: [Op]) -> (result: Double?, remainingOps: [Op]) {
-        var remainingOps = ops
         if !ops.isEmpty {
+            var remainingOps = ops
             let op = remainingOps.removeLast()
             switch op {
             case .Operand(let operand):
@@ -187,24 +187,21 @@ class CalculatorBrain {
                 return (value(), remainingOps)
             case .UnaryOperation(_, let operation):
                 let operandEvaluation = evaluate(remainingOps)
-                remainingOps = operandEvaluation.remainingOps
                 if let operand = operandEvaluation.result {
-                    return (operation(operand), remainingOps)
+                    return (operation(operand), operandEvaluation.remainingOps)
                 }
             case .BinaryOperation(_,let operation):
                 let op1Evaluation = evaluate(remainingOps)
-                remainingOps = op1Evaluation.remainingOps
                 if let operand1 = op1Evaluation.result {
-                    let op2Evaluation = evaluate(remainingOps)
-                    remainingOps = op2Evaluation.remainingOps
+                    let op2Evaluation = evaluate(op1Evaluation.remainingOps)
                     if let operand2 = op2Evaluation.result {
-                        return (operation(operand1,operand2),remainingOps)
+                        return (operation(operand1,operand2),op2Evaluation.remainingOps)
                     }
                 }
             }
         }
-
-        return (nil, remainingOps)
+        
+        return (nil, ops)
     }
  
     // turn a stack into an infix string representation
