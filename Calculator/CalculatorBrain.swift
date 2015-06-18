@@ -158,14 +158,12 @@ class CalculatorBrain {
     }
     
     func swapXY() {
-        var (_, remainder1) = evaluate(opStack)
+        var (_, remainder1,_) = nextExpression(opStack)
         if !remainder1.isEmpty {
-            let expression1 = opStack[remainder1.count...opStack.endIndex-1]
-            let (_, remainder2) = evaluate(remainder1)
-            let expression2 = remainder1[remainder2.count...remainder1.endIndex-1]
-            opStack = remainder2
-            opStack.extend(expression1)
-            opStack.extend(expression2)
+            let X = opStack.tail(remainder1)
+            let (_, remainder2,_) = nextExpression(remainder1)
+            let Y = remainder1.tail(remainder2)
+            opStack = X+Y
         }
     }
     
@@ -177,8 +175,8 @@ class CalculatorBrain {
         
     // helper function that evaluates an arbitrary stack
     private func evaluate(ops: [Op]) -> (result: Double?, remainingOps: [Op]) {
+        var remainingOps = ops
         if !ops.isEmpty {
-            var remainingOps = ops
             let op = remainingOps.removeLast()
             switch op {
             case .Operand(let operand):
@@ -189,21 +187,24 @@ class CalculatorBrain {
                 return (value(), remainingOps)
             case .UnaryOperation(_, let operation):
                 let operandEvaluation = evaluate(remainingOps)
+                remainingOps = operandEvaluation.remainingOps
                 if let operand = operandEvaluation.result {
-                    return (operation(operand), operandEvaluation.remainingOps)
+                    return (operation(operand), remainingOps)
                 }
             case .BinaryOperation(_,let operation):
                 let op1Evaluation = evaluate(remainingOps)
+                remainingOps = op1Evaluation.remainingOps
                 if let operand1 = op1Evaluation.result {
-                    let op2Evaluation = evaluate(op1Evaluation.remainingOps)
+                    let op2Evaluation = evaluate(remainingOps)
+                    remainingOps = op2Evaluation.remainingOps
                     if let operand2 = op2Evaluation.result {
-                        return (operation(operand1,operand2),op2Evaluation.remainingOps)
+                        return (operation(operand1,operand2),remainingOps)
                     }
                 }
             }
         }
 
-        return (nil, ops)
+        return (nil, remainingOps)
     }
  
     // turn a stack into an infix string representation
@@ -273,5 +274,10 @@ class CalculatorBrain {
         let desc = parseStack(opStack)
         return desc
     }
-    
+}
+
+private extension Array {
+    func tail(head: Array) -> Array {
+        return Array(self[head.count...self.endIndex-1])
+    }
 }
