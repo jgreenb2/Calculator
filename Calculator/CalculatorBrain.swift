@@ -159,22 +159,10 @@ class CalculatorBrain {
     
     // function that evaluates the gloal opStack
     func evaluate() -> Double? {
-        if preserveStack {
-            var saveStack = [Op]()
-            saveStack = opStack
-            let (result, remainder) = evaluate(opStack)
-            opStack=saveStack
-            return result
-        } else {
             let (result, remainder) = evaluate(opStack)
             return result
-        }
     }
-    
-    func setPreserveStackMode(mode: Bool) {
-        preserveStack = mode
-    }
-    
+        
     // helper function that evaluates an arbitrary stack
     private func evaluate(ops: [Op]) -> (result: Double?, remainingOps: [Op]) {
         if !ops.isEmpty {
