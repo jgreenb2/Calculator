@@ -157,6 +157,18 @@ class CalculatorBrain {
         return performOperation(OperatorSymbols.PlusMinus)
     }
     
+    func swapXY() {
+        var (_, remainder1) = evaluate(opStack)
+        if !remainder1.isEmpty {
+            let expression1 = opStack[remainder1.count...opStack.endIndex-1]
+            let (_, remainder2) = evaluate(remainder1)
+            let expression2 = remainder1[remainder2.count...remainder1.endIndex-1]
+            opStack = remainder2
+            opStack.extend(expression1)
+            opStack.extend(expression2)
+        }
+    }
+    
     // function that evaluates the gloal opStack
     func evaluate() -> Double? {
             let (result, remainder) = evaluate(opStack)

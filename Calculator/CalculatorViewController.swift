@@ -83,6 +83,15 @@ class CalculatorViewController: UIViewController {
         }
     }
     
+    @IBAction func swapXY() {
+        if userIsInTheMiddleOfTypingANumber {
+            userIsInTheMiddleOfTypingANumber=false
+            enter()
+        }
+        brain.swapXY()
+        history.text = brain.description + "="
+    }
+    
     var displayValue: Double? {
         get {
             if let num=NSNumberFormatter().numberFromString(display.text!) {
