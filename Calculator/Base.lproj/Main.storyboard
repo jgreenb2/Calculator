@@ -19,14 +19,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="StR-rR-igr">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="StR-rR-igr">
                                 <rect key="frame" x="16" y="93" width="552" height="39"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="39" id="jKT-gp-vPc"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                        <integer key="value" value="2"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pHm-sv-KmD">
                                 <rect key="frame" x="16" y="64" width="552" height="21"/>
@@ -37,8 +46,8 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FjV-NG-IlK">
-                                <rect key="frame" x="98" y="136" width="78" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="FjV-NG-IlK">
+                                <rect key="frame" x="64" y="136" width="45" height="41"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="38" id="lxR-gt-z0J"/>
@@ -56,8 +65,8 @@
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7Ia-dk-xhm"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GTd-sq-XKF">
-                                <rect key="frame" x="179" y="136" width="79" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="GTd-sq-XKF">
+                                <rect key="frame" x="112" y="136" width="45" height="41"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="38" id="KAN-m6-6Bj"/>
@@ -75,8 +84,8 @@
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uSB-gw-73f"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GI1-Kl-H8a">
-                                <rect key="frame" x="261" y="136" width="78" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="GI1-Kl-H8a">
+                                <rect key="frame" x="160" y="136" width="45" height="41"/>
                                 <color key="backgroundColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="×">
@@ -86,8 +95,8 @@
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DDB-7H-Xdh"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="248" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HKa-19-9p5">
-                                <rect key="frame" x="261" y="180" width="78" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="248" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="HKa-19-9p5">
+                                <rect key="frame" x="160" y="180" width="45" height="41"/>
                                 <color key="backgroundColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="÷">
@@ -97,8 +106,8 @@
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jZm-Qd-5ai"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cN8-hs-oEk">
-                                <rect key="frame" x="261" y="224" width="78" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="cN8-hs-oEk">
+                                <rect key="frame" x="160" y="224" width="45" height="41"/>
                                 <color key="backgroundColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="+">
@@ -108,8 +117,8 @@
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Qhj-Xz-l1I"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vuc-PQ-3kl">
-                                <rect key="frame" x="261" y="268" width="78" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="vuc-PQ-3kl">
+                                <rect key="frame" x="160" y="268" width="45" height="41"/>
                                 <color key="backgroundColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="−">
@@ -119,8 +128,8 @@
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AQV-Gf-lc6"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DlM-zF-iYS">
-                                <rect key="frame" x="342" y="268" width="79" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="DlM-zF-iYS">
+                                <rect key="frame" x="208" y="268" width="45" height="41"/>
                                 <color key="backgroundColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="√">
@@ -130,8 +139,8 @@
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AXu-1H-lPz"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YYs-Cu-wXD">
-                                <rect key="frame" x="16" y="136" width="79" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="YYs-Cu-wXD">
+                                <rect key="frame" x="16" y="136" width="45" height="41"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="38" id="1CC-gE-El7"/>
@@ -149,8 +158,8 @@
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IjO-Mi-7wb"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DR8-ED-fNs">
-                                <rect key="frame" x="98" y="180" width="78" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="DR8-ED-fNs">
+                                <rect key="frame" x="64" y="180" width="45" height="41"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="5">
@@ -160,8 +169,8 @@
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sc7-uE-ar9"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9p4-1C-fmd">
-                                <rect key="frame" x="179" y="180" width="79" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="9p4-1C-fmd">
+                                <rect key="frame" x="112" y="180" width="45" height="41"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="6">
@@ -171,8 +180,8 @@
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FvD-6y-Pl4"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fpT-Cu-Okv">
-                                <rect key="frame" x="16" y="180" width="79" height="41"/>
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="fpT-Cu-Okv">
+                                <rect key="frame" x="16" y="180" width="45" height="41"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="4">
@@ -182,8 +191,8 @@
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8IX-CW-RFW"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jQs-nv-Rn2">
-                                <rect key="frame" x="179" y="224" width="79" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="jQs-nv-Rn2">
+                                <rect key="frame" x="112" y="224" width="45" height="41"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="3">
@@ -193,8 +202,8 @@
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Wzj-My-UaR"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l9X-Z8-pTl">
-                                <rect key="frame" x="342" y="224" width="79" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="l9X-Z8-pTl">
+                                <rect key="frame" x="208" y="224" width="45" height="41"/>
                                 <color key="backgroundColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="π">
@@ -205,7 +214,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleAspectFit" horizontalCompressionResistancePriority="800" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="gcL-Yw-NRy">
-                                <rect key="frame" x="342" y="180" width="79" height="41"/>
+                                <rect key="frame" x="208" y="180" width="45" height="41"/>
                                 <color key="backgroundColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <state key="normal" title="cos">
@@ -216,7 +225,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="dWs-1y-vst">
-                                <rect key="frame" x="342" y="136" width="79" height="41"/>
+                                <rect key="frame" x="208" y="136" width="45" height="41"/>
                                 <color key="backgroundColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <state key="normal" title="sin">
@@ -226,8 +235,8 @@
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="S4b-EJ-ter"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ieu-rw-jSY">
-                                <rect key="frame" x="424" y="136" width="78" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="ieu-rw-jSY">
+                                <rect key="frame" x="256" y="136" width="45" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="C">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -236,8 +245,8 @@
                                     <action selector="clear" destination="BYZ-38-t0r" eventType="touchUpInside" id="XpD-u8-P5c"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HPB-O2-hOX">
-                                <rect key="frame" x="505" y="136" width="79" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="HPB-O2-hOX">
+                                <rect key="frame" x="304" y="136" width="45" height="41"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="38" id="aKl-NS-3DC"/>
                                 </constraints>
@@ -254,8 +263,8 @@
                                     <action selector="backspace" destination="BYZ-38-t0r" eventType="touchUpInside" id="5IA-Ec-oo1"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SVT-3Q-ZOR">
-                                <rect key="frame" x="424" y="268" width="78" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="SVT-3Q-ZOR">
+                                <rect key="frame" x="256" y="268" width="45" height="41"/>
                                 <color key="backgroundColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="±">
@@ -265,8 +274,8 @@
                                     <action selector="changeSign" destination="BYZ-38-t0r" eventType="touchUpInside" id="y8M-v7-lUA"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="byw-Ns-T3A">
-                                <rect key="frame" x="505" y="181" width="79" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="byw-Ns-T3A">
+                                <rect key="frame" x="304" y="181" width="45" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="G">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -275,25 +284,43 @@
                                     <segue destination="8sW-2x-1PR" kind="showDetail" identifier="Show Graph" id="6Gm-Ii-cs3"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="edx-uF-U8h">
-                                <rect key="frame" x="505" y="224" width="79" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="edx-uF-U8h">
+                                <rect key="frame" x="304" y="224" width="45" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xLl-gW-bTq">
-                                <rect key="frame" x="505" y="268" width="79" height="41"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" title="x↔︎y">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="clip" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xLl-gW-bTq">
+                                <rect key="frame" x="304" y="268" width="45" height="41"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="x">
+                                            <attributes>
+                                                <font key="NSFont" size="23" name="HelveticaNeue"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="clipping" baseWritingDirection="natural" lineHeightMultiple="1"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment content="↔︎">
+                                            <attributes>
+                                                <font key="NSFont" size="21" name="STHeitiSC-Light"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="clipping" baseWritingDirection="natural" lineHeightMultiple="1"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment content="y">
+                                            <attributes>
+                                                <font key="NSFont" size="23" name="HelveticaNeue"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="clipping" baseWritingDirection="natural" lineHeightMultiple="1"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
                                 </state>
                                 <connections>
                                     <action selector="swapXY" destination="BYZ-38-t0r" eventType="touchUpInside" id="FUz-8y-56K"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LhY-1s-0hr">
-                                <rect key="frame" x="424" y="224" width="78" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="LhY-1s-0hr">
+                                <rect key="frame" x="256" y="224" width="45" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="M">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -302,8 +329,8 @@
                                     <action selector="memGet" destination="BYZ-38-t0r" eventType="touchUpInside" id="eIx-vI-X8t"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hby-gx-BBV">
-                                <rect key="frame" x="179" y="268" width="79" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="hby-gx-BBV">
+                                <rect key="frame" x="112" y="268" width="45" height="41"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="⏎">
@@ -313,8 +340,8 @@
                                     <action selector="enter" destination="BYZ-38-t0r" eventType="touchUpInside" id="2Fz-H6-sG5"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i5D-uG-pfk">
-                                <rect key="frame" x="98" y="268" width="78" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="i5D-uG-pfk">
+                                <rect key="frame" x="64" y="268" width="45" height="41"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="0">
@@ -324,8 +351,8 @@
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sGe-lj-lXh"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eiK-ym-xtY">
-                                <rect key="frame" x="16" y="268" width="79" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="eiK-ym-xtY">
+                                <rect key="frame" x="16" y="268" width="45" height="41"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title=".">
@@ -335,8 +362,8 @@
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vvH-I3-8m3"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vWf-eO-UAe">
-                                <rect key="frame" x="98" y="224" width="78" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="vWf-eO-UAe">
+                                <rect key="frame" x="64" y="224" width="45" height="41"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="2">
@@ -346,8 +373,8 @@
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gDa-Fg-Zts"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TXk-6h-wlX">
-                                <rect key="frame" x="16" y="224" width="79" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="TXk-6h-wlX">
+                                <rect key="frame" x="16" y="224" width="45" height="41"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="1">
@@ -357,8 +384,8 @@
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ua5-i4-D3d"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hr1-4U-MoZ">
-                                <rect key="frame" x="424" y="180" width="78" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="Hr1-4U-MoZ">
+                                <rect key="frame" x="256" y="180" width="45" height="41"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="38" id="cK8-XW-wqd"/>
                                 </constraints>
@@ -492,7 +519,7 @@
                             <constraint firstItem="YYs-Cu-wXD" firstAttribute="width" secondItem="gcL-Yw-NRy" secondAttribute="width" id="UGF-Ep-dVA"/>
                             <constraint firstItem="YYs-Cu-wXD" firstAttribute="leading" secondItem="StR-rR-igr" secondAttribute="leading" id="UIW-S3-wbJ"/>
                             <constraint firstItem="YYs-Cu-wXD" firstAttribute="height" secondItem="jQs-nv-Rn2" secondAttribute="height" id="UcY-RQ-sWg"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="HPB-O2-hOX" secondAttribute="trailing" id="Ud1-p8-dcP"/>
+                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="HPB-O2-hOX" secondAttribute="trailing" id="Ud1-p8-dcP"/>
                             <constraint firstItem="GI1-Kl-H8a" firstAttribute="leading" secondItem="GTd-sq-XKF" secondAttribute="trailing" constant="8" id="Um3-Si-0VC"/>
                             <constraint firstItem="jQs-nv-Rn2" firstAttribute="baseline" secondItem="vWf-eO-UAe" secondAttribute="baseline" id="Uqu-oM-9Dg"/>
                             <constraint firstItem="cN8-hs-oEk" firstAttribute="trailing" secondItem="vuc-PQ-3kl" secondAttribute="trailing" id="Uzc-71-dKU"/>
@@ -632,9 +659,6 @@
                                 <exclude reference="lpC-zs-c5q"/>
                                 <exclude reference="tAL-oL-QCH"/>
                                 <exclude reference="xvZ-yG-2f6"/>
-                                <exclude reference="OOx-0Q-8h7"/>
-                                <exclude reference="dXV-1W-7Ue"/>
-                                <exclude reference="tw3-Ha-Azk"/>
                                 <exclude reference="0AH-6y-Be5"/>
                                 <exclude reference="3DV-uU-B7W"/>
                                 <exclude reference="407-JZ-xHr"/>
@@ -649,13 +673,6 @@
                                 <exclude reference="V4q-gL-QwR"/>
                                 <exclude reference="k6x-Bi-vzg"/>
                                 <exclude reference="yWe-AO-Urc"/>
-                                <exclude reference="15N-AW-5xK"/>
-                                <exclude reference="Um3-Si-0VC"/>
-                                <exclude reference="p4O-qS-kbm"/>
-                                <exclude reference="9KM-c3-2Dv"/>
-                                <exclude reference="aRd-Z3-eTA"/>
-                                <exclude reference="gxy-AH-guC"/>
-                                <exclude reference="nva-If-JhS"/>
                                 <exclude reference="6yE-j8-hoe"/>
                                 <exclude reference="NJW-86-9Ip"/>
                                 <exclude reference="Peu-8c-chM"/>
@@ -663,23 +680,15 @@
                                 <exclude reference="fan-vD-QDp"/>
                                 <exclude reference="fqH-yw-h5m"/>
                                 <exclude reference="vo8-wm-Fep"/>
-                                <exclude reference="Hni-ww-gHR"/>
-                                <exclude reference="IAS-Pc-B3h"/>
-                                <exclude reference="K1W-3e-RNo"/>
-                                <exclude reference="jwc-8a-p1A"/>
-                                <exclude reference="uds-j5-yMe"/>
-                                <exclude reference="wQS-Jb-a2D"/>
+                                <exclude reference="OOx-0Q-8h7"/>
+                                <exclude reference="dXV-1W-7Ue"/>
+                                <exclude reference="tw3-Ha-Azk"/>
                                 <exclude reference="YTf-xs-WNG"/>
                                 <exclude reference="ZPw-Sh-dmv"/>
                                 <exclude reference="fbe-2p-bbo"/>
                                 <exclude reference="kVm-s8-lAH"/>
                                 <exclude reference="xmA-yi-3Bi"/>
-                                <exclude reference="niM-Y4-SHo"/>
-                                <exclude reference="p8Z-jk-D7d"/>
-                                <exclude reference="3Kp-VS-8vp"/>
-                                <exclude reference="QXM-JJ-Ma7"/>
-                                <exclude reference="xK0-4X-aOb"/>
-                                <exclude reference="Uzc-71-dKU"/>
+                                <exclude reference="9KM-c3-2Dv"/>
                                 <exclude reference="A8K-OE-6cF"/>
                                 <exclude reference="KIK-DH-Mgk"/>
                                 <exclude reference="auf-3G-Wao"/>
@@ -688,12 +697,40 @@
                                 <exclude reference="pMd-tc-6UQ"/>
                                 <exclude reference="yjF-xS-kbz"/>
                                 <exclude reference="0hQ-8x-hbT"/>
+                                <exclude reference="15N-AW-5xK"/>
+                                <exclude reference="Um3-Si-0VC"/>
+                                <exclude reference="p4O-qS-kbm"/>
+                                <exclude reference="aRd-Z3-eTA"/>
+                                <exclude reference="gxy-AH-guC"/>
+                                <exclude reference="nva-If-JhS"/>
+                                <exclude reference="Uzc-71-dKU"/>
+                                <exclude reference="Hni-ww-gHR"/>
+                                <exclude reference="IAS-Pc-B3h"/>
+                                <exclude reference="K1W-3e-RNo"/>
+                                <exclude reference="jwc-8a-p1A"/>
+                                <exclude reference="uds-j5-yMe"/>
+                                <exclude reference="wQS-Jb-a2D"/>
+                                <exclude reference="LmL-FI-cY2"/>
+                                <exclude reference="gbf-Zi-Dig"/>
+                                <exclude reference="imB-ZJ-Br7"/>
+                                <exclude reference="qdT-mB-ery"/>
+                                <exclude reference="niM-Y4-SHo"/>
+                                <exclude reference="p8Z-jk-D7d"/>
+                                <exclude reference="3Kp-VS-8vp"/>
+                                <exclude reference="QXM-JJ-Ma7"/>
+                                <exclude reference="xK0-4X-aOb"/>
                                 <exclude reference="A5U-0B-BKA"/>
                                 <exclude reference="Dp8-6m-kc4"/>
                                 <exclude reference="O4N-E4-Xq1"/>
                                 <exclude reference="d2F-aE-0tt"/>
                                 <exclude reference="kTg-Kw-A4U"/>
                                 <exclude reference="mbu-rb-GPt"/>
+                                <exclude reference="DT7-ku-W0O"/>
+                                <exclude reference="HFA-PG-nkP"/>
+                                <exclude reference="Jps-q4-48k"/>
+                                <exclude reference="TCH-YZ-TAp"/>
+                                <exclude reference="bEP-k7-CBQ"/>
+                                <exclude reference="ejC-OW-P1w"/>
                                 <exclude reference="3Ke-VM-Sa1"/>
                                 <exclude reference="Bdj-NJ-T0M"/>
                                 <exclude reference="IAV-E6-0NZ"/>
@@ -701,24 +738,14 @@
                                 <exclude reference="YKn-by-CPq"/>
                                 <exclude reference="jp4-kB-Nz1"/>
                                 <exclude reference="pGE-6h-EZ2"/>
-                                <exclude reference="LmL-FI-cY2"/>
-                                <exclude reference="gbf-Zi-Dig"/>
-                                <exclude reference="imB-ZJ-Br7"/>
-                                <exclude reference="qdT-mB-ery"/>
-                                <exclude reference="DT7-ku-W0O"/>
-                                <exclude reference="HFA-PG-nkP"/>
-                                <exclude reference="Jps-q4-48k"/>
-                                <exclude reference="TCH-YZ-TAp"/>
-                                <exclude reference="bEP-k7-CBQ"/>
-                                <exclude reference="ejC-OW-P1w"/>
                                 <exclude reference="JPM-WX-6MF"/>
                                 <exclude reference="XcA-8H-QKi"/>
                                 <exclude reference="hH9-Hn-0TL"/>
-                                <exclude reference="T9U-th-BRb"/>
-                                <exclude reference="X4r-6s-hOq"/>
                                 <exclude reference="h7A-Wn-mMn"/>
                                 <exclude reference="mGR-Ih-lgx"/>
                                 <exclude reference="zsj-Do-HZv"/>
+                                <exclude reference="T9U-th-BRb"/>
+                                <exclude reference="X4r-6s-hOq"/>
                             </mask>
                         </variation>
                     </view>
