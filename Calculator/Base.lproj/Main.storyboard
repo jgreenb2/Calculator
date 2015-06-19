@@ -28,14 +28,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="8"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
-                                        <integer key="value" value="2"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pHm-sv-KmD">
                                 <rect key="frame" x="16" y="64" width="552" height="21"/>
@@ -659,6 +651,9 @@
                                 <exclude reference="lpC-zs-c5q"/>
                                 <exclude reference="tAL-oL-QCH"/>
                                 <exclude reference="xvZ-yG-2f6"/>
+                                <exclude reference="OOx-0Q-8h7"/>
+                                <exclude reference="dXV-1W-7Ue"/>
+                                <exclude reference="tw3-Ha-Azk"/>
                                 <exclude reference="0AH-6y-Be5"/>
                                 <exclude reference="3DV-uU-B7W"/>
                                 <exclude reference="407-JZ-xHr"/>
@@ -673,6 +668,10 @@
                                 <exclude reference="V4q-gL-QwR"/>
                                 <exclude reference="k6x-Bi-vzg"/>
                                 <exclude reference="yWe-AO-Urc"/>
+                                <exclude reference="15N-AW-5xK"/>
+                                <exclude reference="Um3-Si-0VC"/>
+                                <exclude reference="p4O-qS-kbm"/>
+                                <exclude reference="9KM-c3-2Dv"/>
                                 <exclude reference="6yE-j8-hoe"/>
                                 <exclude reference="NJW-86-9Ip"/>
                                 <exclude reference="Peu-8c-chM"/>
@@ -680,15 +679,20 @@
                                 <exclude reference="fan-vD-QDp"/>
                                 <exclude reference="fqH-yw-h5m"/>
                                 <exclude reference="vo8-wm-Fep"/>
-                                <exclude reference="OOx-0Q-8h7"/>
-                                <exclude reference="dXV-1W-7Ue"/>
-                                <exclude reference="tw3-Ha-Azk"/>
                                 <exclude reference="YTf-xs-WNG"/>
                                 <exclude reference="ZPw-Sh-dmv"/>
                                 <exclude reference="fbe-2p-bbo"/>
                                 <exclude reference="kVm-s8-lAH"/>
                                 <exclude reference="xmA-yi-3Bi"/>
-                                <exclude reference="9KM-c3-2Dv"/>
+                                <exclude reference="aRd-Z3-eTA"/>
+                                <exclude reference="gxy-AH-guC"/>
+                                <exclude reference="nva-If-JhS"/>
+                                <exclude reference="Hni-ww-gHR"/>
+                                <exclude reference="IAS-Pc-B3h"/>
+                                <exclude reference="K1W-3e-RNo"/>
+                                <exclude reference="jwc-8a-p1A"/>
+                                <exclude reference="uds-j5-yMe"/>
+                                <exclude reference="wQS-Jb-a2D"/>
                                 <exclude reference="A8K-OE-6cF"/>
                                 <exclude reference="KIK-DH-Mgk"/>
                                 <exclude reference="auf-3G-Wao"/>
@@ -696,41 +700,23 @@
                                 <exclude reference="eIb-y9-29p"/>
                                 <exclude reference="pMd-tc-6UQ"/>
                                 <exclude reference="yjF-xS-kbz"/>
-                                <exclude reference="0hQ-8x-hbT"/>
-                                <exclude reference="15N-AW-5xK"/>
-                                <exclude reference="Um3-Si-0VC"/>
-                                <exclude reference="p4O-qS-kbm"/>
-                                <exclude reference="aRd-Z3-eTA"/>
-                                <exclude reference="gxy-AH-guC"/>
-                                <exclude reference="nva-If-JhS"/>
+                                <exclude reference="niM-Y4-SHo"/>
+                                <exclude reference="p8Z-jk-D7d"/>
                                 <exclude reference="Uzc-71-dKU"/>
-                                <exclude reference="Hni-ww-gHR"/>
-                                <exclude reference="IAS-Pc-B3h"/>
-                                <exclude reference="K1W-3e-RNo"/>
-                                <exclude reference="jwc-8a-p1A"/>
-                                <exclude reference="uds-j5-yMe"/>
-                                <exclude reference="wQS-Jb-a2D"/>
+                                <exclude reference="0hQ-8x-hbT"/>
+                                <exclude reference="3Kp-VS-8vp"/>
+                                <exclude reference="QXM-JJ-Ma7"/>
+                                <exclude reference="xK0-4X-aOb"/>
                                 <exclude reference="LmL-FI-cY2"/>
                                 <exclude reference="gbf-Zi-Dig"/>
                                 <exclude reference="imB-ZJ-Br7"/>
                                 <exclude reference="qdT-mB-ery"/>
-                                <exclude reference="niM-Y4-SHo"/>
-                                <exclude reference="p8Z-jk-D7d"/>
-                                <exclude reference="3Kp-VS-8vp"/>
-                                <exclude reference="QXM-JJ-Ma7"/>
-                                <exclude reference="xK0-4X-aOb"/>
                                 <exclude reference="A5U-0B-BKA"/>
                                 <exclude reference="Dp8-6m-kc4"/>
                                 <exclude reference="O4N-E4-Xq1"/>
                                 <exclude reference="d2F-aE-0tt"/>
                                 <exclude reference="kTg-Kw-A4U"/>
                                 <exclude reference="mbu-rb-GPt"/>
-                                <exclude reference="DT7-ku-W0O"/>
-                                <exclude reference="HFA-PG-nkP"/>
-                                <exclude reference="Jps-q4-48k"/>
-                                <exclude reference="TCH-YZ-TAp"/>
-                                <exclude reference="bEP-k7-CBQ"/>
-                                <exclude reference="ejC-OW-P1w"/>
                                 <exclude reference="3Ke-VM-Sa1"/>
                                 <exclude reference="Bdj-NJ-T0M"/>
                                 <exclude reference="IAV-E6-0NZ"/>
@@ -738,6 +724,12 @@
                                 <exclude reference="YKn-by-CPq"/>
                                 <exclude reference="jp4-kB-Nz1"/>
                                 <exclude reference="pGE-6h-EZ2"/>
+                                <exclude reference="DT7-ku-W0O"/>
+                                <exclude reference="HFA-PG-nkP"/>
+                                <exclude reference="Jps-q4-48k"/>
+                                <exclude reference="TCH-YZ-TAp"/>
+                                <exclude reference="bEP-k7-CBQ"/>
+                                <exclude reference="ejC-OW-P1w"/>
                                 <exclude reference="JPM-WX-6MF"/>
                                 <exclude reference="XcA-8H-QKi"/>
                                 <exclude reference="hH9-Hn-0TL"/>

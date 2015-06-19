@@ -9,8 +9,9 @@
 import UIKit
 
 class CalculatorViewController: UIViewController {
-
-    @IBOutlet weak var display: UILabel!
+    @IBOutlet weak var display: UILabel! {
+        didSet { display.layer.cornerRadius=8}
+    }
     @IBOutlet weak var history: UILabel!
     var userIsInTheMiddleOfTypingANumber = false
     var brain = CalculatorBrain()
