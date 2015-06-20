@@ -232,11 +232,7 @@ class CalculatorBrain {
                 case .Operand(let value):
                     return ("\(value)", stack,token.precedence)
                 case .Symbol(let symbol,_):
-                    if let value = variableValues[symbol] {
-                        return (symbol, stack, token.precedence)
-                    } else {
-                        return (symbol,stack,token.precedence)
-                    }
+                    return (symbol, stack, token.precedence)
                 case .Constant(let constant, _):
                     return (constant, stack, token.precedence)
                 case .UnaryOperation(let operation,_):
