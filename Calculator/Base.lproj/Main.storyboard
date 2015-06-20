@@ -349,7 +349,9 @@
                                 <rect key="frame" x="228" y="343" width="45" height="41"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40.5" id="3tu-y6-ZpH"/>
+                                    <constraint firstAttribute="height" constant="40.5" id="3tu-y6-ZpH">
+                                        <variation key="heightClass=compact" constant="40"/>
+                                    </constraint>
                                     <constraint firstAttribute="width" constant="45" id="hcn-Oa-pX4"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
@@ -678,7 +680,9 @@
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="45" id="4fX-aK-Jcx"/>
-                                    <constraint firstAttribute="height" constant="40.5" id="fkP-N9-HvU"/>
+                                    <constraint firstAttribute="height" constant="40.5" id="fkP-N9-HvU">
+                                        <variation key="heightClass=compact" constant="40"/>
+                                    </constraint>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="2">
@@ -710,7 +714,9 @@
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="45" id="9aN-EF-TQa"/>
-                                    <constraint firstAttribute="height" constant="40.5" id="m0K-2F-sza"/>
+                                    <constraint firstAttribute="height" constant="40.5" id="m0K-2F-sza">
+                                        <variation key="heightClass=compact" constant="40"/>
+                                    </constraint>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="1">
@@ -1485,6 +1491,7 @@
                                 <exclude reference="VlD-J6-kQj"/>
                                 <exclude reference="he8-Nm-GG6"/>
                                 <exclude reference="o1J-Fa-Y5l"/>
+                                <exclude reference="h2J-do-mQe"/>
                                 <exclude reference="3XA-WA-qNN"/>
                                 <exclude reference="4Yj-hL-ebj"/>
                                 <exclude reference="4fd-h0-hXQ"/>
@@ -1683,7 +1690,7 @@
                                 <include reference="Jdu-jP-P54"/>
                                 <include reference="TVJ-3R-mid"/>
                                 <include reference="otZ-PH-XFd"/>
-                                <include reference="TAl-RF-ysm"/>
+                                <exclude reference="TAl-RF-ysm"/>
                                 <exclude reference="eLK-Yl-5WX"/>
                                 <include reference="lIQ-gj-cgi"/>
                                 <exclude reference="4GL-eE-7BI"/>
