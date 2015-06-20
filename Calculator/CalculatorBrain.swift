@@ -24,6 +24,13 @@ class CalculatorBrain {
         static let PlusMinus = "±"
         static let Sin = "sin"
         static let Cos = "cos"
+        static let Tan = "tan"
+        static let XSquared = "x²"
+        static let XCubed = "x³"
+        static let XInv = "1/x"
+        static let yToX = "yˣ"
+        static let NaturalLog = "ln"
+        static let eToX = "ℯˣ"
     }
     
     private enum Op: Printable {
@@ -94,8 +101,15 @@ class CalculatorBrain {
         learnOp(Op.UnaryOperation(OperatorSymbols.SquareRoot, sqrt))
         learnOp(Op.UnaryOperation(OperatorSymbols.Sin, sin))
         learnOp(Op.UnaryOperation(OperatorSymbols.Cos, cos))
+        learnOp(Op.UnaryOperation(OperatorSymbols.Tan, tan))
         learnOp(Op.Constant(OperatorSymbols.Pi) {M_PI})
         learnOp(Op.UnaryOperation(OperatorSymbols.PlusMinus) { -1 * $0 })
+        learnOp(Op.UnaryOperation(OperatorSymbols.eToX) { exp($0) })
+        learnOp(Op.UnaryOperation(OperatorSymbols.NaturalLog) { log($0) })
+        learnOp(Op.UnaryOperation(OperatorSymbols.XCubed) { $0*$0*$0 })
+        learnOp(Op.UnaryOperation(OperatorSymbols.XInv) { 1/$0 })
+        learnOp(Op.UnaryOperation(OperatorSymbols.XSquared) { $0*$0 })
+        learnOp(Op.BinaryOperation(OperatorSymbols.yToX) { pow($1,$0) })
     }
     
     var program: AnyObject {
