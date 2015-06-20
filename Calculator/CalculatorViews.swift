@@ -28,6 +28,11 @@ class MainNumericalDisplay: UILabel {
         }
     }
 
+    @IBInspectable var rightInset: CGFloat=0
+    override func drawTextInRect(rect: CGRect) {
+        let inset = UIEdgeInsetsMake(0, 0, 0, rightInset)
+        return super.drawTextInRect(UIEdgeInsetsInsetRect(rect, inset))
+    }
 }
 
 @IBDesignable
@@ -38,4 +43,13 @@ class RoundedButtons: UIButton {
             layer.masksToBounds = cornerRadius > 0
         }
     }
+    @IBInspectable var sizeTextToFit: Bool = false {
+        didSet {
+            let label = self.titleLabel
+            label?.minimumScaleFactor = 0.5
+            label?.adjustsFontSizeToFitWidth = sizeTextToFit
+            label?.setNeedsDisplay()
+        }
+    }
 }
+
