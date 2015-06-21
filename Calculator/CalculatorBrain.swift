@@ -263,26 +263,33 @@ class CalculatorBrain {
                     let expression = nextExpression(stack)
                     let formattedExpression = formatUnaryExpression(operation, expression)
                     return (formattedExpression, expression.remainingStack, token.precedence)
-                case .BinaryOperation(var operation, _):
+                case .BinaryOperation(let operation, _):
                     let expression2 = nextExpression(stack)
                     let expression1 = nextExpression(expression2.remainingStack)
-                    var expression: String
-                    if let alternate = alternateOperatorDescription[operation] {
-                        operation = alternate.name
-                    }
-                    if expression1.precedence < token.precedence {
-                        expression = addParens(expression1.result)+operation+expression2.result
-                    } else if expression2.precedence < token.precedence {
-                        expression = expression1.result+operation+addParens(expression2.result)
-                    } else {
-                        expression = expression1.result+operation+expression2.result
-                    }
+                    let expression = formatBinaryExpression(operation, expression1, expression2 , token.precedence)
                     return (expression, expression1.remainingStack, token.precedence)
             }
         } else {
             return ("?",stack,Int.max)
         }
         
+    }
+    
+    private func formatBinaryExpression(var operation: String, _ expression1: ExpressionType,
+        _ expression2: ExpressionType, _ operatorPrecedence: Int) -> String {
+        
+        var expression:String
+        if let alternate = alternateOperatorDescription[operation] {
+            operation = alternate.name
+        }
+        if expression1.precedence < operatorPrecedence {
+            expression = addParens(expression1.result)+operation+expression2.result
+        } else if expression2.precedence < operatorPrecedence {
+            expression = expression1.result+operation+addParens(expression2.result)
+        } else {
+            expression = expression1.result+operation+expression2.result
+        }
+        return expression
     }
     
     private func formatUnaryExpression(operation: String, _ expression: ExpressionType) -> String {
