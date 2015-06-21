@@ -32,6 +32,8 @@ class CalculatorBrain {
         static let NaturalLog = "ln"
         static let eToX = "ℯˣ"
     }
+    typealias AlternateName = (name: String, postfix: Bool)
+    private var alternateOperatorDescription = [String:AlternateName]()
     
     private enum Op: Printable {
         case Operand(Double)
@@ -110,6 +112,13 @@ class CalculatorBrain {
         learnOp(Op.UnaryOperation(OperatorSymbols.XInv) { 1/$0 })
         learnOp(Op.UnaryOperation(OperatorSymbols.XSquared) { $0*$0 })
         learnOp(Op.BinaryOperation(OperatorSymbols.yToX) { pow($1,$0) })
+        
+
+        alternateOperatorDescription[OperatorSymbols.eToX] = ("exp", postfix: false)
+        alternateOperatorDescription[OperatorSymbols.XCubed] = ("³", postfix: true)
+        alternateOperatorDescription[OperatorSymbols.XInv] = ("inv", postfix: false)
+        alternateOperatorDescription[OperatorSymbols.XSquared] = ("²", postfix: true)
+        alternateOperatorDescription[OperatorSymbols.yToX] = ("^", postfix: false)
     }
     
     var program: AnyObject {
@@ -239,7 +248,8 @@ class CalculatorBrain {
     // precedence is an int returning the precedence of the expression.
     // Expression precedence is defined as the precedence of the operator enclosed in the expression
     // It's used to determine when parens are needed in the infix rep
-    private func nextExpression(var stack: [Op]) -> (result: String, remainingStack: [Op], precedence: Int) {
+    private typealias ExpressionType = (result: String, remainingStack: [Op], precedence: Int)
+    private func nextExpression(var stack: [Op]) -> ExpressionType {
         if !stack.isEmpty {
             var token = stack.removeLast()
             switch token {
@@ -251,11 +261,15 @@ class CalculatorBrain {
                     return (constant, stack, token.precedence)
                 case .UnaryOperation(let operation,_):
                     let expression = nextExpression(stack)
-                    return (operation+addParens(expression.result), expression.remainingStack, token.precedence)
-                case .BinaryOperation(let operation, _):
+                    let formattedExpression = formatUnaryExpression(operation, expression)
+                    return (formattedExpression, expression.remainingStack, token.precedence)
+                case .BinaryOperation(var operation, _):
                     let expression2 = nextExpression(stack)
                     let expression1 = nextExpression(expression2.remainingStack)
                     var expression: String
+                    if let alternate = alternateOperatorDescription[operation] {
+                        operation = alternate.name
+                    }
                     if expression1.precedence < token.precedence {
                         expression = addParens(expression1.result)+operation+expression2.result
                     } else if expression2.precedence < token.precedence {
@@ -269,6 +283,20 @@ class CalculatorBrain {
             return ("?",stack,Int.max)
         }
         
+    }
+    
+    private func formatUnaryExpression(operation: String, _ expression: ExpressionType) -> String {
+        var formattedExpr: String
+        if let alternate = alternateOperatorDescription[operation] {
+            if alternate.postfix {
+                formattedExpr = addParens(expression.result)+alternate.name
+            } else {
+                formattedExpr = alternate.name+addParens(expression.result)
+            }
+        } else {
+            formattedExpr = operation+addParens(expression.result)
+        }
+        return formattedExpr
     }
     
     // utility function to add parentheses
