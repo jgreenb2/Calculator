@@ -70,7 +70,7 @@ class AxesDrawer
             let pointsPerHashmarkX = unitsPerHashmarkX * pointsPerUnitX
             let pointsPerHashmarkY = unitsPerHashmarkY * pointsPerUnitY
             
-            var startingHashmarkR = startingHashmarkRadii(bounds,origin: origin,pointsPerHashmarkX: pointsPerHashmarkX,pointsPerHashmarkY: pointsPerHashmarkY)
+            let startingHashmarkR = startingHashmarkRadii(bounds,origin: origin,pointsPerHashmarkX: pointsPerHashmarkX,pointsPerHashmarkY: pointsPerHashmarkY)
             
             // now create a bounding box inside whose edges those four hashmarks lie
             var bbox = CGRect(center: origin, size: CGSize(width: 2*pointsPerHashmarkX*startingHashmarkR.x, height: 2*pointsPerHashmarkY*startingHashmarkR.y))
@@ -200,7 +200,7 @@ class AxesDrawer
     // if contentScaleFactor is left to its default (1), then things will be on the nearest "point" boundary instead
     // the lines will still be sharp in that case, but might be a pixel (or more theoretically) off of where they should be
 
-    private func alignedPoint(#x: CGFloat, y: CGFloat, insideBounds: CGRect? = nil) -> CGPoint?
+    private func alignedPoint(x x: CGFloat, y: CGFloat, insideBounds: CGRect? = nil) -> CGPoint?
     {
         let point = CGPoint(x: align(x), y: align(y))
         if let permissibleBounds = insideBounds {

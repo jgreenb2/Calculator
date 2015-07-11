@@ -32,17 +32,16 @@ class CalculatorViewController: UIViewController {
             display.text = "-" + display.text!
         } else if abs(displayValue!) > 0.0 {
             displayValue = brain.changeSign()!
-
         }
     }
     
     @IBAction func backspace() {
         if userIsInTheMiddleOfTypingANumber {
-            switch count(display.text!) {
+            switch (display.text!).characters.count {
                 case 1:
                     displayValue=0
                 default:
-                    display.text = dropLast(display.text!)
+                    display.text = String(dropLast((display.text!).characters))
             }
         } else if displayValue != 0 {
             displayValue = 0

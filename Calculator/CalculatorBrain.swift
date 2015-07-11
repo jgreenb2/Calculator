@@ -35,7 +35,7 @@ class CalculatorBrain {
     typealias AlternateName = (name: String, postfix: Bool)
     private var alternateOperatorDescription = [String:AlternateName]()
     
-    private enum Op: Printable {
+    private enum Op: CustomStringConvertible {
         case Operand(Double)
         case Constant(String,()->Double)
         case Symbol(String,(String)-> Double?)
@@ -192,7 +192,7 @@ class CalculatorBrain {
     
     // function that evaluates the gloal opStack
     func evaluate() -> Double? {
-            let (result, remainder) = evaluate(opStack)
+            let (result, _) = evaluate(opStack)
             return result
     }
         
@@ -206,7 +206,7 @@ class CalculatorBrain {
                 return (operand, remainingOps)
             case .Symbol(let symbol, let value):
                 return (value(symbol), remainingOps)
-            case .Constant(let constant, let value):
+            case .Constant( _, let value):
                 return (value(), remainingOps)
             case .UnaryOperation(_, let operation):
                 let operandEvaluation = evaluate(remainingOps)

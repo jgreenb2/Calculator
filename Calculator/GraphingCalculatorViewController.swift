@@ -16,9 +16,9 @@ class GraphingCalculatorViewController: CalculatorViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        var destination = segue.destinationViewController as? UIViewController
+        var destination = segue.destinationViewController as UIViewController
         if let navController = destination as? UINavigationController {
-            destination = navController.visibleViewController
+            destination = navController.visibleViewController!
         }
         if let graphViewController = destination as? GraphViewController {
             if let identifier = segue.identifier {
