@@ -251,7 +251,7 @@ class CalculatorBrain {
     private typealias ExpressionType = (result: String, remainingStack: [Op], precedence: Int)
     private func nextExpression(var stack: [Op]) -> ExpressionType {
         if !stack.isEmpty {
-            var token = stack.removeLast()
+            let token = stack.removeLast()
             switch token {
                 case .Operand(let value):
                     return ("\(value)", stack,token.precedence)

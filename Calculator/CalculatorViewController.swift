@@ -41,7 +41,8 @@ class CalculatorViewController: UIViewController {
                 case 1:
                     displayValue=0
                 default:
-                    display.text = String(dropLast((display.text!).characters))
+                    //display.text = String(dropLast((display.text!).characters))
+                    display.text = String((display.text!).characters.dropLast())
             }
         } else if displayValue != 0 {
             displayValue = 0
