@@ -97,7 +97,7 @@ class AxesDrawer
                 if let bottomHashmarkPoint = alignedPoint(x: origin.x, y: bbox.maxY, insideBounds:bounds) {
                     drawHashmarkAtLocation(bottomHashmarkPoint, .Left("-\(labelY)"))
                 }
-                bbox.inset(dx: -pointsPerHashmarkX, dy: -pointsPerHashmarkY)
+                bbox.insetInPlace(dx: -pointsPerHashmarkX, dy: -pointsPerHashmarkY)
             }
         }
     }

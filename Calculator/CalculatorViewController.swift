@@ -10,7 +10,11 @@ import UIKit
 
 class CalculatorViewController: UIViewController {
     @IBOutlet weak var display: UILabel! {
-        didSet { display.layer.cornerRadius=8}
+        didSet { 
+            display.layer.cornerRadius=8
+            display.adjustsFontSizeToFitWidth = true
+            display.minimumScaleFactor=0.8
+        }
     }
     @IBOutlet weak var history: UILabel!
     var userIsInTheMiddleOfTypingANumber = false

@@ -181,7 +181,7 @@ class CalculatorBrain {
     }
     
     func swapXY() {
-        var (_, remainder1,_) = nextExpression(opStack)
+        let (_, remainder1,_) = nextExpression(opStack)
         if !remainder1.isEmpty {
             let X = opStack.tail(remainder1)
             let (_, remainder2,_) = nextExpression(remainder1)
