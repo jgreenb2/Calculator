@@ -22,8 +22,10 @@ class CalculatorViewController: UIViewController {
     
     @IBAction func appendDigit(sender: UIButton) {
         let digit = sender.currentTitle!
-        if digit=="."  && display.text!.rangeOfString(".") != nil { return }
         if userIsInTheMiddleOfTypingANumber {
+            if digit == "."  && display.text!.rangeOfString(".") != nil {
+                return
+            }
             display.text = display.text! + digit
         } else {
             display.text = digit
