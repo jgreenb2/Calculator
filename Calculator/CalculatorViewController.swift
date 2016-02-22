@@ -113,7 +113,7 @@ class CalculatorViewController: UIViewController {
                 display.text = "\(v)"
                 userIsInTheMiddleOfTypingANumber = false
             } else {
-                display.text = " "
+                display.text = "0.0"
             }
             history.text = brain.description + "="
         }
