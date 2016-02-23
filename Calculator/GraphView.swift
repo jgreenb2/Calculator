@@ -25,6 +25,7 @@ class GraphView: UIView {
             if graphOrigin != nil {
                 (minX,maxX) = newXRange(density.x, origin: graphCenter)
                 (minY,maxY) = newYRange(density.y, origin: graphCenter)
+                let delta = graphOrigin! - oldValue!
                 setNeedsDisplay()
             }
         }
@@ -70,6 +71,7 @@ class GraphView: UIView {
     func newXRange(density: CGFloat, origin: CGPoint) -> (xMin:Double, xMax:Double) {
         return (Double(-origin.x/density), Double((bounds.maxX-origin.x)/density))
     }
+    
 
     override func drawRect(rect: CGRect) {
         let axes = AxesDrawer(color: axesColor, contentScaleFactor: contentScaleFactor)
@@ -190,4 +192,8 @@ class GraphView: UIView {
 // add two CGpoints
 private func + (left: CGPoint, right: CGPoint) -> CGPoint {
     return CGPoint(x: left.x+right.x, y: left.y+right.y)
+}
+// subtract two CGpoints
+private func - (left: CGPoint, right: CGPoint) -> CGPoint {
+    return CGPoint(x: left.x-right.x, y: left.y-right.y)
 }
