@@ -25,9 +25,8 @@ class GraphView: UIView {
             if graphOrigin != nil {
                 (minX,maxX) = newXRange(density.x, origin: graphCenter)
                 (minY,maxY) = newYRange(density.y, origin: graphCenter)
-                let delta = graphOrigin! - oldValue!
                 setNeedsDisplay()
-            }
+             }
         }
     }
     
@@ -78,7 +77,7 @@ class GraphView: UIView {
         density = (bounds.width/CGFloat(maxX-minX),bounds.height/CGFloat(maxY-minY))
         axes.drawAxesInRect(bounds, origin: graphCenter, pointsPerUnit: density)
     
-        plotFunction()
+        plotFunction(rect)
     }
     
     // plot the function using the appropriate protocol
@@ -86,10 +85,10 @@ class GraphView: UIView {
     // undefined points
     weak var dataSource: GraphViewDataSource?
 
-    func plotFunction() {
+    func plotFunction(rect: CGRect) {
         var prevValueUndefined = true
         let curve = UIBezierPath()
-        for (var i:CGFloat=0;i<bounds.width;i+=1/contentScaleFactor) {
+        for (var i:CGFloat=0;i<rect.width;i+=1/contentScaleFactor) {
             let x = ScreenToX(i)
             if let y = dataSource?.functionValue(self, atXEquals: x) {
                 if !prevValueUndefined {
