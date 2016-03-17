@@ -43,7 +43,7 @@ class AxesDrawer
     // e.g. if you wanted there to be 100 points along an axis between -1 and 1,
     //    you'd set pointsPerUnit to 50
 
-    func drawAxesInRect(bounds: CGRect, origin: CGPoint, pointsPerUnit: (x: CGFloat, y: CGFloat))
+    func drawAxesInRect(bounds: CGRect, origin: CGPoint, pointsPerUnit: (x: CGFloat, y: CGFloat), drawHashMarks:Bool = true)
     {
         let pointsPerUnitX = pointsPerUnit.x; let pointsPerUnitY = pointsPerUnit.y
         CGContextSaveGState(UIGraphicsGetCurrentContext())
@@ -54,7 +54,9 @@ class AxesDrawer
         path.moveToPoint(CGPoint(x: align(origin.x), y: bounds.minY))
         path.addLineToPoint(CGPoint(x: align(origin.x), y: bounds.maxY))
         path.stroke()
-        drawHashmarksInRect(bounds, origin: origin, pointsPerUnitX: abs(pointsPerUnitX), pointsPerUnitY: abs(pointsPerUnitY))
+        if drawHashMarks {
+            drawHashmarksInRect(bounds, origin: origin, pointsPerUnitX: abs(pointsPerUnitX), pointsPerUnitY: abs(pointsPerUnitY))
+        }
         CGContextRestoreGState(UIGraphicsGetCurrentContext())
     }
 
