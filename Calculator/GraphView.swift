@@ -55,7 +55,7 @@ class GraphView: UIView {
     @IBInspectable
     var maxY:Double = 10
     
-    var simpleAxes:Bool = false
+    var simplePlot:Bool = false
     
     var density: (x: CGFloat, y: CGFloat) = (100,100) {
         didSet {
@@ -77,13 +77,13 @@ class GraphView: UIView {
     override func drawRect(rect: CGRect) {
         let axes = AxesDrawer(color: axesColor, contentScaleFactor: contentScaleFactor)
         density = (bounds.width/CGFloat(maxX-minX),bounds.height/CGFloat(maxY-minY))
-        if simpleAxes {
+        if simplePlot {
             axes.drawAxesInRect(bounds, origin: graphCenter, pointsPerUnit: density, drawHashMarks: false)
+            plotFunction(rect,simple: true)
         } else {
             axes.drawAxesInRect(bounds, origin: graphCenter, pointsPerUnit: density, drawHashMarks: true)
+            plotFunction(rect,simple: false)
         }
-    
-        plotFunction(rect)
     }
     
     // plot the function using the appropriate protocol
@@ -91,10 +91,12 @@ class GraphView: UIView {
     // undefined points
     weak var dataSource: GraphViewDataSource?
 
-    func plotFunction(rect: CGRect) {
+    func plotFunction(rect: CGRect, simple:Bool = false) {
         var prevValueUndefined = true
+        let resolutionFactor:CGFloat = (simple ? 4.0 : 1.0)
         let curve = UIBezierPath()
-        for (var i:CGFloat=0;i<rect.width;i+=1/contentScaleFactor) {
+        let increment = (1/contentScaleFactor)*resolutionFactor
+        for (var i:CGFloat=0;i<rect.width;i+=increment) {
             let x = ScreenToX(i)
             if let y = dataSource?.functionValue(self, atXEquals: x) {
                 if !prevValueUndefined {
@@ -135,10 +137,10 @@ class GraphView: UIView {
     func moveOrigin(gesture: UIPanGestureRecognizer) {
         switch gesture.state {
         case .Ended:
-            simpleAxes = false
+            simplePlot = false
             setNeedsDisplay()
         case .Changed:
-            simpleAxes = true
+            simplePlot = true
             let translation = gesture.translationInView(self)
             graphOrigin = graphCenter + translation
             gesture.setTranslation(CGPointZero, inView: self)
@@ -159,7 +161,7 @@ class GraphView: UIView {
             // if we don't have exactly 2 touchpoints we
             // don't know what's going on
             if gesture.numberOfTouches() == 2 {
-                simpleAxes = true
+                simplePlot = true
                 // get the touchpoints
                 let touch1 = gesture.locationOfTouch(0, inView: self)
                 let touch2 = gesture.locationOfTouch(1, inView: self)
@@ -190,7 +192,7 @@ class GraphView: UIView {
                 gesture.scale=1
             }
         case .Ended:
-            simpleAxes = false
+            simplePlot = false
             setNeedsDisplay()
         default:
             break
