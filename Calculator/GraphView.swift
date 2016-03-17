@@ -55,6 +55,8 @@ class GraphView: UIView {
     @IBInspectable
     var maxY:Double = 10
     
+    var drawAxes:Bool = true
+    
     var density: (x: CGFloat, y: CGFloat) = (100,100) {
         didSet {
             (minX,maxX) = newXRange(density.x, origin: graphCenter)
@@ -73,9 +75,11 @@ class GraphView: UIView {
     
 
     override func drawRect(rect: CGRect) {
-        let axes = AxesDrawer(color: axesColor, contentScaleFactor: contentScaleFactor)
-        density = (bounds.width/CGFloat(maxX-minX),bounds.height/CGFloat(maxY-minY))
-        axes.drawAxesInRect(bounds, origin: graphCenter, pointsPerUnit: density)
+        if drawAxes {
+            let axes = AxesDrawer(color: axesColor, contentScaleFactor: contentScaleFactor)
+            density = (bounds.width/CGFloat(maxX-minX),bounds.height/CGFloat(maxY-minY))
+            axes.drawAxesInRect(bounds, origin: graphCenter, pointsPerUnit: density)
+        }
     
         plotFunction(rect)
     }
@@ -128,8 +132,11 @@ class GraphView: UIView {
     
     func moveOrigin(gesture: UIPanGestureRecognizer) {
         switch gesture.state {
-        case .Ended: fallthrough
+        case .Ended:
+            drawAxes = true
+            setNeedsDisplay()
         case .Changed:
+            drawAxes = false
             let translation = gesture.translationInView(self)
             graphOrigin = graphCenter + translation
             gesture.setTranslation(CGPointZero, inView: self)
@@ -145,10 +152,12 @@ class GraphView: UIView {
         static let scaleXZoneMax = 22.5
     }
     func scaleGraph(gesture: UIPinchGestureRecognizer) {
-        if gesture.state == .Changed {
+        switch gesture.state {
+        case .Changed:
             // if we don't have exactly 2 touchpoints we
             // don't know what's going on
             if gesture.numberOfTouches() == 2 {
+                drawAxes = false
                 // get the touchpoints
                 let touch1 = gesture.locationOfTouch(0, inView: self)
                 let touch2 = gesture.locationOfTouch(1, inView: self)
@@ -178,6 +187,11 @@ class GraphView: UIView {
 
                 gesture.scale=1
             }
+        case .Ended:
+            drawAxes = true
+            setNeedsDisplay()
+        default:
+            break
         }
     }
     

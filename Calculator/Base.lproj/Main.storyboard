@@ -18,8 +18,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="300" verticalCompressionResistancePriority="1000" misplaced="YES" text="=" textAlignment="right" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pHm-sv-KmD" customClass="CalculatorDisplay" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="16" y="72" width="568" height="23"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="300" verticalCompressionResistancePriority="1000" text="=" textAlignment="right" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pHm-sv-KmD" customClass="CalculatorDisplay" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="20" y="72" width="560" height="23"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -32,8 +32,8 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="FjV-NG-IlK" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="175" y="245" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="FjV-NG-IlK" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="179" y="245" width="45" height="41"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="45" id="Ge0-OZ-nVy"/>
@@ -68,8 +68,8 @@
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7Ia-dk-xhm"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="GTd-sq-XKF" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="228" y="245" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="GTd-sq-XKF" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="232" y="245" width="45" height="41"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="45" id="4PR-jD-QhT"/>
@@ -104,8 +104,8 @@
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uSB-gw-73f"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="251" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="GI1-Kl-H8a" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="281" y="245" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="GI1-Kl-H8a" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="285" y="245" width="45" height="41"/>
                                 <color key="backgroundColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="45" id="app-xh-n0b"/>
@@ -133,8 +133,8 @@
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DDB-7H-Xdh"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="248" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="HKa-19-9p5" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="281" y="294" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="248" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="HKa-19-9p5" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="285" y="294" width="45" height="41"/>
                                 <color key="backgroundColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="45" id="BSX-px-gAJ"/>
@@ -160,8 +160,8 @@
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jZm-Qd-5ai"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="cN8-hs-oEk" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="281" y="343" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="cN8-hs-oEk" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="285" y="343" width="45" height="41"/>
                                 <color key="backgroundColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40.5" id="3q1-aR-gKC">
@@ -189,8 +189,8 @@
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Qhj-Xz-l1I"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="vuc-PQ-3kl" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="281" y="392" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="vuc-PQ-3kl" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="285" y="392" width="45" height="41"/>
                                 <color key="backgroundColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="1rQ-dG-Idc"/>
@@ -216,8 +216,8 @@
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AQV-Gf-lc6"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="YYs-Cu-wXD" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="122" y="245" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="YYs-Cu-wXD" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="126" y="245" width="45" height="41"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40.5" id="ATc-2z-dg0">
@@ -250,8 +250,8 @@
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IjO-Mi-7wb"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="DR8-ED-fNs" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="175" y="294" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="DR8-ED-fNs" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="179" y="294" width="45" height="41"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="1Af-Fp-mn0"/>
@@ -282,8 +282,8 @@
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sc7-uE-ar9"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="9p4-1C-fmd" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="228" y="294" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="9p4-1C-fmd" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="232" y="294" width="45" height="41"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="45" id="6oZ-fI-PmX"/>
@@ -314,8 +314,8 @@
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FvD-6y-Pl4"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleAspectFit" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="fpT-Cu-Okv" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="122" y="294" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="fpT-Cu-Okv" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="126" y="294" width="45" height="41"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="45" id="aqQ-Zw-Er9"/>
@@ -346,8 +346,8 @@
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8IX-CW-RFW"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="jQs-nv-Rn2" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="228" y="343" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="jQs-nv-Rn2" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="232" y="343" width="45" height="41"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40.5" id="3tu-y6-ZpH">
@@ -380,8 +380,8 @@
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Wzj-My-UaR"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleAspectFit" horizontalCompressionResistancePriority="800" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="gcL-Yw-NRy" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="175" y="196" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleAspectFit" horizontalCompressionResistancePriority="800" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="gcL-Yw-NRy" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="179" y="196" width="45" height="41"/>
                                 <color key="backgroundColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="7Hj-kj-ZEq"/>
@@ -410,8 +410,8 @@
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gjS-vA-W2y"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="dWs-1y-vst" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="122" y="196" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="dWs-1y-vst" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="126" y="196" width="45" height="41"/>
                                 <color key="backgroundColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="Erb-3H-En0"/>
@@ -437,8 +437,8 @@
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="S4b-EJ-ter"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="HPB-O2-hOX" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="69" y="147" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="HPB-O2-hOX" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="73" y="147" width="45" height="41"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="41" id="C2N-2X-NaT"/>
                                     <constraint firstAttribute="width" constant="45" id="WEf-W0-3ZW"/>
@@ -469,8 +469,8 @@
                                     <action selector="backspace" destination="BYZ-38-t0r" eventType="touchUpInside" id="5IA-Ec-oo1"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="SVT-3Q-ZOR" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="228" y="392" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="SVT-3Q-ZOR" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="232" y="392" width="45" height="41"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="45" id="Art-Ds-oxQ"/>
@@ -501,8 +501,8 @@
                                     <action selector="changeSign" destination="BYZ-38-t0r" eventType="touchUpInside" id="y8M-v7-lUA"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="byw-Ns-T3A" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="16" y="245" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="byw-Ns-T3A" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="20" y="245" width="45" height="41"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40.5" id="RQl-Uf-uul">
                                         <variation key="heightClass=compact" constant="40"/>
@@ -533,8 +533,8 @@
                                     <segue destination="8sW-2x-1PR" kind="showDetail" identifier="Show Graph" id="6Gm-Ii-cs3"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="clip" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xLl-gW-bTq" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="69" y="245" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="clip" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xLl-gW-bTq" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="73" y="245" width="45" height="41"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40.5" id="8LF-wY-KQO">
                                         <variation key="heightClass=compact" constant="40"/>
@@ -586,8 +586,8 @@
                                     <action selector="swapXY" destination="BYZ-38-t0r" eventType="touchUpInside" id="FUz-8y-56K"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="LhY-1s-0hr" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="69" y="196" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="LhY-1s-0hr" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="73" y="196" width="45" height="41"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="45" id="Esu-AM-uc8"/>
                                     <constraint firstAttribute="height" constant="40" id="cOO-eF-fPZ"/>
@@ -612,8 +612,8 @@
                                     <action selector="memGet" destination="BYZ-38-t0r" eventType="touchUpInside" id="eIx-vI-X8t"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="i5D-uG-pfk" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="175" y="392" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="i5D-uG-pfk" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="179" y="392" width="45" height="41"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="8sW-tE-7ww"/>
@@ -644,8 +644,8 @@
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sGe-lj-lXh"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="eiK-ym-xtY" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="122" y="392" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="eiK-ym-xtY" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="126" y="392" width="45" height="41"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="45" id="THa-wd-LUl"/>
@@ -676,8 +676,8 @@
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vvH-I3-8m3"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="vWf-eO-UAe" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="175" y="343" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="vWf-eO-UAe" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="179" y="343" width="45" height="41"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="45" id="4fX-aK-Jcx"/>
@@ -710,8 +710,8 @@
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gDa-Fg-Zts"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="752" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="TXk-6h-wlX" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="122" y="343" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="TXk-6h-wlX" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="126" y="343" width="45" height="41"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="45" id="9aN-EF-TQa"/>
@@ -744,8 +744,8 @@
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ua5-i4-D3d"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="300" verticalCompressionResistancePriority="1000" misplaced="YES" text="0.0" textAlignment="right" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="StR-rR-igr" customClass="CalculatorDisplay" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="16" y="103" width="568" height="36"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="300" verticalCompressionResistancePriority="1000" text="0.0" textAlignment="right" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="StR-rR-igr" customClass="CalculatorDisplay" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="20" y="103" width="560" height="36"/>
                                 <color key="backgroundColor" red="0.59749877452850342" green="0.70627033710479736" blue="0.68328219652175903" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -762,8 +762,8 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </label>
-                            <button opaque="NO" contentMode="scaleAspectFit" horizontalCompressionResistancePriority="800" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="kCf-Cu-6Px" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="228" y="196" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleAspectFit" horizontalCompressionResistancePriority="800" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="kCf-Cu-6Px" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="232" y="196" width="45" height="41"/>
                                 <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="45" id="exo-I2-cY3"/>
@@ -792,8 +792,8 @@
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1HC-yc-RQP"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="DlM-zF-iYS" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="281" y="196" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="DlM-zF-iYS" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="285" y="196" width="45" height="41"/>
                                 <color key="backgroundColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="DCj-CF-BSx"/>
@@ -819,8 +819,8 @@
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AXu-1H-lPz"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="aYX-hM-R5B" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="122" y="147" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="aYX-hM-R5B" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="126" y="147" width="45" height="41"/>
                                 <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40.5" id="qjp-Sc-cTy">
@@ -848,8 +848,8 @@
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rh7-WY-c4C"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="oAP-5k-9bA" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="175" y="147" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="oAP-5k-9bA" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="179" y="147" width="45" height="41"/>
                                 <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="45" id="huz-xc-Mdk"/>
@@ -875,8 +875,8 @@
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OB9-XW-gvG"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="Rj9-Uc-OEE" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="228" y="147" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="Rj9-Uc-OEE" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="232" y="147" width="45" height="41"/>
                                 <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="45" id="GHC-fn-bth"/>
@@ -902,8 +902,8 @@
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MIm-W5-MZt"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="nHV-6a-Rxk" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="281" y="147" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="nHV-6a-Rxk" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="285" y="147" width="45" height="41"/>
                                 <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="45" id="19S-zs-p7W"/>
@@ -929,8 +929,8 @@
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BcV-ed-Tx3"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="VGc-iv-HBi" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="69" y="343" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="VGc-iv-HBi" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="73" y="343" width="45" height="41"/>
                                 <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="45" id="2G7-b8-3Fh"/>
@@ -960,8 +960,8 @@
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ou3-Ut-f9S"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="Pct-sE-4X8" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="16" y="343" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="Pct-sE-4X8" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="20" y="343" width="45" height="41"/>
                                 <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="41" id="6Kb-DN-lbh"/>
@@ -989,8 +989,8 @@
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GL6-OL-I9i"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="Hr1-4U-MoZ" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="16" y="196" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="Hr1-4U-MoZ" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="20" y="196" width="45" height="41"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="45" id="4O5-DY-Boj"/>
                                     <constraint firstAttribute="height" constant="40" id="Zfp-dr-k3Y"/>
@@ -1018,8 +1018,8 @@
                                     <action selector="memSet" destination="BYZ-38-t0r" eventType="touchUpInside" id="Saz-T1-r5d"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="ieu-rw-jSY" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="16" y="147" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="ieu-rw-jSY" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="20" y="147" width="45" height="41"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="4m3-nZ-Sh2"/>
                                     <constraint firstAttribute="width" constant="45" id="lsn-2K-Nqw"/>
@@ -1048,8 +1048,8 @@
                                     <action selector="clear" destination="BYZ-38-t0r" eventType="touchUpInside" id="XpD-u8-P5c"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="hby-gx-BBV" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="16" y="392" width="98" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="hby-gx-BBV" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="20" y="392" width="98" height="41"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="⏎">
@@ -1064,8 +1064,8 @@
                                     <action selector="enter" destination="BYZ-38-t0r" eventType="touchUpInside" id="2Fz-H6-sG5"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="l9X-Z8-pTl" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="69" y="294" width="45" height="41"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="l9X-Z8-pTl" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="73" y="294" width="45" height="41"/>
                                 <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="KwL-2w-5vB"/>
