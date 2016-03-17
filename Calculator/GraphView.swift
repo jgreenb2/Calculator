@@ -93,7 +93,7 @@ class GraphView: UIView {
 
     func plotFunction(rect: CGRect, simple:Bool = false) {
         var prevValueUndefined = true
-        let resolutionFactor:CGFloat = (simple ? 4.0 : 1.0)
+        let resolutionFactor:CGFloat = (simple ? 2.0 : 1.0)
         let curve = UIBezierPath()
         let increment = (1/contentScaleFactor)*resolutionFactor
         for (var i:CGFloat=0;i<rect.width;i+=increment) {
