@@ -55,13 +55,16 @@ class GraphView: UIView {
     @IBInspectable
     var maxY:Double = 10
     
+    var touchCenter:CGPoint = CGPoint(x: 0, y: 0)
+    let radius:CGFloat = 10
+
     var simplePlot:Bool = false
     
-    var density: (x: CGFloat, y: CGFloat) = (100,100) {
+    var density: (x: CGFloat, y: CGFloat) = (25,25) {
         didSet {
             (minX,maxX) = newXRange(density.x, origin: graphCenter)
             (minY,maxY) = newYRange(density.y, origin: graphCenter)
-            setNeedsDisplay()
+            //setNeedsDisplay()
         }
     }
     
@@ -75,8 +78,14 @@ class GraphView: UIView {
     
 
     override func drawRect(rect: CGRect) {
+        let dot = UIBezierPath(ovalInRect: (CGRectMake ((touchCenter.x - radius/2), (touchCenter.y 
+            - radius/2)
+            , radius, radius)));
+        UIColor.greenColor().setFill()
+        dot.fill()
+
         let axes = AxesDrawer(color: axesColor, contentScaleFactor: contentScaleFactor)
-        density = (bounds.width/CGFloat(maxX-minX),bounds.height/CGFloat(maxY-minY))
+        //density = (bounds.width/CGFloat(maxX-minX),bounds.height/CGFloat(maxY-minY))
         if simplePlot {
             axes.drawAxesInRect(bounds, origin: graphCenter, pointsPerUnit: density, drawHashMarks: false)
             plotFunction(rect,simple: true)
@@ -128,6 +137,10 @@ class GraphView: UIView {
         return Double((i - graphCenter.x)/density.x)
     }
     
+    func ScreenToY(i: CGFloat) -> Double {
+        return Double((graphCenter.y - i)/density.y)
+    }
+    
     func YToScreen(y: Double) -> CGFloat {
         return -CGFloat(y)*density.y + graphCenter.y
     }
@@ -155,6 +168,7 @@ class GraphView: UIView {
         static let scaleXZoneMin = -22.5
         static let scaleXZoneMax = 22.5
     }
+    
     func scaleGraph(gesture: UIPinchGestureRecognizer) {
         switch gesture.state {
         case .Changed:
@@ -179,15 +193,34 @@ class GraphView: UIView {
                     theta += 180.0
                 }
                 
+                var scalex:CGFloat = 1.0
+                var scaley:CGFloat = 1.0
+                
                 if theta > scaleZones.scaleXZoneMin && theta <= scaleZones.scaleXZoneMax {
                     densityX *= gesture.scale
+                    scalex = gesture.scale
                 } else if theta > scaleZones.scaleXYZoneMin && theta <= scaleZones.scaleXYZoneMax {
                     densityX *= gesture.scale
                     densityY *= gesture.scale
+                    scalex = gesture.scale
+                    scaley = gesture.scale
                 } else {
                     densityY *= gesture.scale
+                    scaley = gesture.scale
                 }
                 density = (densityX, densityY)
+
+                // compute the center of the pinch
+                let deltaTouch = touch2 - touch1
+                touchCenter = touch1 + deltaTouch/2.0
+                let touchCenterInGraphCoord = CGPoint(x: ScreenToX(touchCenter.x), y: ScreenToY(touchCenter.y))
+                
+                // now compute the amount the origin has to move to keep this point 
+                // in the same position on the screen
+                let translation = CGPoint(x: touchCenterInGraphCoord.x*densityX*(1.0-1.0/scalex), y: touchCenterInGraphCoord.y*densityY*(1.0-1.0/scaley))
+                graphOrigin = graphCenter - translation
+                
+                // let's put a dot where we think this thing is
 
                 gesture.scale=1
             }
@@ -213,4 +246,8 @@ private func + (left: CGPoint, right: CGPoint) -> CGPoint {
 // subtract two CGpoints
 private func - (left: CGPoint, right: CGPoint) -> CGPoint {
     return CGPoint(x: left.x-right.x, y: left.y-right.y)
+}
+
+private func / (left: CGPoint, right: CGFloat) -> CGPoint {
+    return CGPoint(x: left.x/right, y: left.y/right)
 }
