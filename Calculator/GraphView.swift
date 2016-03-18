@@ -213,15 +213,14 @@ class GraphView: UIView {
                 // compute the center of the pinch
                 let deltaTouch = touch2 - touch1
                 touchCenter = touch1 + deltaTouch/2.0
-                let touchCenterInGraphCoord = CGPoint(x: ScreenToX(touchCenter.x), y: ScreenToY(touchCenter.y))
+                //let touchCenterInGraphCoord = CGPoint(x: ScreenToX(touchCenter.x), y: ScreenToY(touchCenter.y))
                 
                 // now compute the amount the origin has to move to keep this point 
                 // in the same position on the screen
-                let translation = CGPoint(x: touchCenterInGraphCoord.x*densityX*(1.0-1.0/scalex), y: touchCenterInGraphCoord.y*densityY*(1.0-1.0/scaley))
-                graphOrigin = graphCenter - translation
+                //let translation = CGPoint(x: touchCenterInGraphCoord.x*densityX*(1.0-1.0/scalex), y: touchCenterInGraphCoord.y*densityY*(1.0-1.0/scaley))
+                let translation = CGPoint(x: (touchCenter.x-graphCenter.x)*(1.0-1.0/scalex), y: (graphCenter.y-touchCenter.y)*(1.0-1.0/scaley))
+                graphOrigin = graphCenter + translation
                 
-                // let's put a dot where we think this thing is
-
                 gesture.scale=1
             }
         case .Ended:
