@@ -21,7 +21,7 @@ class GlobalUISplitViewController: UISplitViewController, UISplitViewControllerD
         // a trivial delay keeps iOS from being confused and issuing an unmatched begin/end
         // transition warning
         if traitCollection.horizontalSizeClass == UIUserInterfaceSizeClass.Regular {
-            delay(0.01){self.preferredDisplayMode = UISplitViewControllerDisplayMode.PrimaryOverlay}
+            delay(0.02){self.preferredDisplayMode = UISplitViewControllerDisplayMode.PrimaryOverlay}
         }
     }
     
