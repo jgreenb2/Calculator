@@ -64,7 +64,6 @@ class GraphView: UIView {
         didSet {
             (minX,maxX) = newXRange(density.x, origin: graphCenter)
             (minY,maxY) = newYRange(density.y, origin: graphCenter)
-            //setNeedsDisplay()
         }
     }
     
@@ -78,14 +77,7 @@ class GraphView: UIView {
     
 
     override func drawRect(rect: CGRect) {
-        let dot = UIBezierPath(ovalInRect: (CGRectMake ((touchCenter.x - radius/2), (touchCenter.y 
-            - radius/2)
-            , radius, radius)));
-        UIColor.greenColor().setFill()
-        dot.fill()
-
         let axes = AxesDrawer(color: axesColor, contentScaleFactor: contentScaleFactor)
-        //density = (bounds.width/CGFloat(maxX-minX),bounds.height/CGFloat(maxY-minY))
         if simplePlot {
             axes.drawAxesInRect(bounds, origin: graphCenter, pointsPerUnit: density, drawHashMarks: false)
             plotFunction(rect,simple: true)
@@ -131,10 +123,6 @@ class GraphView: UIView {
         return CGPoint(x: XToScreen(x), y: YToScreen(y))
     }
     
-    func XToScreen(x: Double) -> CGFloat {
-        return CGFloat(x)*density.x + graphCenter.x
-    }
-    
     func ScreenToX(i: CGFloat) -> Double {
         return Double((i - graphCenter.x)/density.x)
     }
@@ -143,8 +131,16 @@ class GraphView: UIView {
         return Double((graphCenter.y - i)/density.y)
     }
     
+    func XToScreen(x: Double) -> CGFloat {
+        return CGFloat(x)*density.x + graphCenter.x
+    }
+    
     func YToScreen(y: Double) -> CGFloat {
         return -CGFloat(y)*density.y + graphCenter.y
+    }
+    
+    func ScreenToXY(p: CGPoint) -> CGPoint {
+        return CGPoint(x: ScreenToX(p.x), y: ScreenToY(p.y))
     }
     
     // gesture handling functions
@@ -215,12 +211,10 @@ class GraphView: UIView {
                 // compute the center of the pinch
                 let deltaTouch = touch2 - touch1
                 touchCenter = touch1 + deltaTouch/2.0
-                //let touchCenterInGraphCoord = CGPoint(x: ScreenToX(touchCenter.x), y: ScreenToY(touchCenter.y))
                 
                 // now compute the amount the origin has to move to keep this point 
                 // in the same position on the screen
-                //let translation = CGPoint(x: touchCenterInGraphCoord.x*densityX*(1.0-1.0/scalex), y: touchCenterInGraphCoord.y*densityY*(1.0-1.0/scaley))
-                let translation = CGPoint(x: (touchCenter.x-graphCenter.x)*(1.0-1.0/scalex), y: (graphCenter.y-touchCenter.y)*(1.0-1.0/scaley))
+                let translation = CGPoint(x: (touchCenter.x-graphCenter.x)*(1.0-scalex), y: (touchCenter.y-graphCenter.y)*(1.0-scaley))
                 graphOrigin = graphCenter + translation
                 
                 gesture.scale=1
@@ -248,7 +242,7 @@ private func + (left: CGPoint, right: CGPoint) -> CGPoint {
 private func - (left: CGPoint, right: CGPoint) -> CGPoint {
     return CGPoint(x: left.x-right.x, y: left.y-right.y)
 }
-
+// divide a CGPoint by a scalar
 private func / (left: CGPoint, right: CGFloat) -> CGPoint {
     return CGPoint(x: left.x/right, y: left.y/right)
 }
