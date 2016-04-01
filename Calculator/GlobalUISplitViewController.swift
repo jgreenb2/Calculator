@@ -16,10 +16,16 @@ class GlobalUISplitViewController: UISplitViewController, UISplitViewControllerD
         super.viewDidLoad()
         
         self.delegate = self
+        // for wide displays we use PrimaryOverlay as the display mode
+        //
+        // a trivial delay keeps iOS from being confused and issuing an unmatched begin/end
+        // transition warning
+        if traitCollection.horizontalSizeClass == UIUserInterfaceSizeClass.Regular {
+            delay(0.01){self.preferredDisplayMode = UISplitViewControllerDisplayMode.PrimaryOverlay}
+        }
     }
     
     func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController: UIViewController, ontoPrimaryViewController primaryViewController: UIViewController) -> Bool{
         return true
-    }
-    
+    }    
 }

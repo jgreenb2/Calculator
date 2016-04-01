@@ -249,7 +249,8 @@ class CalculatorBrain {
     // Expression precedence is defined as the precedence of the operator enclosed in the expression
     // It's used to determine when parens are needed in the infix rep
     private typealias ExpressionType = (result: String, remainingStack: [Op], precedence: Int)
-    private func nextExpression(var stack: [Op]) -> ExpressionType {
+    private func nextExpression(stack: [Op]) -> ExpressionType {
+        var stack = stack
         if !stack.isEmpty {
             let token = stack.removeLast()
             switch token {
@@ -275,9 +276,10 @@ class CalculatorBrain {
         
     }
     
-    private func formatBinaryExpression(var operation: String, _ expression1: ExpressionType,
+    private func formatBinaryExpression(operation: String, _ expression1: ExpressionType,
         _ expression2: ExpressionType, _ operatorPrecedence: Int) -> String {
         
+        var operation = operation
         var expression:String
         if let alternate = alternateOperatorDescription[operation] {
             operation = alternate.name

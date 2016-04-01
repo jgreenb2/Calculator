@@ -105,7 +105,8 @@ class GraphView: UIView {
         let resolutionFactor:CGFloat = (simple ? 2.0 : 1.0)
         let curve = UIBezierPath()
         let increment = (1/contentScaleFactor)*resolutionFactor
-        for (var i:CGFloat=0;i<rect.width;i+=increment) {
+        var i:CGFloat = 0
+        while ( i < rect.width) {
             let x = ScreenToX(i)
             if let y = dataSource?.functionValue(self, atXEquals: x) {
                 if !prevValueUndefined {
@@ -117,6 +118,7 @@ class GraphView: UIView {
             } else {
                 prevValueUndefined = true
             }
+            i+=increment
         }
         curve.lineWidth=lineWidth
         lineColor.set()
