@@ -205,7 +205,7 @@ class CalculatorBrain {
             case .Operand(let operand):
                 return (operand, remainingOps)
             case .Symbol(let symbol, let value):
-                return (value(symbol), remainingOps)
+                return (value(symbol) ?? 0, remainingOps)
             case .Constant( _, let value):
                 return (value(), remainingOps)
             case .UnaryOperation(_, let operation):
