@@ -8,7 +8,21 @@
 
 import UIKit
 
+
 class CalculatorViewController: UIViewController {
+    var userIsInTheMiddleOfTypingANumber = false
+    var brain = CalculatorBrain()
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        displayValue = brain.loadProgram()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        brain.saveProgram()
+    }
+    
     @IBOutlet weak var display: UILabel! {
         didSet { 
             display.layer.cornerRadius=8
@@ -17,8 +31,6 @@ class CalculatorViewController: UIViewController {
         }
     }
     @IBOutlet weak var history: UILabel!
-    var userIsInTheMiddleOfTypingANumber = false
-    var brain = CalculatorBrain()
     
     @IBAction func appendDigit(sender: UIButton) {
         let digit = sender.currentTitle!

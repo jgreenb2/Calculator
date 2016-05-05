@@ -87,7 +87,8 @@ class CalculatorBrain {
     // the operator stack, operator and variable dictionarys
     private var opStack = [Op]()
     private var knownOps = [String:Op]()
-    var variableValues = [String:Double]()
+    typealias variableDict = [String:Double]
+    var variableValues = variableDict()
     private var preserveStack: Bool = false
     
     // initialize by setting all of the operations
@@ -317,6 +318,32 @@ class CalculatorBrain {
     var description: String {
         let desc = parseStack(opStack)
         return desc
+    }
+    
+    // methods to save and restore the current program
+    
+    private struct SavedProgramKeys {
+        static let programKey = "_programKey_"
+        static let variablesKey = "_variablesKey_"
+    }
+    
+    func saveProgram() {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(program, forKey: SavedProgramKeys.programKey)
+        defaults.setObject(variableValues, forKey: SavedProgramKeys.variablesKey)
+    }
+    
+    func loadProgram()-> Double? {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let restoredVariables = defaults.dictionaryForKey(SavedProgramKeys.variablesKey) as? variableDict {
+            variableValues = restoredVariables
+        }
+        if let restoredProgram = defaults.objectForKey(SavedProgramKeys.programKey) {
+            program = restoredProgram
+            return evaluate()
+        } else {
+            return 0
+        }
     }
 }
 
