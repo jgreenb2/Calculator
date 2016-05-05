@@ -84,8 +84,14 @@ class CalculatorBrain {
         }
     }
   
+    private var prvOpStack = [Op]()
     // the operator stack, operator and variable dictionarys
-    private var opStack = [Op]()
+    private var opStack = [Op]() {
+        willSet(newOpStack) {
+            prvOpStack = opStack
+        }
+    }
+    
     private var knownOps = [String:Op]()
     typealias variableDict = [String:Double]
     var variableValues = variableDict()
@@ -344,6 +350,13 @@ class CalculatorBrain {
         } else {
             return 0
         }
+    }
+    
+    func undo()-> Double? {
+        let tmpStack = opStack
+        opStack = prvOpStack
+        prvOpStack = tmpStack
+        return evaluate()
     }
 }
 

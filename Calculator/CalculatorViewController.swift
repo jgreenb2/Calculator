@@ -111,6 +111,10 @@ class CalculatorViewController: UIViewController {
         displayValue = brain.evaluate()
     }
     
+    @IBAction func Undo() {
+        displayValue = brain.undo()
+    }
+    
     var displayValue: Double? {
         get {
             if let num=NSNumberFormatter().numberFromString(display.text!) {

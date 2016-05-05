@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="arj-xa-VpZ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="arj-xa-VpZ">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -1095,6 +1095,37 @@
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WoJ-Pz-xtU"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="Qxc-0U-I5u" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                                <rect key="frame" x="20" y="294" width="45" height="41"/>
+                                <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="TCW-JY-iMF"/>
+                                    <constraint firstAttribute="width" constant="45" id="eQS-sk-QpT"/>
+                                    <constraint firstAttribute="height" constant="41" id="uAW-nu-aIL"/>
+                                    <constraint firstAttribute="width" constant="45" id="ugS-9f-J3N"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="u">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="TCW-JY-iMF"/>
+                                        <exclude reference="eQS-sk-QpT"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="TCW-JY-iMF"/>
+                                        <exclude reference="uAW-nu-aIL"/>
+                                        <exclude reference="ugS-9f-J3N"/>
+                                        <include reference="eQS-sk-QpT"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="Undo" destination="BYZ-38-t0r" eventType="touchUpInside" id="GV0-4x-eYX"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -1238,7 +1269,9 @@
                             <constraint firstItem="vuc-PQ-3kl" firstAttribute="leading" secondItem="cN8-hs-oEk" secondAttribute="leading" id="Tie-JS-Wed"/>
                             <constraint firstItem="TXk-6h-wlX" firstAttribute="leading" secondItem="dWs-1y-vst" secondAttribute="leading" id="Tqy-b8-LDg"/>
                             <constraint firstItem="cN8-hs-oEk" firstAttribute="height" secondItem="HKa-19-9p5" secondAttribute="height" id="TtE-LX-VFm"/>
+                            <constraint firstItem="Qxc-0U-I5u" firstAttribute="leading" secondItem="Pct-sE-4X8" secondAttribute="leading" id="U26-0w-obI"/>
                             <constraint firstItem="vuc-PQ-3kl" firstAttribute="trailing" secondItem="cN8-hs-oEk" secondAttribute="trailing" id="U4v-Y6-IuR"/>
+                            <constraint firstItem="Pct-sE-4X8" firstAttribute="top" secondItem="Qxc-0U-I5u" secondAttribute="bottom" constant="8" id="UWb-Gp-ntG"/>
                             <constraint firstItem="kCf-Cu-6Px" firstAttribute="leading" secondItem="gcL-Yw-NRy" secondAttribute="trailing" constant="8" id="UkF-lK-xIe">
                                 <variation key="heightClass=compact" constant="8" symbolic="YES"/>
                             </constraint>
@@ -1280,6 +1313,7 @@
                             <constraint firstItem="cN8-hs-oEk" firstAttribute="width" secondItem="SVT-3Q-ZOR" secondAttribute="width" id="aku-X3-0bs"/>
                             <constraint firstItem="Rj9-Uc-OEE" firstAttribute="leading" secondItem="oAP-5k-9bA" secondAttribute="trailing" constant="8" symbolic="YES" id="awk-bT-qJ4"/>
                             <constraint firstItem="Hr1-4U-MoZ" firstAttribute="top" secondItem="LhY-1s-0hr" secondAttribute="top" id="b0r-Ad-S4I"/>
+                            <constraint firstItem="l9X-Z8-pTl" firstAttribute="leading" secondItem="Qxc-0U-I5u" secondAttribute="trailing" constant="8" id="bO3-h8-pr5"/>
                             <constraint firstItem="dWs-1y-vst" firstAttribute="bottom" secondItem="gcL-Yw-NRy" secondAttribute="bottom" id="bc1-RE-dgM"/>
                             <constraint firstItem="FjV-NG-IlK" firstAttribute="bottom" secondItem="byw-Ns-T3A" secondAttribute="bottom" id="cHB-aL-to8"/>
                             <constraint firstItem="vuc-PQ-3kl" firstAttribute="trailing" secondItem="HKa-19-9p5" secondAttribute="trailing" id="cJ3-2j-VNV"/>
