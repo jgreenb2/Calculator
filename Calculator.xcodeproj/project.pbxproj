@@ -19,6 +19,7 @@
 		75E8B8151B2C943F005C542B /* GraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E8B8141B2C943F005C542B /* GraphViewController.swift */; };
 		75E8B8171B2C9792005C542B /* GraphingCalculatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E8B8161B2C9792005C542B /* GraphingCalculatorViewController.swift */; };
 		75E8B81B1B2CE07A005C542B /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E8B81A1B2CE07A005C542B /* GraphView.swift */; };
+		75EBD1771CDD440F006AF41F /* FixedLengthStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EBD1761CDD440F006AF41F /* FixedLengthStack.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		75E8B8141B2C943F005C542B /* GraphViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphViewController.swift; sourceTree = "<group>"; };
 		75E8B8161B2C9792005C542B /* GraphingCalculatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphingCalculatorViewController.swift; sourceTree = "<group>"; };
 		75E8B81A1B2CE07A005C542B /* GraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
+		75EBD1761CDD440F006AF41F /* FixedLengthStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FixedLengthStack.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 				75E72ED51B1A18390014FCD3 /* AppDelegate.swift */,
 				75E72EF51B1B5C680014FCD3 /* CalculatorBrain.swift */,
 				75E8B81A1B2CE07A005C542B /* GraphView.swift */,
+				75EBD1761CDD440F006AF41F /* FixedLengthStack.swift */,
 				75E72ED71B1A18390014FCD3 /* CalculatorViewController.swift */,
 				75AF0A591B34BEC300893452 /* CalculatorViews.swift */,
 				75E72ED91B1A18390014FCD3 /* Main.storyboard */,
@@ -218,6 +221,7 @@
 				75E72EF61B1B5C680014FCD3 /* CalculatorBrain.swift in Sources */,
 				75E8B8151B2C943F005C542B /* GraphViewController.swift in Sources */,
 				75AF0A5A1B34BEC300893452 /* CalculatorViews.swift in Sources */,
+				75EBD1771CDD440F006AF41F /* FixedLengthStack.swift in Sources */,
 				75E3ED701B31E9580061A9C2 /* GlobalUISplitViewController.swift in Sources */,
 				75937F411B2BC0B500229CFA /* AxesDrawer.swift in Sources */,
 				75E72ED81B1A18390014FCD3 /* CalculatorViewController.swift in Sources */,
