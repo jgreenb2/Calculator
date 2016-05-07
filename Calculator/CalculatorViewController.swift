@@ -13,6 +13,13 @@ class CalculatorViewController: UIViewController {
     var userIsInTheMiddleOfTypingANumber = false
     var brain = CalculatorBrain()
     
+    @IBOutlet weak var shiftButton: UIShiftableButton!
+   
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        initializeShiftButtonStates()
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         displayValue = brain.loadProgram()
@@ -111,37 +118,50 @@ class CalculatorViewController: UIViewController {
         displayValue = brain.evaluate()
     }
     
-    private struct ShiftKeyLabels {
-        struct UnShifted {
-            static let cos = "cos"
-            static let sin = "sin"
-            static let tan = "tan"
-            static let undo = "⤾"
-        }
-        struct Shifted {
-            static let cos = "acos"
-            static let sin = "asin"
-            static let tan = "atan"
-            static let undo = "⤿"
-        }
-    }
+    let shiftLabels:[String:String]=["cos":"acos", "sin":"asin", "tan":"atan", "⤾":"⤿"]
     
     var shiftedState = false
     @IBAction func shiftMode(sender: AnyObject) {
-
-        let shiftButton = sender as! UIButton
         if shiftedState {
             shiftedState = false
-            shiftButton.setTitleColor(UIColor.blueColor(), forState: .Normal)
         } else {
             shiftedState = true
-            shiftButton.setTitleColor(UIColor.redColor(), forState: .Normal)
+        }
+        setButtonsToShifted(shiftedState)
+    }
+    
+    func setButtonsToShifted(shift:Bool) {
+        for v in view.subviews {
+            if let sb = v as? UIShiftableButton {
+                sb.setShifted(shift)
+            }
+        }
+    }
+    
+    func initializeShiftButtonStates() {
+        for v in view.subviews {
+            if let sb = v as? UIShiftableButton {
+                sb.setTitleColor(UIColor.redColor(), forState: .Shifted)
+                sb.setShifted(false)
+                
+                if let shiftedLabel = shiftLabels[sb.titleLabel!.text!] {
+                    sb.setTitle(shiftedLabel, forState: .Shifted)
+                }
+            }
         }
     }
     
     @IBAction func undo() {
-        displayValue = brain.undo()
-    }
+        if shiftedState {
+            if let newVal = brain.redo() {
+                displayValue = newVal
+            }
+        } else {
+            if let newVal = brain.undo() {
+                displayValue = newVal
+            }
+        }
+   }
     
     var displayValue: Double? {
         get {

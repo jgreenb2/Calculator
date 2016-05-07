@@ -8,10 +8,10 @@
 
 import Foundation
 class FixedLengthStack<T> {
-    var pWrite:Int
-    var pRead:Int
-    var size:Int
-    var stack:[T?]
+    private var pWrite:Int
+    private var pRead:Int
+    private var size:Int
+    private var stack:[T?]
     
     
     init(N: Int) {
@@ -37,7 +37,7 @@ class FixedLengthStack<T> {
     }
     
     func prev() -> T? {
-        if (dec(pRead) == pWrite) {
+        if (dec(pRead) == pWrite || pRead < 0 || stack[dec(pRead)]==nil ) {
             return nil
         }
         pRead = dec(pRead)

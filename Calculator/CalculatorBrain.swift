@@ -23,8 +23,11 @@ class CalculatorBrain {
         static let Pi = "π"
         static let PlusMinus = "±"
         static let Sin = "sin"
+        static let ASin = "asin"
         static let Cos = "cos"
+        static let ACos = "acos"
         static let Tan = "tan"
+        static let ATan = "atan"
         static let XSquared = "x²"
         static let XCubed = "x³"
         static let XInv = "1/x"
@@ -83,12 +86,19 @@ class CalculatorBrain {
             }
         }
     }
-  
-    private var prvOpStack = [Op]()
+    
+    
+    private var undoOrRedoInProgress = false
+    
+    private var undoStack = FixedLengthStack<[Op]>(N: 10)
+    //private var prvOpStack = [Op]()
     // the operator stack, operator and variable dictionarys
     private var opStack = [Op]() {
         willSet(newOpStack) {
-            prvOpStack = opStack
+            //prvOpStack = opStack
+            if !undoOrRedoInProgress {
+                undoStack.add(newOpStack)
+            }
         }
     }
     
@@ -109,8 +119,11 @@ class CalculatorBrain {
         learnOp(Op.BinaryOperation(OperatorSymbols.Division) {$1 / $0})
         learnOp(Op.UnaryOperation(OperatorSymbols.SquareRoot, sqrt))
         learnOp(Op.UnaryOperation(OperatorSymbols.Sin, sin))
+        learnOp(Op.UnaryOperation(OperatorSymbols.ASin, asin))
         learnOp(Op.UnaryOperation(OperatorSymbols.Cos, cos))
+        learnOp(Op.UnaryOperation(OperatorSymbols.ACos, acos))
         learnOp(Op.UnaryOperation(OperatorSymbols.Tan, tan))
+        learnOp(Op.UnaryOperation(OperatorSymbols.ATan, atan))
         learnOp(Op.Constant(OperatorSymbols.Pi) {M_PI})
         learnOp(Op.UnaryOperation(OperatorSymbols.PlusMinus) { -1 * $0 })
         learnOp(Op.UnaryOperation(OperatorSymbols.eToX) { exp($0) })
@@ -352,11 +365,30 @@ class CalculatorBrain {
         }
     }
     
+    func redo()->Double? {
+        undoOrRedoInProgress = true
+        var result:Double? = nil
+        if let nxtOpStack = undoStack.next() {
+            opStack = nxtOpStack
+            result = evaluate()
+        } else {
+            result = nil
+        }
+        undoOrRedoInProgress=false
+        return result
+    }
+    
     func undo()-> Double? {
-        let tmpStack = opStack
-        opStack = prvOpStack
-        prvOpStack = tmpStack
-        return evaluate()
+        undoOrRedoInProgress = true
+        var result:Double? = nil
+        if let prvOpStack = undoStack.prev() {
+            opStack = prvOpStack
+            result = evaluate()
+        } else {
+            result = nil
+        }
+        undoOrRedoInProgress = false
+        return result
     }
 }
 
