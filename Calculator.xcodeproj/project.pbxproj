@@ -20,6 +20,7 @@
 		75E8B8171B2C9792005C542B /* GraphingCalculatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E8B8161B2C9792005C542B /* GraphingCalculatorViewController.swift */; };
 		75E8B81B1B2CE07A005C542B /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E8B81A1B2CE07A005C542B /* GraphView.swift */; };
 		75EBD1771CDD440F006AF41F /* FixedLengthStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EBD1761CDD440F006AF41F /* FixedLengthStack.swift */; };
+		75EBD17E1CDD8CD7006AF41F /* Cambria Math.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 75EBD17D1CDD8CD7006AF41F /* Cambria Math.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		75E8B8161B2C9792005C542B /* GraphingCalculatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphingCalculatorViewController.swift; sourceTree = "<group>"; };
 		75E8B81A1B2CE07A005C542B /* GraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
 		75EBD1761CDD440F006AF41F /* FixedLengthStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FixedLengthStack.swift; sourceTree = "<group>"; };
+		75EBD17D1CDD8CD7006AF41F /* Cambria Math.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cambria Math.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				75E72EDE1B1A18390014FCD3 /* LaunchScreen.xib */,
+				75EBD17D1CDD8CD7006AF41F /* Cambria Math.ttf */,
 				75E72EDC1B1A18390014FCD3 /* Images.xcassets */,
 				75E72ED41B1A18390014FCD3 /* Info.plist */,
 			);
@@ -199,6 +202,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				75E72EDB1B1A18390014FCD3 /* Main.storyboard in Resources */,
+				75EBD17E1CDD8CD7006AF41F /* Cambria Math.ttf in Resources */,
 				75E72EE01B1A18390014FCD3 /* LaunchScreen.xib in Resources */,
 				75E72EDD1B1A18390014FCD3 /* Images.xcassets in Resources */,
 			);

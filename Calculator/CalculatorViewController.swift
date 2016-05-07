@@ -111,7 +111,35 @@ class CalculatorViewController: UIViewController {
         displayValue = brain.evaluate()
     }
     
-    @IBAction func Undo() {
+    private struct ShiftKeyLabels {
+        struct UnShifted {
+            static let cos = "cos"
+            static let sin = "sin"
+            static let tan = "tan"
+            static let undo = "⤾"
+        }
+        struct Shifted {
+            static let cos = "acos"
+            static let sin = "asin"
+            static let tan = "atan"
+            static let undo = "⤿"
+        }
+    }
+    
+    var shiftedState = false
+    @IBAction func shiftMode(sender: AnyObject) {
+
+        let shiftButton = sender as! UIButton
+        if shiftedState {
+            shiftedState = false
+            shiftButton.setTitleColor(UIColor.blueColor(), forState: .Normal)
+        } else {
+            shiftedState = true
+            shiftButton.setTitleColor(UIColor.redColor(), forState: .Normal)
+        }
+    }
+    
+    @IBAction func undo() {
         displayValue = brain.undo()
     }
     
