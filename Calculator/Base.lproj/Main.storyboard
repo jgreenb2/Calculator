@@ -1929,7 +1929,6 @@
                     <connections>
                         <outlet property="display" destination="StR-rR-igr" id="F8h-aQ-YP1"/>
                         <outlet property="history" destination="pHm-sv-KmD" id="yHl-5o-QJA"/>
-                        <outlet property="shiftButton" destination="ghP-4G-kmw" id="HVm-zJ-ifo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

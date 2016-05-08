@@ -89,13 +89,11 @@ class CalculatorBrain {
     
     
     private var undoOrRedoInProgress = false
+    private var undoStack = FixedLengthStack<[Op]>(N: 10)   // N levels of undo/redo
     
-    private var undoStack = FixedLengthStack<[Op]>(N: 10)
-    //private var prvOpStack = [Op]()
     // the operator stack, operator and variable dictionarys
     private var opStack = [Op]() {
         willSet(newOpStack) {
-            //prvOpStack = opStack
             if !undoOrRedoInProgress {
                 undoStack.add(newOpStack)
             }

@@ -12,8 +12,6 @@ import UIKit
 class CalculatorViewController: UIViewController {
     var userIsInTheMiddleOfTypingANumber = false
     var brain = CalculatorBrain()
-    
-    @IBOutlet weak var shiftButton: UIShiftableButton!
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -122,11 +120,7 @@ class CalculatorViewController: UIViewController {
     
     var shiftedState = false
     @IBAction func shiftMode(sender: AnyObject) {
-        if shiftedState {
-            shiftedState = false
-        } else {
-            shiftedState = true
-        }
+        shiftedState = !shiftedState
         setButtonsToShifted(shiftedState)
     }
     
@@ -144,8 +138,10 @@ class CalculatorViewController: UIViewController {
                 sb.setTitleColor(UIColor.redColor(), forState: .Shifted)
                 sb.setShifted(false)
                 
-                if let shiftedLabel = shiftLabels[sb.titleLabel!.text!] {
-                    sb.setTitle(shiftedLabel, forState: .Shifted)
+                if let titleText = sb.titleLabel?.text {
+                    if let shiftedLabel = shiftLabels[titleText] {
+                        sb.setTitle(shiftedLabel, forState: .Shifted)
+                    }
                 }
             }
         }
@@ -161,7 +157,7 @@ class CalculatorViewController: UIViewController {
                 displayValue = newVal
             }
         }
-   }
+    }
     
     var displayValue: Double? {
         get {

@@ -55,6 +55,6 @@ class UIShiftableButton: UIButton {
 
 }
 
-extension UIControlState {
+public extension UIControlState {
     static let Shifted = UIControlState(rawValue: 1<<16)
 }
