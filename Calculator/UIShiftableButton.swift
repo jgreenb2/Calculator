@@ -13,18 +13,15 @@ class UIShiftableButton: UIButton {
     func setShifted(shift:Bool) {
         if shift {
             customState.insert(.Shifted)
-            customState.remove(.Normal)
         } else {
             customState.remove(.Shifted)
-            customState.insert(.Normal)
         }
         stateWasUpdated()
     }
     
     override var state: UIControlState {
         get {
-            var curState = super.state
-            return [curState.remove(.Normal)!, customState]
+            return [super.state, customState]
         }
     }
     

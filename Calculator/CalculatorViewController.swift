@@ -82,9 +82,14 @@ class CalculatorViewController: UIViewController {
         if userIsInTheMiddleOfTypingANumber {
             enter()
         }
-        if let operation = sender.currentTitle {
-            displayValue = brain.performOperation(operation)
+        var operation:String?
+        if sender.state.contains(.Shifted) {
+            operation = sender.titleForState(.Shifted)
+        } else {
+            operation = sender.currentTitle
         }
+        displayValue = brain.performOperation(operation!)
+        shiftedState=false
     }
 
     @IBAction func memSet() {
@@ -118,10 +123,14 @@ class CalculatorViewController: UIViewController {
     
     let shiftLabels:[String:String]=["cos":"acos", "sin":"asin", "tan":"atan", "⤾":"⤿"]
     
-    var shiftedState = false
+    var shiftedState = false {
+        didSet {
+            setButtonsToShifted(shiftedState)
+        }
+    }
+    
     @IBAction func shiftMode(sender: AnyObject) {
         shiftedState = !shiftedState
-        setButtonsToShifted(shiftedState)
     }
     
     func setButtonsToShifted(shift:Bool) {
