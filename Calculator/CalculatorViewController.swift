@@ -58,6 +58,7 @@ class CalculatorViewController: UIViewController {
     var degMode = true
     @IBAction func degRadMode(sender: RoundedButton) {
         degMode = !degMode
+        brain.degMode(degMode)
         if degMode {
             sender.setTitle("Deg", forState: .Normal)
         } else {
