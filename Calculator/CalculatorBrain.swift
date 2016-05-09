@@ -9,6 +9,8 @@
 import Foundation
 
 class CalculatorBrain {
+    let degPerRad = 180.0/M_PI
+    private var degMode = true
     
     /*  the basic operator type
         includes a computed variable that can be referenced
@@ -116,12 +118,12 @@ class CalculatorBrain {
         learnOp(Op.BinaryOperation(OperatorSymbols.Addition,+))
         learnOp(Op.BinaryOperation(OperatorSymbols.Division) {$1 / $0})
         learnOp(Op.UnaryOperation(OperatorSymbols.SquareRoot, sqrt))
-        learnOp(Op.UnaryOperation(OperatorSymbols.Sin, sin))
-        learnOp(Op.UnaryOperation(OperatorSymbols.ASin, asin))
-        learnOp(Op.UnaryOperation(OperatorSymbols.Cos, cos))
-        learnOp(Op.UnaryOperation(OperatorSymbols.ACos, acos))
-        learnOp(Op.UnaryOperation(OperatorSymbols.Tan, tan))
-        learnOp(Op.UnaryOperation(OperatorSymbols.ATan, atan))
+        learnOp(Op.UnaryOperation(OperatorSymbols.Sin, calcSin))
+        learnOp(Op.UnaryOperation(OperatorSymbols.ASin, calcASin))
+        learnOp(Op.UnaryOperation(OperatorSymbols.Cos, calcCos))
+        learnOp(Op.UnaryOperation(OperatorSymbols.ACos, calcACos))
+        learnOp(Op.UnaryOperation(OperatorSymbols.Tan, calcTan))
+        learnOp(Op.UnaryOperation(OperatorSymbols.ATan, calcATan))
         learnOp(Op.Constant(OperatorSymbols.Pi) {M_PI})
         learnOp(Op.UnaryOperation(OperatorSymbols.PlusMinus) { -1 * $0 })
         learnOp(Op.UnaryOperation(OperatorSymbols.eToX) { exp($0) })
@@ -138,6 +140,7 @@ class CalculatorBrain {
         alternateOperatorDescription[OperatorSymbols.XSquared] = ("²", postfix: true)
         alternateOperatorDescription[OperatorSymbols.yToX] = ("^", postfix: false)
     }
+    
     
     var program: AnyObject {
         get {
@@ -387,6 +390,40 @@ class CalculatorBrain {
         }
         undoOrRedoInProgress = false
         return result
+    }
+    
+    func degMode(mode: Bool) {
+        degMode = mode
+    }
+    
+    func calcSin(theta: Double)->Double {
+        let angle = (degMode ? theta/degPerRad : theta)
+        return sin(angle)
+    }
+    
+    func calcASin(sval: Double)->Double {
+        let angle = asin(sval)
+        return (degMode ? angle*degPerRad : angle)
+    }
+    
+    func calcCos(theta: Double)->Double {
+        let angle = (degMode ? theta/degPerRad : theta)
+        return cos(angle)
+    }
+    
+    func calcACos(sval: Double)->Double {
+        let angle = acos(sval)
+        return (degMode ? angle*degPerRad : angle)
+    }
+    
+    func calcTan(theta: Double)->Double {
+        let angle = (degMode ? theta/degPerRad : theta)
+        return tan(angle)
+    }
+    
+    func calcATan(sval: Double)->Double {
+        let angle = atan(sval)
+        return (degMode ? angle*degPerRad : angle)
     }
 }
 

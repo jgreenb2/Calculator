@@ -55,6 +55,16 @@ class CalculatorViewController: UIViewController {
         }
     }
     
+    var degMode = true
+    @IBAction func degRadMode(sender: RoundedButton) {
+        degMode = !degMode
+        if degMode {
+            sender.setTitle("Deg", forState: .Normal)
+        } else {
+            sender.setTitle("Rad", forState: .Normal)
+        }
+    }
+    
     @IBAction func changeSign() {
         if userIsInTheMiddleOfTypingANumber {
             display.text = "-" + display.text!
