@@ -18,9 +18,9 @@ class CalculatorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeShiftButtonStates()
-        shiftButton.setTitle("⇪", forState: [.ShiftLocked, .Shifted])
-        shiftButton.setTitle("⇧", forState: .Normal)
-        shiftButton.setTitleColor(UIColor.redColor(), forState: [.ShiftLocked, .Shifted])
+        shiftButton.setTitle("\u{21EA}", forState: [.ShiftLocked, .Shifted])    // UPWARDS WHITE ARROW FROM BAR
+        shiftButton.setTitle("\u{21E7}", forState: .Normal)                     // UPWARDS WHITE ARROW
+        shiftButton.setTitleColor(UIColor.redColor(), forState: [.ShiftLocked, .Shifted]) 
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -94,7 +94,7 @@ class CalculatorViewController: UIViewController {
             operation = sender.currentTitle
         }
         displayValue = brain.performOperation(operation!)
-        if !shiftLocked {
+        if !shiftButton.shiftLocked {
             shiftedState=false
         }
     }
@@ -134,8 +134,7 @@ class CalculatorViewController: UIViewController {
         didSet {
             setButtonsToShifted(shiftedState)
             if !shiftedState {
-                shiftLocked = false
-                shiftButton.setShiftLocked(false)
+                 shiftButton.setShiftLocked(false)
             }
         }
     }
@@ -152,11 +151,9 @@ class CalculatorViewController: UIViewController {
     
     // if there's a double tap, cancel the previous single tap and lock the
     // shift button down.
-    var shiftLocked = false
     @IBAction func shiftLock(sender: UIShiftableButton, forEvent event: UIEvent) {
         NSObject.cancelPreviousPerformRequestsWithTarget(self)
         shiftedState = true
-        shiftLocked = true
         shiftButton.setShiftLocked(shiftedState)
     }
     
@@ -193,7 +190,7 @@ class CalculatorViewController: UIViewController {
                 displayValue = newVal
             }
         }
-        if !shiftLocked {
+        if !shiftButton.shiftLocked {
             shiftedState=false
         }
 

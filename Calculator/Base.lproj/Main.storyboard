@@ -8,6 +8,7 @@
     <customFonts key="customFonts">
         <mutableArray key="Cambria Math.ttf">
             <string>CambriaMath</string>
+            <string>CambriaMath</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -194,7 +195,7 @@
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Qhj-Xz-l1I"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="vuc-PQ-3kl" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="vuc-PQ-3kl" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
                                 <rect key="frame" x="285" y="392" width="45" height="41"/>
                                 <color key="backgroundColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -477,7 +478,7 @@
                                     <action selector="backspace" destination="BYZ-38-t0r" eventType="touchUpInside" id="5IA-Ec-oo1"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="SVT-3Q-ZOR" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="SVT-3Q-ZOR" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
                                 <rect key="frame" x="232" y="392" width="45" height="41"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -620,7 +621,7 @@
                                     <action selector="memGet" destination="BYZ-38-t0r" eventType="touchUpInside" id="eIx-vI-X8t"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="i5D-uG-pfk" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="i5D-uG-pfk" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
                                 <rect key="frame" x="179" y="392" width="45" height="41"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -652,7 +653,7 @@
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sGe-lj-lXh"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="eiK-ym-xtY" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="eiK-ym-xtY" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
                                 <rect key="frame" x="126" y="392" width="45" height="41"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -1056,7 +1057,7 @@
                                     <action selector="clear" destination="BYZ-38-t0r" eventType="touchUpInside" id="XpD-u8-P5c"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="hby-gx-BBV" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="hby-gx-BBV" customClass="RoundedButton" customModule="Calculator" customModuleProvider="target">
                                 <rect key="frame" x="20" y="392" width="98" height="41"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
@@ -1103,13 +1104,11 @@
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WoJ-Pz-xtU"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="ghP-4G-kmw" customClass="UIShiftableButton" customModule="Calculator" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="ghP-4G-kmw" customClass="UIShiftableButton" customModule="Calculator" customModuleProvider="target">
                                 <rect key="frame" x="20" y="441" width="45" height="41"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" title="⇧">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
+                                <fontDescription key="fontDescription" name="CambriaMath" family="Cambria Math" pointSize="48"/>
+                                <state key="normal" title="⇧"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="8"/>
