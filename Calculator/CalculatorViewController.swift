@@ -89,7 +89,9 @@ class CalculatorViewController: UIViewController {
             operation = sender.currentTitle
         }
         displayValue = brain.performOperation(operation!)
-        shiftedState=false
+        if !shiftLocked {
+            shiftedState=false
+        }
     }
 
     @IBAction func memSet() {
@@ -129,8 +131,23 @@ class CalculatorViewController: UIViewController {
         }
     }
     
-    @IBAction func shiftMode(sender: AnyObject) {
+    // delay the single tap for a short interval in case the user is 
+    // actually doing a double tap. Then toggle the shift state.
+    @IBAction func shiftOnSingleTap(sender: UIShiftableButton) {
+        performSelector(#selector(self.toggleShift), withObject: sender, afterDelay: 0.25)
+    }
+    
+    func toggleShift() {
         shiftedState = !shiftedState
+    }
+    
+    // if there's a double tap, cancel the previous single tap and lock the
+    // shift button down.
+    var shiftLocked = false
+    @IBAction func shiftLock(sender: UIShiftableButton, forEvent event: UIEvent) {
+        NSObject.cancelPreviousPerformRequestsWithTarget(sender)
+        shiftedState = true
+        shiftLocked = true
     }
     
     func setButtonsToShifted(shift:Bool) {
@@ -188,3 +205,13 @@ class CalculatorViewController: UIViewController {
         }
     }
 }
+
+func delay(delay:Double, closure:()->()) {
+    dispatch_after(
+        dispatch_time(
+            DISPATCH_TIME_NOW,
+            Int64(delay * Double(NSEC_PER_SEC))
+        ),
+        dispatch_get_main_queue(), closure)
+}
+

@@ -1114,9 +1114,11 @@
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="8"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="sizeTextToFit" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="shiftMode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6f7-h3-Uwh"/>
+                                    <action selector="shiftLock:forEvent:" destination="BYZ-38-t0r" eventType="touchDownRepeat" id="A7T-W6-qw3"/>
+                                    <action selector="shiftOnSingleTap:" destination="BYZ-38-t0r" eventType="touchDown" id="aaK-JH-Mp0"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="Qxc-0U-I5u" customClass="UIShiftableButton" customModule="Calculator" customModuleProvider="target">
