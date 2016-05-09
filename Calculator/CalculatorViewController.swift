@@ -13,9 +13,14 @@ class CalculatorViewController: UIViewController {
     var userIsInTheMiddleOfTypingANumber = false
     var brain = CalculatorBrain()
    
+    @IBOutlet weak var shiftButton: UIShiftableButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeShiftButtonStates()
+        shiftButton.setTitle("⇪", forState: [.ShiftLocked, .Shifted])
+        shiftButton.setTitle("⇧", forState: .Normal)
+        shiftButton.setTitleColor(UIColor.redColor(), forState: [.ShiftLocked, .Shifted])
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -27,7 +32,7 @@ class CalculatorViewController: UIViewController {
         super.viewWillDisappear(animated)
         brain.saveProgram()
     }
-    
+
     @IBOutlet weak var display: UILabel! {
         didSet { 
             display.layer.cornerRadius=8
@@ -128,13 +133,17 @@ class CalculatorViewController: UIViewController {
     var shiftedState = false {
         didSet {
             setButtonsToShifted(shiftedState)
+            if !shiftedState {
+                shiftLocked = false
+                shiftButton.setShiftLocked(false)
+            }
         }
     }
     
     // delay the single tap for a short interval in case the user is 
     // actually doing a double tap. Then toggle the shift state.
     @IBAction func shiftOnSingleTap(sender: UIShiftableButton) {
-        performSelector(#selector(self.toggleShift), withObject: sender, afterDelay: 0.25)
+        performSelector(#selector(self.toggleShift), withObject: nil, afterDelay: 0.25)
     }
     
     func toggleShift() {
@@ -145,9 +154,10 @@ class CalculatorViewController: UIViewController {
     // shift button down.
     var shiftLocked = false
     @IBAction func shiftLock(sender: UIShiftableButton, forEvent event: UIEvent) {
-        NSObject.cancelPreviousPerformRequestsWithTarget(sender)
+        NSObject.cancelPreviousPerformRequestsWithTarget(self)
         shiftedState = true
         shiftLocked = true
+        shiftButton.setShiftLocked(shiftedState)
     }
     
     func setButtonsToShifted(shift:Bool) {
@@ -183,6 +193,10 @@ class CalculatorViewController: UIViewController {
                 displayValue = newVal
             }
         }
+        if !shiftLocked {
+            shiftedState=false
+        }
+
     }
     
     var displayValue: Double? {

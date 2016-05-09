@@ -19,9 +19,24 @@ class UIShiftableButton: UIButton {
         stateWasUpdated()
     }
     
+    func setShiftLocked(shiftLocked:Bool) {
+        if shiftLocked {
+            customState.insert(.ShiftLocked)
+        } else {
+            customState.remove(.ShiftLocked)
+        }
+        stateWasUpdated()
+    }
+    
     override var state: UIControlState {
         get {
             return [super.state, customState]
+        }
+    }
+    
+    var shiftLocked:Bool {
+        get {
+            return state.contains(.ShiftLocked)
         }
     }
     
@@ -54,4 +69,5 @@ class UIShiftableButton: UIButton {
 
 public extension UIControlState {
     static let Shifted = UIControlState(rawValue: 1<<16)
+    static let ShiftLocked = UIControlState(rawValue: 1<<17)
 }

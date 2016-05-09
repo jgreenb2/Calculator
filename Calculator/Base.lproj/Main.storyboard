@@ -1104,10 +1104,10 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="ghP-4G-kmw" customClass="UIShiftableButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="20" y="441" width="98" height="41"/>
+                                <rect key="frame" x="20" y="441" width="45" height="41"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" title="Shift">
+                                <state key="normal" title="⇧">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -1162,6 +1162,7 @@
                             <constraint firstItem="TXk-6h-wlX" firstAttribute="bottom" secondItem="oAP-5k-9bA" secondAttribute="bottom" id="2Ti-yx-cB8"/>
                             <constraint firstItem="ieu-rw-jSY" firstAttribute="bottom" secondItem="dWs-1y-vst" secondAttribute="bottom" id="2tX-vN-bx7"/>
                             <constraint firstItem="cN8-hs-oEk" firstAttribute="width" secondItem="HKa-19-9p5" secondAttribute="width" id="2wO-LF-gro"/>
+                            <constraint firstItem="ghP-4G-kmw" firstAttribute="trailing" secondItem="Pct-sE-4X8" secondAttribute="trailing" id="3Cs-nr-22s"/>
                             <constraint firstItem="hby-gx-BBV" firstAttribute="top" secondItem="Pct-sE-4X8" secondAttribute="bottom" constant="8" symbolic="YES" id="3Sf-J4-cuP"/>
                             <constraint firstItem="DR8-ED-fNs" firstAttribute="leading" secondItem="FjV-NG-IlK" secondAttribute="leading" id="3XA-WA-qNN"/>
                             <constraint firstItem="SVT-3Q-ZOR" firstAttribute="leading" secondItem="Rj9-Uc-OEE" secondAttribute="leading" id="4E6-ql-faU"/>
@@ -1615,6 +1616,7 @@
                                 <exclude reference="x3o-5f-l2a"/>
                                 <exclude reference="F69-OY-PXg"/>
                                 <exclude reference="jEl-c1-O9C"/>
+                                <exclude reference="lkh-t7-RRd"/>
                                 <exclude reference="5IY-Df-T6S"/>
                                 <exclude reference="JAb-Yx-9hi"/>
                                 <exclude reference="Tie-JS-Wed"/>
@@ -1931,6 +1933,7 @@
                     <connections>
                         <outlet property="display" destination="StR-rR-igr" id="F8h-aQ-YP1"/>
                         <outlet property="history" destination="pHm-sv-KmD" id="yHl-5o-QJA"/>
+                        <outlet property="shiftButton" destination="ghP-4G-kmw" id="TmQ-26-rEl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
