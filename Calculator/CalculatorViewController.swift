@@ -207,6 +207,13 @@ class CalculatorViewController: UIViewController {
 
     }
     
+    
+    private enum formatMode {
+        case fixed(Int)
+        case sci(Int)
+    }
+
+    private var outputFormat:formatMode = formatMode.fixed(2)
     var displayValue: Double? {
         get {
             if let num=NSNumberFormatter().numberFromString(display.text!) {
@@ -218,7 +225,7 @@ class CalculatorViewController: UIViewController {
         
         set {
             if let v = newValue {
-                display.text = "\(v)"
+                display.text = formatDouble(v, format: outputFormat)
                 userIsInTheMiddleOfTypingANumber = false
             } else {
                 display.text = "0.0"
@@ -226,14 +233,25 @@ class CalculatorViewController: UIViewController {
             history.text = brain.description + "="
         }
     }
+    
+    private func formatDouble(val: Double, format: formatMode) -> String {
+        var output:String
+        switch format {
+            case .fixed(let digits):
+                let formatter = NSNumberFormatter()
+                formatter.numberStyle = .DecimalStyle
+                formatter.maximumFractionDigits = digits
+                formatter.minimumFractionDigits = digits
+                formatter.maximumIntegerDigits = 16 - digits
+                formatter.roundingMode = .RoundHalfDown
+                if let s = formatter.stringFromNumber(val) {
+                    output = s
+                } else {
+                    output = "####"
+                }
+            case .sci(let digits):
+                output = "\(val)"
+        }
+        return output
+    }
 }
-
-func delay(delay:Double, closure:()->()) {
-    dispatch_after(
-        dispatch_time(
-            DISPATCH_TIME_NOW,
-            Int64(delay * Double(NSEC_PER_SEC))
-        ),
-        dispatch_get_main_queue(), closure)
-}
-
