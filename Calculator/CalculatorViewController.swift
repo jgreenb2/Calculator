@@ -216,7 +216,9 @@ class CalculatorViewController: UIViewController {
     private var outputFormat:formatMode = formatMode.fixed(2)
     var displayValue: Double? {
         get {
-            if let num=NSNumberFormatter().numberFromString(display.text!) {
+            let f = NSNumberFormatter()
+            f.usesGroupingSeparator=true
+            if let num=f.numberFromString(display.text!) {
                 return num.doubleValue
             } else {
                 return nil
@@ -242,13 +244,8 @@ class CalculatorViewController: UIViewController {
                 formatter.numberStyle = .DecimalStyle
                 formatter.maximumFractionDigits = digits
                 formatter.minimumFractionDigits = digits
-                formatter.maximumIntegerDigits = 16 - digits
                 formatter.roundingMode = .RoundHalfDown
-                if let s = formatter.stringFromNumber(val) {
-                    output = s
-                } else {
-                    output = "####"
-                }
+                output = formatter.stringFromNumber(val)! 
             case .sci(let digits):
                 output = "\(val)"
         }
