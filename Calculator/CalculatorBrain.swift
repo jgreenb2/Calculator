@@ -105,7 +105,6 @@ class CalculatorBrain {
     private var knownOps = [String:Op]()
     typealias variableDict = [String:Double]
     var variableValues = variableDict()
-    private var preserveStack: Bool = false
     
     // initialize by setting all of the operations
     // that the calculator can do

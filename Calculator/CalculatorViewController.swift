@@ -111,28 +111,30 @@ class CalculatorViewController: UIViewController {
     }
 
     @IBAction func memSet() {
+        if userIsInTheMiddleOfTypingANumber {
+            displayValue = brain.setVariable("M", value: displayValue)
+        } else {
+            displayValue = brain.setVariable("M", value: displayRegister)
+        }
         userIsInTheMiddleOfTypingANumber=false
-        displayValue = brain.setVariable("M", value: displayValue)
     }
 
     @IBAction func memGet() {
         if userIsInTheMiddleOfTypingANumber {
-            userIsInTheMiddleOfTypingANumber=false
             enter()
         }
         displayValue = brain.pushOperand("M")
     }
     
     @IBAction func enter() {
-        userIsInTheMiddleOfTypingANumber = false
         if displayValue != nil {
             displayValue = brain.pushOperand(displayValue!)
         }
+        userIsInTheMiddleOfTypingANumber = false
     }
     
     @IBAction func swapXY() {
         if userIsInTheMiddleOfTypingANumber {
-            userIsInTheMiddleOfTypingANumber=false
             enter()
         }
         brain.swapXY()
@@ -213,20 +215,40 @@ class CalculatorViewController: UIViewController {
         case sci(Int)
     }
 
+    // displayValue is a computed var that returns either
+    // the actual Double that is the result of the last stack
+    // eval (i.e. displayRegister) OR a string->num conversion
+    // of the text currently displayed
+    //
+    // The text representation is only used when the user is actively
+    // entering a number because at that point, the displayRegister
+    // is not yet valid
+    //
+    // setting the displayValue updates the displayRegister and
+    // creates a string representation of displayRegister according
+    // to the current format settings. This string representation is
+    // placed in the display textField.
+    //
     private var outputFormat:formatMode = formatMode.fixed(2)
+    private var displayRegister:Double=0
     var displayValue: Double? {
         get {
-            let f = NSNumberFormatter()
-            f.usesGroupingSeparator=true
-            if let num=f.numberFromString(display.text!) {
-                return num.doubleValue
+            if userIsInTheMiddleOfTypingANumber {
+                let f = NSNumberFormatter()
+                f.usesGroupingSeparator=true
+                if let num=f.numberFromString(display.text!) {
+                    return num.doubleValue
+                } else {
+                    return nil
+                }
             } else {
-                return nil
+                return displayRegister
             }
         }
         
         set {
             if let v = newValue {
+                displayRegister = v
                 display.text = formatDouble(v, format: outputFormat)
                 userIsInTheMiddleOfTypingANumber = false
             } else {
