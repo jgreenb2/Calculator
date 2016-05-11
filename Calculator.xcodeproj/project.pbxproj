@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7508CD291CE38EA30038ECE5 /* CalculatorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7508CD281CE38EA30038ECE5 /* CalculatorButton.swift */; };
 		75937F411B2BC0B500229CFA /* AxesDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75937F401B2BC0B500229CFA /* AxesDrawer.swift */; };
 		75AF0A5A1B34BEC300893452 /* CalculatorViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AF0A591B34BEC300893452 /* CalculatorViews.swift */; };
 		75E3ED701B31E9580061A9C2 /* GlobalUISplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E3ED6F1B31E9580061A9C2 /* GlobalUISplitViewController.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7508CD281CE38EA30038ECE5 /* CalculatorButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculatorButton.swift; sourceTree = SOURCE_ROOT; };
 		75937F401B2BC0B500229CFA /* AxesDrawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AxesDrawer.swift; sourceTree = "<group>"; };
 		75AF0A591B34BEC300893452 /* CalculatorViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculatorViews.swift; sourceTree = "<group>"; };
 		75E3ED6F1B31E9580061A9C2 /* GlobalUISplitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalUISplitViewController.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 				75E72ED71B1A18390014FCD3 /* CalculatorViewController.swift */,
 				75AF0A591B34BEC300893452 /* CalculatorViews.swift */,
 				75E72ED91B1A18390014FCD3 /* Main.storyboard */,
+				7508CD281CE38EA30038ECE5 /* CalculatorButton.swift */,
 				75EBD17F1CDD91D0006AF41F /* UIShiftableButton.swift */,
 				75E3ED6F1B31E9580061A9C2 /* GlobalUISplitViewController.swift */,
 				75E8B8161B2C9792005C542B /* GraphingCalculatorViewController.swift */,
@@ -232,6 +235,7 @@
 				75EBD1771CDD440F006AF41F /* FixedLengthStack.swift in Sources */,
 				75E3ED701B31E9580061A9C2 /* GlobalUISplitViewController.swift in Sources */,
 				75937F411B2BC0B500229CFA /* AxesDrawer.swift in Sources */,
+				7508CD291CE38EA30038ECE5 /* CalculatorButton.swift in Sources */,
 				75E72ED81B1A18390014FCD3 /* CalculatorViewController.swift in Sources */,
 				75E8B8171B2C9792005C542B /* GraphingCalculatorViewController.swift in Sources */,
 				75E8B81B1B2CE07A005C542B /* GraphView.swift in Sources */,

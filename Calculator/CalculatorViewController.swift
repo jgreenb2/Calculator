@@ -8,16 +8,22 @@
 
 import UIKit
 
+protocol CalcEntryMode {
+    func setEntryModeNormal()
+    func isEntryModeNormal() -> Bool
+}
 
-class CalculatorViewController: UIViewController {
+class CalculatorViewController: UIViewController, CalcEntryMode {
     var userIsInTheMiddleOfTypingANumber = false
     var brain = CalculatorBrain()
    
     @IBOutlet weak var shiftButton: UIShiftableButton!
+    @IBOutlet weak var formatButton: UIShiftableButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeShiftButtonStates()
+        initializeButtons()
         shiftButton.setTitle("\u{21EA}", forState: [.ShiftLocked, .Shifted])    // UPWARDS WHITE ARROW FROM BAR
         shiftButton.setTitle("\u{21E7}", forState: .Normal)                     // UPWARDS WHITE ARROW
         shiftButton.setTitleColor(UIColor.redColor(), forState: [.ShiftLocked, .Shifted]) 
@@ -43,15 +49,27 @@ class CalculatorViewController: UIViewController {
     @IBOutlet weak var history: UILabel!
     
     @IBAction func appendDigit(sender: UIButton) {
-        let digit = sender.currentTitle!
-        if userIsInTheMiddleOfTypingANumber {
-            if digit == "."  && display.text!.rangeOfString(".") != nil {
-                return
+        switch entryMode {
+            case .FormatFix:
+                outputFormat = formatMode.Fixed(Int(sender.titleLabel!.text!)!)
+                displayValue = displayRegister
+                entryMode = digitEntryModes.Normal
+            case .FormatSci:
+                outputFormat = formatMode.Sci(Int(sender.titleLabel!.text!)!)
+                displayValue = displayRegister
+                entryMode = digitEntryModes.Normal
+                shiftedState = false
+            case .Normal:
+                let digit = sender.currentTitle!
+                if userIsInTheMiddleOfTypingANumber {
+                    if digit == "."  && display.text!.rangeOfString(".") != nil {
+                        return
+                    }
+                    display.text = display.text! + digit
+                } else {
+                    display.text = digit
+                    userIsInTheMiddleOfTypingANumber = true
             }
-            display.text = display.text! + digit
-        } else {
-            display.text = digit
-            userIsInTheMiddleOfTypingANumber = true
         }
     }
     
@@ -141,7 +159,7 @@ class CalculatorViewController: UIViewController {
         displayValue = brain.evaluate()
     }
     
-    let shiftLabels:[String:String]=["cos":"acos", "sin":"asin", "tan":"atan", "⤾":"⤿"]
+    let shiftLabels:[String:String]=["cos":"acos", "sin":"asin", "tan":"atan", "⤾":"⤿","Fix":"Sci"]
     
     var shiftedState = false {
         didSet {
@@ -193,6 +211,14 @@ class CalculatorViewController: UIViewController {
         }
     }
     
+    func initializeButtons() {
+        for v in view.subviews {
+            if let cb = v as? CalculatorButton {
+                cb.delegate = self
+            }
+        }
+    }
+    
     @IBAction func undo() {
         if shiftedState {
             if let newVal = brain.redo() {
@@ -211,10 +237,44 @@ class CalculatorViewController: UIViewController {
     
     
     private enum formatMode {
-        case fixed(Int)
-        case sci(Int)
+        case Fixed(Int)
+        case Sci(Int)
+    }
+    
+    private enum digitEntryModes {
+        case FormatFix
+        case FormatSci
+        case Normal
+    }
+    
+    lazy var formatButtonBackgroundColor:UIColor={self.formatButton.backgroundColor!}()
+    private var entryMode:digitEntryModes = digitEntryModes.Normal {
+        didSet {
+            if entryMode != .Normal {
+                formatButtonBackgroundColor = formatButton.backgroundColor!
+                formatButton.backgroundColor = UIColor.blackColor()
+            } else {
+                formatButton.backgroundColor = formatButtonBackgroundColor
+            }
+        }
     }
 
+    @IBAction func setFormat(sender: UIShiftableButton) {
+        if !sender.shifted {
+            entryMode = digitEntryModes.FormatFix
+        } else {
+            entryMode = digitEntryModes.FormatSci
+        }
+    }
+    
+    func setEntryModeNormal() {
+        entryMode = digitEntryModes.Normal
+    }
+    
+    func isEntryModeNormal() -> Bool {
+        return entryMode == .Normal
+    }
+    
     // displayValue is a computed var that returns either
     // the actual Double that is the result of the last stack
     // eval (i.e. displayRegister) OR a string->num conversion
@@ -229,7 +289,7 @@ class CalculatorViewController: UIViewController {
     // to the current format settings. This string representation is
     // placed in the display textField.
     //
-    private var outputFormat:formatMode = formatMode.fixed(2)
+    private var outputFormat:formatMode = formatMode.Fixed(2)
     private var displayRegister:Double=0
     var displayValue: Double? {
         get {
@@ -261,14 +321,14 @@ class CalculatorViewController: UIViewController {
     private func formatDouble(val: Double, format: formatMode) -> String {
         var output:String
         switch format {
-            case .fixed(let digits):
+            case .Fixed(let digits):
                 let formatter = NSNumberFormatter()
                 formatter.numberStyle = .DecimalStyle
                 formatter.maximumFractionDigits = digits
                 formatter.minimumFractionDigits = digits
                 formatter.roundingMode = .RoundHalfDown
                 output = formatter.stringFromNumber(val)! 
-            case .sci(let digits):
+            case .Sci(let digits):
                 output = "\(val)"
         }
         return output

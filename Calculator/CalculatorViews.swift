@@ -36,7 +36,7 @@ class CalculatorDisplay: UILabel {
 }
 
 @IBDesignable
-class RoundedButton: UIButton {
+class RoundedButton: CalculatorButton {
     @IBInspectable var cornerRadius: CGFloat = 0 {
         didSet {
             layer.cornerRadius = cornerRadius
@@ -53,3 +53,6 @@ class RoundedButton: UIButton {
     }
 }
 
+class CalculatorDigits: RoundedButton {
+
+}

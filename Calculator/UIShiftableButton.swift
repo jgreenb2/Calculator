@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UIShiftableButton: UIButton {
+class UIShiftableButton: CalculatorButton {
     var customState:UIControlState = .Normal
     func setShifted(shift:Bool) {
         if shift {
