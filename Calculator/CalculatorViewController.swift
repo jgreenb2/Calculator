@@ -8,11 +8,6 @@
 
 import UIKit
 
-protocol CalcEntryMode {
-    func setEntryModeNormal()
-    func isEntryModeNormal() -> Bool
-}
-
 class CalculatorViewController: UIViewController, CalcEntryMode {
     var userIsInTheMiddleOfTypingANumber = false
     var brain = CalculatorBrain()

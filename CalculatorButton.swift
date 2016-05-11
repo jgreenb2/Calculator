@@ -8,11 +8,16 @@
 
 // class exists so that the calculator can inspect button all button events
 
+protocol CalcEntryMode {
+    func setEntryModeNormal()
+    func isEntryModeNormal() -> Bool
+}
+
+
 import UIKit
 
 class CalculatorButton: UIButton {
-    var delegate:CalculatorViewController?
-
+    var delegate:CalcEntryMode?
     override func sendAction(action: Selector, to target: AnyObject?, forEvent event: UIEvent?) {
         if !(self is CalculatorDigits) {
             if delegate != nil {
