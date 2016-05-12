@@ -10,7 +10,7 @@ import Foundation
 
 class CalculatorBrain {
     let degPerRad = 180.0/M_PI
-    private var degMode = true
+    var degMode = true
     
     /*  the basic operator type
         includes a computed variable that can be referenced

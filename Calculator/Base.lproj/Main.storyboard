@@ -2061,6 +2061,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="4fr-bd-oCQ"/>
                     <connections>
+                        <outlet property="degModeButton" destination="wxa-uc-g8i" id="Xzb-ua-zjF"/>
                         <outlet property="display" destination="StR-rR-igr" id="F8h-aQ-YP1"/>
                         <outlet property="formatButton" destination="a1w-j3-Q1G" id="nro-Ad-ogq"/>
                         <outlet property="history" destination="pHm-sv-KmD" id="yHl-5o-QJA"/>

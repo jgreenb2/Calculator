@@ -19,6 +19,7 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
    
     @IBOutlet weak var shiftButton: UIShiftableButton!
     @IBOutlet weak var formatButton: UIShiftableButton!
+    @IBOutlet weak var degModeButton: RoundedButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +30,7 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
         super.viewWillAppear(animated)
         loadDisplayModes()
         displayValue = brain.loadProgram()
+        degMode=brain.degMode
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -87,17 +89,23 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
         }
     }
     
-    var degMode = true
+    private var degMode = true {
+        didSet {
+            setDegButtonTitle(degMode)
+        }
+    }
     @IBAction func degRadMode(sender: RoundedButton) {
         degMode = !degMode
         brain.degMode(degMode)
-        if degMode {
-            sender.setTitle("Deg", forState: .Normal)
-        } else {
-            sender.setTitle("Rad", forState: .Normal)
-        }
     }
     
+    private func setDegButtonTitle(mode:Bool) {
+        if mode {
+            degModeButton.setTitle("Deg", forState: .Normal)
+        } else {
+            degModeButton.setTitle("Rad", forState: .Normal)
+        }
+    }
     @IBAction func changeSign() {
         if userIsInTheMiddleOfTypingANumber {
             display.text = "-" + display.text!
@@ -112,8 +120,7 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
                 case 1:
                     displayValue=0
                 default:
-                    //display.text = String(dropLast((display.text!).characters))
-                    display.text = String((display.text!).characters.dropLast())
+                     display.text = String((display.text!).characters.dropLast())
             }
         } else if displayValue != 0 {
             displayValue = 0
@@ -173,9 +180,9 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
         displayValue = brain.evaluate()
     }
     
-    let shiftLabels:[String:String]=["cos":"acos", "sin":"asin", "tan":"atan", "⤾":"⤿","Fix":"Sci"]
+    private let shiftLabels:[String:String]=["cos":"acos", "sin":"asin", "tan":"atan", "⤾":"⤿","Fix":"Sci"]
     
-    var shiftedState = false {
+    private var shiftedState = false {
         didSet {
             setButtonsToShifted(shiftedState)
             if !shiftedState {
@@ -202,7 +209,7 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
         shiftButton.setShiftLocked(shiftedState)
     }
     
-    func setButtonsToShifted(shift:Bool) {
+    private func setButtonsToShifted(shift:Bool) {
         for v in view.subviews {
             if let sb = v as? UIShiftableButton {
                 sb.setShifted(shift)
@@ -210,7 +217,7 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
         }
     }
     
-    func initializeButtons() {
+    private func initializeButtons() {
         initializeShiftButtonStates()
         setCalcButtonDelegates()
         shiftButton.setTitle("\u{21EA}", forState: [.ShiftLocked, .Shifted])    // UPWARDS WHITE ARROW FROM BAR
@@ -218,7 +225,7 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
         shiftButton.setTitleColor(UIColor.redColor(), forState: [.ShiftLocked, .Shifted]) 
     }
     
-    func setCalcButtonDelegates() {
+    private func setCalcButtonDelegates() {
         for v in view.subviews {
             if let cb = v as? CalculatorButton {
                 cb.delegate = self
@@ -226,7 +233,7 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
         }
     }
     
-    func initializeShiftButtonStates() {
+    private func initializeShiftButtonStates() {
         for v in view.subviews {
             if let sb = v as? UIShiftableButton {
                 sb.setTitleColor(UIColor.redColor(), forState: .Shifted)
@@ -337,7 +344,7 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
     //
     private var outputFormat:formatMode = formatMode.Fixed(2)
     private var displayRegister:Double=0
-    var displayValue: Double? {
+    private var displayValue: Double? {
         get {
             if userIsInTheMiddleOfTypingANumber {
                 let f = NSNumberFormatter()
@@ -364,7 +371,7 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
         }
     }
     
-    lazy var displayFormatter: NSNumberFormatter = {
+    private lazy var displayFormatter: NSNumberFormatter = {
         let formatter = NSNumberFormatter()
         formatter.roundingMode = .RoundHalfDown
         return formatter
