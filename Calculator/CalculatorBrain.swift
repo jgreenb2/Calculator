@@ -344,18 +344,23 @@ class CalculatorBrain {
     private struct SavedProgramKeys {
         static let programKey = "_programKey_"
         static let variablesKey = "_variablesKey_"
+        static let degRadModeKey = "_degRadModeKey_"
     }
     
     func saveProgram() {
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(program, forKey: SavedProgramKeys.programKey)
         defaults.setObject(variableValues, forKey: SavedProgramKeys.variablesKey)
+        defaults.setBool(degMode, forKey: SavedProgramKeys.degRadModeKey)
     }
     
     func loadProgram()-> Double? {
         let defaults = NSUserDefaults.standardUserDefaults()
         if let restoredVariables = defaults.dictionaryForKey(SavedProgramKeys.variablesKey) as? variableDict {
             variableValues = restoredVariables
+        }
+        if let restoredMode = defaults.objectForKey(SavedProgramKeys.degRadModeKey) as? Bool {
+            degMode = restoredMode
         }
         if let restoredProgram = defaults.objectForKey(SavedProgramKeys.programKey) {
             program = restoredProgram

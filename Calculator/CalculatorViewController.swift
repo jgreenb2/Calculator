@@ -7,6 +7,11 @@
 //
 
 import UIKit
+protocol propertyListReadable {
+    associatedtype ValueType
+    func propertyListRepresentation() -> Dictionary<String, ValueType>
+    init?(propertyListRepresentation:Dictionary<String, ValueType>)
+}
 
 class CalculatorViewController: UIViewController, CalcEntryMode {
     var userIsInTheMiddleOfTypingANumber = false
@@ -17,11 +22,7 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        initializeShiftButtonStates()
         initializeButtons()
-        shiftButton.setTitle("\u{21EA}", forState: [.ShiftLocked, .Shifted])    // UPWARDS WHITE ARROW FROM BAR
-        shiftButton.setTitle("\u{21E7}", forState: .Normal)                     // UPWARDS WHITE ARROW
-        shiftButton.setTitleColor(UIColor.redColor(), forState: [.ShiftLocked, .Shifted]) 
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -32,6 +33,22 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         brain.saveProgram()
+    }
+    
+    private struct DefaultKeys {
+        static let fixSciKey = "_fixSciKey_"
+    }
+    
+    private func loadDisplayModes() {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let format = defaults.objectForKey(DefaultKeys.fixSciKey) as? formatMode {
+            outputFormat = format
+        }
+    }
+    
+    private func saveDisplayModes() {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(<#T##value: AnyObject?##AnyObject?#>, forKey: <#T##String#>)
     }
 
     @IBOutlet weak var display: UILabel! {
@@ -191,6 +208,22 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
         }
     }
     
+    func initializeButtons() {
+        initializeShiftButtonStates()
+        setCalcButtonDelegates()
+        shiftButton.setTitle("\u{21EA}", forState: [.ShiftLocked, .Shifted])    // UPWARDS WHITE ARROW FROM BAR
+        shiftButton.setTitle("\u{21E7}", forState: .Normal)                     // UPWARDS WHITE ARROW
+        shiftButton.setTitleColor(UIColor.redColor(), forState: [.ShiftLocked, .Shifted]) 
+    }
+    
+    func setCalcButtonDelegates() {
+        for v in view.subviews {
+            if let cb = v as? CalculatorButton {
+                cb.delegate = self
+            }
+        }
+    }
+    
     func initializeShiftButtonStates() {
         for v in view.subviews {
             if let sb = v as? UIShiftableButton {
@@ -202,14 +235,6 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
                         sb.setTitle(shiftedLabel, forState: .Shifted)
                     }
                 }
-            }
-        }
-    }
-    
-    func initializeButtons() {
-        for v in view.subviews {
-            if let cb = v as? CalculatorButton {
-                cb.delegate = self
             }
         }
     }
@@ -229,11 +254,31 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
         }
 
     }
+
     
-    
-    private enum formatMode {
+    private enum formatMode: propertyListReadable {
         case Fixed(Int)
         case Sci(Int)
+        
+        func propertyListRepresentation() -> [String:Int] {
+            switch self {
+                case .Fixed(let f):
+                    return ["Fixed":f]
+                case .Sci(let s):
+                    return ["Sci":s]
+            }
+        }
+        
+        init?(propertyListRepresentation:[String:Int]?) {
+            guard let val=propertyListRepresentation else {return nil}
+            let (s,v) = val.first!
+            switch s {
+                case "Fixed":
+                    self = formatMode.Fixed(v)
+                case "Sci":
+                    self = formatMode.Sci(v)
+            }
+        }
     }
     
     private enum digitEntryModes {
