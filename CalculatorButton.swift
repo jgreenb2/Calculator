@@ -18,14 +18,13 @@ import UIKit
 
 class CalculatorButton: UIButton {
     var delegate:CalcEntryMode?
+    
+    // catch all actions make sure that only a digit key can
+    // be pressed in format mode. 
     override func sendAction(action: Selector, to target: AnyObject?, forEvent event: UIEvent?) {
-        if !(self is CalculatorDigits) {
-            if delegate != nil {
-                if !delegate!.isEntryModeNormal() { 
-                    delegate?.setEntryModeNormal()
-                    return 
-                }
-            }
+        guard (self is CalculatorDigits) || (delegate?.isEntryModeNormal())! else {
+            delegate!.setEntryModeNormal()
+            return
         }
         super.sendAction(action, to: target, forEvent: event)
     }
