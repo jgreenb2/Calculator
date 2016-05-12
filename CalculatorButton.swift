@@ -22,9 +22,11 @@ class CalculatorButton: UIButton {
     // catch all actions make sure that only a digit key can
     // be pressed in format mode.
     override func sendAction(action: Selector, to target: AnyObject?, forEvent event: UIEvent?) {
-        guard (self is CalculatorDigits) || (delegate?.isEntryModeNormal())! else {
-            delegate?.setEntryModeNormal()
-            return
+        if delegate != nil {
+            guard (self is CalculatorDigits) || (delegate?.isEntryModeNormal())! else {
+                delegate?.setEntryModeNormal()
+                return
+            }
         }
         super.sendAction(action, to: target, forEvent: event)
     }
