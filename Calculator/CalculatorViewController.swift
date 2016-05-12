@@ -314,24 +314,26 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
         }
     }
     
+    lazy var displayFormatter: NSNumberFormatter = {
+        let formatter = NSNumberFormatter()
+        formatter.roundingMode = .RoundHalfDown
+        return formatter
+    }()
+    
     private func formatDouble(val: Double, format: formatMode) -> String {
         var output:String
-        let formatter = NSNumberFormatter()
         switch format {
             case .Fixed(let digits):
-                formatter.numberStyle = .DecimalStyle
-                formatter.maximumFractionDigits = digits
-                formatter.minimumFractionDigits = digits
-                formatter.roundingMode = .RoundHalfDown
-                output = formatter.stringFromNumber(val)! 
+                displayFormatter.numberStyle = .DecimalStyle
+                displayFormatter.maximumFractionDigits = digits
+                displayFormatter.minimumFractionDigits = digits
+                output = displayFormatter.stringFromNumber(val)!
             case .Sci(let digits):
-                formatter.numberStyle = .ScientificStyle
-                formatter.maximumFractionDigits = digits
-                formatter.minimumFractionDigits = digits
-                formatter.roundingMode = .RoundHalfDown
-                output = formatter.stringFromNumber(val)!
-               // output = "\(val)"
-        }
+                displayFormatter.numberStyle = .ScientificStyle
+                displayFormatter.maximumFractionDigits = digits
+                displayFormatter.minimumFractionDigits = digits
+                output = displayFormatter.stringFromNumber(val)!
+         }
         return output
     }
 }
