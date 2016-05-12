@@ -9,8 +9,8 @@
 import UIKit
 protocol propertyListReadable {
     associatedtype ValueType
-    func propertyListRepresentation() -> Dictionary<String, ValueType>
-    init?(propertyListRepresentation:Dictionary<String, ValueType>)
+    func propertyListRepresentation() -> [String:ValueType]
+    init?(propertyListRepresentation:[String:ValueType]?)
 }
 
 class CalculatorViewController: UIViewController, CalcEntryMode {
@@ -27,12 +27,14 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        loadDisplayModes()
         displayValue = brain.loadProgram()
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         brain.saveProgram()
+        saveDisplayModes()
     }
     
     private struct DefaultKeys {
@@ -41,14 +43,14 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
     
     private func loadDisplayModes() {
         let defaults = NSUserDefaults.standardUserDefaults()
-        if let format = defaults.objectForKey(DefaultKeys.fixSciKey) as? formatMode {
+        if let format = formatMode(propertyListRepresentation: defaults.dictionaryForKey(DefaultKeys.fixSciKey) as? [String:Int]) {
             outputFormat = format
         }
     }
     
     private func saveDisplayModes() {
         let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(<#T##value: AnyObject?##AnyObject?#>, forKey: <#T##String#>)
+        defaults.setObject(outputFormat.propertyListRepresentation(), forKey: DefaultKeys.fixSciKey)
     }
 
     @IBOutlet weak var display: UILabel! {
@@ -255,8 +257,8 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
 
     }
 
-    
     private enum formatMode: propertyListReadable {
+        typealias ValueType=Int
         case Fixed(Int)
         case Sci(Int)
         
@@ -273,13 +275,16 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
             guard let val=propertyListRepresentation else {return nil}
             let (s,v) = val.first!
             switch s {
-                case "Fixed":
-                    self = formatMode.Fixed(v)
-                case "Sci":
-                    self = formatMode.Sci(v)
+            case "Fixed":
+                self = formatMode.Fixed(v)
+            case "Sci":
+                self = formatMode.Sci(v)
+            default:
+                return nil
             }
         }
     }
+   
     
     private enum digitEntryModes {
         case FormatFix
