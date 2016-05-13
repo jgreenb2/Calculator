@@ -33,45 +33,45 @@ class GraphView: UIView {
     // a computed version of the origin that returns the default center position
     // OR the graphOrigin if it's been set. Whenever anyone wants to know what
     // the current origin is, this is what you pass them
-    var graphCenter: CGPoint {
+    private var graphCenter: CGPoint {
         return graphOrigin ?? convertPoint(center, fromCoordinateSpace: superview!)
     }
 
     @IBInspectable
-    var lineWidth: CGFloat = 1 { didSet { setNeedsDisplay() } }
+    private var lineWidth: CGFloat = 1 { didSet { setNeedsDisplay() } }
     
     @IBInspectable
-    var axesColor: UIColor = UIColor.blueColor() { didSet { setNeedsDisplay() } }
+    private var axesColor: UIColor = UIColor.blueColor() { didSet { setNeedsDisplay() } }
     
     @IBInspectable
-    var lineColor: UIColor = UIColor.redColor() { didSet { setNeedsDisplay() } }
+    private var lineColor: UIColor = UIColor.redColor() { didSet { setNeedsDisplay() } }
     
     @IBInspectable
-    var minX:Double = -10
+    private var minX:Double = -10
     @IBInspectable
-    var maxX:Double = 10
+    private var maxX:Double = 10
     @IBInspectable
-    var minY:Double = -10
+    private var minY:Double = -10
     @IBInspectable
-    var maxY:Double = 10
+    private var maxY:Double = 10
     
-    var touchCenter:CGPoint = CGPoint(x: 0, y: 0)
-    let radius:CGFloat = 10
+    private var touchCenter:CGPoint = CGPoint(x: 0, y: 0)
+    private let radius:CGFloat = 10
 
-    var simplePlot:Bool = false
+    private var simplePlot:Bool = false
     
-    var density: (x: CGFloat, y: CGFloat) = (25,25) {
+    private var density: (x: CGFloat, y: CGFloat) = (25,25) {
         didSet {
             (minX,maxX) = newXRange(density.x, origin: graphCenter)
             (minY,maxY) = newYRange(density.y, origin: graphCenter)
         }
     }
     
-    func newYRange(density: CGFloat, origin: CGPoint) -> (yMin:Double, yMax:Double) {
+    private func newYRange(density: CGFloat, origin: CGPoint) -> (yMin:Double, yMax:Double) {
         return (Double(-origin.y/density), Double((bounds.maxY-origin.y)/density))
     }
     
-    func newXRange(density: CGFloat, origin: CGPoint) -> (xMin:Double, xMax:Double) {
+    private func newXRange(density: CGFloat, origin: CGPoint) -> (xMin:Double, xMax:Double) {
         return (Double(-origin.x/density), Double((bounds.maxX-origin.x)/density))
     }
     
@@ -92,7 +92,7 @@ class GraphView: UIView {
     // undefined points
     weak var dataSource: GraphViewDataSource?
 
-    func plotFunction(rect: CGRect, simple:Bool = false) {
+    private func plotFunction(rect: CGRect, simple:Bool = false) {
         var prevValueUndefined = true
         let resolutionFactor:CGFloat = (simple ? 2.0 : 1.0)
         let curve = UIBezierPath()
@@ -119,27 +119,27 @@ class GraphView: UIView {
     
     // coord transform functions
     
-    func XYToPoint(x: Double, _ y: Double) -> CGPoint {
+    private func XYToPoint(x: Double, _ y: Double) -> CGPoint {
         return CGPoint(x: XToScreen(x), y: YToScreen(y))
     }
     
-    func ScreenToX(i: CGFloat) -> Double {
+    private func ScreenToX(i: CGFloat) -> Double {
         return Double((i - graphCenter.x)/density.x)
     }
     
-    func ScreenToY(i: CGFloat) -> Double {
+    private func ScreenToY(i: CGFloat) -> Double {
         return Double((graphCenter.y - i)/density.y)
     }
     
-    func XToScreen(x: Double) -> CGFloat {
+    private func XToScreen(x: Double) -> CGFloat {
         return CGFloat(x)*density.x + graphCenter.x
     }
     
-    func YToScreen(y: Double) -> CGFloat {
+    private func YToScreen(y: Double) -> CGFloat {
         return -CGFloat(y)*density.y + graphCenter.y
     }
     
-    func ScreenToXY(p: CGPoint) -> CGPoint {
+    private func ScreenToXY(p: CGPoint) -> CGPoint {
         return CGPoint(x: ScreenToX(p.x), y: ScreenToY(p.y))
     }
     
