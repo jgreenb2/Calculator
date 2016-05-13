@@ -8,11 +8,6 @@
 
 // class exists so that the calculator can inspect all button events
 
-protocol CalcEntryMode {
-    func setEntryModeNormal()
-    func isEntryModeNormal() -> Bool
-}
-
 protocol ButtonEventInspection {
     func actionShouldNotBePerformed(action: Selector, from source: AnyObject?, to target: AnyObject?, forEvent event: UIEvent? ) -> Bool
 }
