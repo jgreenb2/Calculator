@@ -1,14 +1,58 @@
 //
-//  UIShiftableButton.swift
+//  CalculatorButtons.swift
 //  Calculator
 //
-//  Created by Jeff Greenberg on 5/6/16.
+//  Created by jeff greenberg on 5/11/16.
 //  Copyright © 2016 Jeff Greenberg. All rights reserved.
 //
 
-import UIKit
+// various button classes used for the calculator keys
 
-class UIShiftableButton: CalculatorButton {
+protocol ButtonEventInspection {
+    func actionShouldNotBePerformed(action: Selector, from source: AnyObject?, to target: AnyObject?, forEvent event: UIEvent? ) -> Bool
+}
+
+import UIKit
+@IBDesignable
+class CalculatorButton: UIButton {
+    var delegate:ButtonEventInspection?
+    
+    // catch all actions make sure that only a digit key can
+    // be pressed in format mode.
+    override func sendAction(action: Selector, to target: AnyObject?, forEvent event: UIEvent?) {
+        if delegate != nil {
+            if delegate!.actionShouldNotBePerformed(action, from: self, to: target, forEvent: event) {
+                return
+            }
+        }
+        super.sendAction(action, to: target, forEvent: event)
+    }
+}
+
+@IBDesignable
+class RoundedButton: CalculatorButton {
+    @IBInspectable var cornerRadius: CGFloat = 0 {
+        didSet {
+            layer.cornerRadius = cornerRadius
+            layer.masksToBounds = cornerRadius > 0
+        }
+    }
+    @IBInspectable var sizeTextToFit: Bool = false {
+        didSet {
+            let label = self.titleLabel
+            label?.minimumScaleFactor = 0.5
+            label?.adjustsFontSizeToFitWidth = sizeTextToFit
+            label?.setNeedsDisplay()
+        }
+    }
+}
+
+@IBDesignable
+class CalculatorDigits: RoundedButton {    
+}
+
+@IBDesignable
+class ShiftableButton: CalculatorButton {
     var customState:UIControlState = .Normal
     func setShifted(shift:Bool) {
         if shift {
@@ -63,8 +107,7 @@ class UIShiftableButton: CalculatorButton {
             label?.adjustsFontSizeToFitWidth = sizeTextToFit
             label?.setNeedsDisplay()
         }
-    }
-
+    }    
 }
 
 public extension UIControlState {

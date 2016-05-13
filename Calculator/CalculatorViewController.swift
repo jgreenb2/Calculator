@@ -36,8 +36,8 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
    
     // shift and mode buttons need special handling so we
     // retain outlets to them here
-    @IBOutlet weak var shiftButton: UIShiftableButton!
-    @IBOutlet weak var formatButton: UIShiftableButton!
+    @IBOutlet weak var shiftButton: ShiftableButton!
+    @IBOutlet weak var formatButton: ShiftableButton!
     @IBOutlet weak var degModeButton: RoundedButton!
     
     override func viewDidLoad() {
@@ -215,7 +215,7 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
         displayValue = brain.evaluate()
     }
     
-    // shifted keys are UIShiftableButtons. Shifted labels go here.
+    // shifted keys are ShiftableButtons. Shifted labels go here.
     private let shiftLabels:[String:String]=["cos":"acos", "sin":"asin", "tan":"atan", "⤾":"⤿","Fix":"Sci"]
     // track the shift state
     private var shiftedState = false {
@@ -229,7 +229,7 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
     
     // delay the single tap on the shift key for a short interval in case the user is
     // actually doing a double tap. Then toggle the shift state.
-    @IBAction func shiftOnSingleTap(sender: UIShiftableButton) {
+    @IBAction func shiftOnSingleTap(sender: ShiftableButton) {
         performSelector(#selector(self.toggleShift), withObject: nil, afterDelay: 0.25)
     }
     
@@ -239,16 +239,16 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
     
     // if there's a double tap, cancel the previous single tap and lock the
     // shift button down.
-    @IBAction func shiftLock(sender: UIShiftableButton, forEvent event: UIEvent) {
+    @IBAction func shiftLock(sender: ShiftableButton, forEvent event: UIEvent) {
         NSObject.cancelPreviousPerformRequestsWithTarget(self)
         shiftedState = true
         shiftButton.setShiftLocked(shiftedState)
     }
     
-    // puts any UIShiftableButton objects into shift mode
+    // puts any ShiftableButton objects into shift mode
     private func setButtonsToShifted(shift:Bool) {
         for v in view.subviews {
-            if let sb = v as? UIShiftableButton {
+            if let sb = v as? ShiftableButton {
                 sb.setShifted(shift)
             }
         }
@@ -277,7 +277,7 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
     // definitions here.
     private func initializeShiftButtonStates() {
         for v in view.subviews {
-            if let sb = v as? UIShiftableButton {
+            if let sb = v as? ShiftableButton {
                 sb.setTitleColor(UIColor.redColor(), forState: .Shifted)
                 sb.setShifted(false)
                 
@@ -367,7 +367,7 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
         }
     }
 
-    @IBAction func setFormat(sender: UIShiftableButton) {
+    @IBAction func setFormat(sender: ShiftableButton) {
         if !sender.shifted {
             entryMode = digitEntryModes.FormatFix
         } else {
