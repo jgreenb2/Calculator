@@ -1,22 +1,43 @@
 //
-//  ViewController.swift
+//  CalculatorViewController.swift
 //  Calculator
+//
+//  View controller for the main calculator control panel
 //
 //  Created by Jeff Greenberg on 5/30/15.
 //  Copyright (c) 2015 Jeff Greenberg. All rights reserved.
 //
 
 import UIKit
+
+// types that conform to propertyListReadable can
+// be serialized for storage in NSUserDefaults
 protocol propertyListReadable {
     associatedtype ValueType
     func propertyListRepresentation() -> [String:ValueType]
     init?(propertyListRepresentation:[String:ValueType]?)
 }
 
+// CalcEntryMode is a protocol that implements a simple state machine
+// that determines how keypresses are handled. The calculator implements
+// RPN semantics but the Fix/Sci button works like the HP 15C -- i.e. "fix 4" 
+// or "sci 3". That change in semantics is implemented by the CalculatorButton class
+// using the CalcEntryMode protocol
+
 class CalculatorViewController: UIViewController, CalcEntryMode {
+    
+    // state variables
     var userIsInTheMiddleOfTypingANumber = false
-    var brain = CalculatorBrain()
+    var brain = CalculatorBrain()                   // brain is the calc model
+    
+    private var degMode = true {
+        didSet {
+            setDegButtonTitle(degMode)
+        }
+    }
    
+    // shift and mode buttons need special handling so we
+    // retain outlets to them here
     @IBOutlet weak var shiftButton: UIShiftableButton!
     @IBOutlet weak var formatButton: UIShiftableButton!
     @IBOutlet weak var degModeButton: RoundedButton!
@@ -26,6 +47,7 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
         initializeButtons()
     }
     
+    // restore programs and modes from the last session
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         loadDisplayModes()
@@ -33,16 +55,21 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
         degMode=brain.degMode
     }
     
+    // save current program and modes
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         brain.saveProgram()
         saveDisplayModes()
     }
     
+    // keys for storage
     private struct DefaultKeys {
         static let fixSciKey = "_fixSciKey_"
     }
     
+    // formatMode is an enum which can't be save directly by NSUserDefaults
+    // formatMode conforms to the propertyListReadable protocol which allows
+    // it to be serialized for storage
     private func loadDisplayModes() {
         let defaults = NSUserDefaults.standardUserDefaults()
         if let format = formatMode(propertyListRepresentation: defaults.dictionaryForKey(DefaultKeys.fixSciKey) as? [String:Int]) {
@@ -55,6 +82,7 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
         defaults.setObject(outputFormat.propertyListRepresentation(), forKey: DefaultKeys.fixSciKey)
     }
 
+    // the main numeric display
     @IBOutlet weak var display: UILabel! {
         didSet { 
             display.layer.cornerRadius=8
@@ -62,8 +90,11 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
             display.minimumScaleFactor=0.8
         }
     }
+    
+    // displays the calculator 'tape' in infix format
     @IBOutlet weak var history: UILabel!
     
+    // process the 0-9 keys
     @IBAction func appendDigit(sender: UIButton) {
         switch entryMode {
             case .FormatFix:
@@ -88,24 +119,23 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
             }
         }
     }
-    
-    private var degMode = true {
-        didSet {
-            setDegButtonTitle(degMode)
-        }
-    }
+
+    // process deg/rad key
     @IBAction func degRadMode(sender: RoundedButton) {
         degMode = !degMode
         brain.degMode(degMode)
     }
     
+    // the key label displays the current mode
     private func setDegButtonTitle(mode:Bool) {
         if mode {
-            degModeButton.setTitle("Deg", forState: .Normal)
+            degModeButton.titleLabel?.text = "Deg"
         } else {
-            degModeButton.setTitle("Rad", forState: .Normal)
+            degModeButton.titleLabel?.text = "Rad"
         }
     }
+    
+    // process the +/- key
     @IBAction func changeSign() {
         if userIsInTheMiddleOfTypingANumber {
             display.text = "-" + display.text!
@@ -114,6 +144,7 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
         }
     }
     
+    // erase one digit if still entering, else clear the display
     @IBAction func backspace() {
         if userIsInTheMiddleOfTypingANumber {
             switch (display.text!).characters.count {
@@ -128,11 +159,13 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
         }
     }
     
+    // process clear key
     @IBAction func clear() {
         brain.clear()
         displayValue=0
     }
     
+    // process math operations. some of these have shifted functions.
     @IBAction func operate(sender: UIButton) {
         if userIsInTheMiddleOfTypingANumber {
             enter()
@@ -149,6 +182,7 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
         }
     }
 
+    // store current value in variable "M"
     @IBAction func memSet() {
         if userIsInTheMiddleOfTypingANumber {
             displayValue = brain.setVariable("M", value: displayValue)
@@ -158,6 +192,7 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
         userIsInTheMiddleOfTypingANumber=false
     }
 
+    // recall variable "M"
     @IBAction func memGet() {
         if userIsInTheMiddleOfTypingANumber {
             enter()
@@ -165,6 +200,7 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
         displayValue = brain.pushOperand("M")
     }
     
+    // process enter key
     @IBAction func enter() {
         if displayValue != nil {
             displayValue = brain.pushOperand(displayValue!)
@@ -172,6 +208,7 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
         userIsInTheMiddleOfTypingANumber = false
     }
     
+    // swap the first two items on the stack
     @IBAction func swapXY() {
         if userIsInTheMiddleOfTypingANumber {
             enter()
@@ -180,8 +217,9 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
         displayValue = brain.evaluate()
     }
     
+    // shifted keys are UIShiftableButtons. Shifted labels go here.
     private let shiftLabels:[String:String]=["cos":"acos", "sin":"asin", "tan":"atan", "⤾":"⤿","Fix":"Sci"]
-    
+    // track the shift state
     private var shiftedState = false {
         didSet {
             setButtonsToShifted(shiftedState)
@@ -191,7 +229,7 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
         }
     }
     
-    // delay the single tap for a short interval in case the user is 
+    // delay the single tap on the shift key for a short interval in case the user is
     // actually doing a double tap. Then toggle the shift state.
     @IBAction func shiftOnSingleTap(sender: UIShiftableButton) {
         performSelector(#selector(self.toggleShift), withObject: nil, afterDelay: 0.25)
@@ -209,6 +247,7 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
         shiftButton.setShiftLocked(shiftedState)
     }
     
+    // puts any UIShiftableButton objects into shift mode
     private func setButtonsToShifted(shift:Bool) {
         for v in view.subviews {
             if let sb = v as? UIShiftableButton {
@@ -217,6 +256,7 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
         }
     }
     
+    // set up calculator buttons
     private func initializeButtons() {
         initializeShiftButtonStates()
         setCalcButtonDelegates()
@@ -225,6 +265,8 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
         shiftButton.setTitleColor(UIColor.redColor(), forState: [.ShiftLocked, .Shifted]) 
     }
     
+    // Calculator buttons can cooperate with the CalcEntryMode protocol
+    // which is implemented here. So set the delegate to self.
     private func setCalcButtonDelegates() {
         for v in view.subviews {
             if let cb = v as? CalculatorButton {
@@ -233,6 +275,8 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
         }
     }
     
+    // shifted state buttons change label and color. Set up the shifted state
+    // definitions here.
     private func initializeShiftButtonStates() {
         for v in view.subviews {
             if let sb = v as? UIShiftableButton {
@@ -248,6 +292,7 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
         }
     }
     
+    // process undo key
     @IBAction func undo() {
         if shiftedState {
             if let newVal = brain.redo() {
@@ -264,6 +309,11 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
 
     }
 
+    // this is a trivial enum to handle the format modes.
+    //
+    // unfortunately, we can't store enums directly so the rest of
+    // this code conforms to the propertyListReadable protocol which
+    // serializes an enum into a Dictionary which can be stored
     private enum formatMode: propertyListReadable {
         typealias ValueType=Int
         case Fixed(Int)
@@ -292,7 +342,14 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
         }
     }
    
-    
+    // In FormatFix or FormatSci mode the next key *must* be 0-9 
+    // This sets the number of digits after the decimal point.
+    //
+    // If the next key is anything other than a digit the keypress is discarded
+    // and the mode is set back to Normal/Unshifted
+    //
+    // The CalculatorButton has a CalcEntry mode delegate that handles the little state machine
+    // needed to make this happen
     private enum digitEntryModes {
         case FormatFix
         case FormatSci
