@@ -38,7 +38,7 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
     // retain outlets to them here
     @IBOutlet weak var shiftButton: ShiftableButton!
     @IBOutlet weak var formatButton: ShiftableButton!
-    @IBOutlet weak var degModeButton: RoundedButton!
+    @IBOutlet weak var degModeButton: CalculatorButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -119,7 +119,7 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
     }
 
     // process deg/rad key
-    @IBAction func degRadMode(sender: RoundedButton) {
+    @IBAction func degRadMode(sender: CalculatorButton) {
         degMode = !degMode
         brain.degMode(degMode)
     }

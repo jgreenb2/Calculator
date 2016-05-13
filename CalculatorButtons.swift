@@ -27,10 +27,6 @@ class CalculatorButton: UIButton {
         }
         super.sendAction(action, to: target, forEvent: event)
     }
-}
-
-@IBDesignable
-class RoundedButton: CalculatorButton {
     @IBInspectable var cornerRadius: CGFloat = 0 {
         didSet {
             layer.cornerRadius = cornerRadius
@@ -48,7 +44,7 @@ class RoundedButton: CalculatorButton {
 }
 
 @IBDesignable
-class CalculatorDigits: RoundedButton {    
+class CalculatorDigits: CalculatorButton {    
 }
 
 @IBDesignable
@@ -92,21 +88,6 @@ class ShiftableButton: CalculatorButton {
     
     func stateWasUpdated() {
         setNeedsLayout()
-    }
-    
-    @IBInspectable var cornerRadius: CGFloat = 0 {
-        didSet {
-            layer.cornerRadius = cornerRadius
-            layer.masksToBounds = cornerRadius > 0
-        }
-    }
-    @IBInspectable var sizeTextToFit: Bool = false {
-        didSet {
-            let label = self.titleLabel
-            label?.minimumScaleFactor = 0.5
-            label?.adjustsFontSizeToFitWidth = sizeTextToFit
-            label?.setNeedsDisplay()
-        }
     }    
 }
 
