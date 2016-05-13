@@ -13,22 +13,23 @@ protocol CalcEntryMode {
     func isEntryModeNormal() -> Bool
 }
 
+protocol ButtonEventInspection {
+    func actionShouldNotBePerformed(action: Selector, from source: AnyObject?, to target: AnyObject?, forEvent event: UIEvent? ) -> Bool
+}
 
 import UIKit
 
 class CalculatorButton: UIButton {
-    var delegate:CalcEntryMode?
+    var delegate:ButtonEventInspection?
     
     // catch all actions make sure that only a digit key can
     // be pressed in format mode.
     override func sendAction(action: Selector, to target: AnyObject?, forEvent event: UIEvent?) {
         if delegate != nil {
-            guard (self is CalculatorDigits) || (delegate?.isEntryModeNormal())! else {
-                delegate?.setEntryModeNormal()
+            if delegate!.actionShouldNotBePerformed(action, from: self, to: target, forEvent: event) {
                 return
             }
         }
         super.sendAction(action, to: target, forEvent: event)
     }
 }
-

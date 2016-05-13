@@ -18,13 +18,11 @@ protocol propertyListReadable {
     init?(propertyListRepresentation:[String:ValueType]?)
 }
 
-// CalcEntryMode is a protocol that implements a simple state machine
-// that determines how keypresses are handled. The calculator implements
-// RPN semantics but the Fix/Sci button works like the HP 15C -- i.e. "fix 4" 
-// or "sci 3". That change in semantics is implemented by the CalculatorButton class
-// using the CalcEntryMode protocol
+// ButtonEventInspection is a protocol that allows inspection of
+// button events and conditional suppression of the associated
+// action. It's used to implement the fix/sci button semantics
 
-class CalculatorViewController: UIViewController, CalcEntryMode {
+class CalculatorViewController: UIViewController, ButtonEventInspection {
     
     // state variables
     var userIsInTheMiddleOfTypingANumber = false
@@ -265,7 +263,7 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
         shiftButton.setTitleColor(UIColor.redColor(), forState: [.ShiftLocked, .Shifted]) 
     }
     
-    // Calculator buttons can cooperate with the CalcEntryMode protocol
+    // Calculator buttons can cooperate with the ButtonEventInspection protocol
     // which is implemented here. So set the delegate to self.
     private func setCalcButtonDelegates() {
         for v in view.subviews {
@@ -348,8 +346,9 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
     // If the next key is anything other than a digit the keypress is discarded
     // and the mode is set back to Normal/Unshifted
     //
-    // The CalculatorButton has a CalcEntry mode delegate that handles the little state machine
-    // needed to make this happen
+    // The CalculatorButton has a ButtonEventInspection delegate that allows
+    // the view controller to inspect key presses
+    //
     private enum digitEntryModes {
         case FormatFix
         case FormatSci
@@ -376,13 +375,20 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
         }
     }
     
-    func setEntryModeNormal() {
-        entryMode = digitEntryModes.Normal
-        shiftedState=false
+    // This is the ButtonEventInspection protocol function that allows us to
+    // inspect a button event and conditionally suppress any action
+    func actionShouldNotBePerformed(action: Selector, from source: AnyObject?, to target: AnyObject?, forEvent event: UIEvent?) -> Bool {
+        if (entryMode == .Normal || source is CalculatorDigits) {
+            return false
+        } else {
+            setEntryModeNormal()
+            return true
+        }
     }
     
-    func isEntryModeNormal() -> Bool {
-        return entryMode == .Normal
+    private func setEntryModeNormal() {
+        entryMode = digitEntryModes.Normal
+        shiftedState=false
     }
     
     // displayValue is a computed var that returns either
