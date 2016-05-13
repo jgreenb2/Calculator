@@ -8,14 +8,14 @@
 
 // various button classes used for the calculator keys
 
-protocol ButtonEventInspection {
+protocol ButtonEventInspection: class {
     func actionShouldNotBePerformed(action: Selector, from source: AnyObject?, to target: AnyObject?, forEvent event: UIEvent? ) -> Bool
 }
 
 import UIKit
 @IBDesignable
 class CalculatorButton: UIButton {
-    var delegate:ButtonEventInspection?
+    weak var delegate:ButtonEventInspection?
     
     // catch all actions make sure that only a digit key can
     // be pressed in format mode.
