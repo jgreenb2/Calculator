@@ -129,9 +129,9 @@ class CalculatorViewController: UIViewController, CalcEntryMode {
     // the key label displays the current mode
     private func setDegButtonTitle(mode:Bool) {
         if mode {
-            degModeButton.titleLabel?.text = "Deg"
+            degModeButton.setTitle("Deg", forState: .Normal)
         } else {
-            degModeButton.titleLabel?.text = "Rad"
+            degModeButton.setTitle("Rad", forState: .Normal)
         }
     }
     
