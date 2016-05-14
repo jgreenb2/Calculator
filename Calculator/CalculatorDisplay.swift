@@ -1,5 +1,5 @@
 //
-//  CalculatorViews.swift
+//  CalculatorDisplay.swift
 //  Calculator
 //
 //  Created by jeff greenberg on 6/19/15.

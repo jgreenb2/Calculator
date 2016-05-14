@@ -17,8 +17,8 @@ import UIKit
 class CalculatorButton: UIButton {
     weak var delegate:ButtonEventInspection?
     
-    // catch all actions make sure that only a digit key can
-    // be pressed in format mode.
+    // catch all actions and check with the delegate to see
+    // if it should be performed
     override func sendAction(action: Selector, to target: AnyObject?, forEvent event: UIEvent?) {
         if delegate != nil {
             if delegate!.actionShouldNotBePerformed(action, from: self, to: target, forEvent: event) {
