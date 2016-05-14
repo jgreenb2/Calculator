@@ -166,6 +166,7 @@ class CalculatorBrain {
     func clear() {
         opStack.removeAll(keepCapacity: false)
         variableValues.removeAll(keepCapacity: false)
+        undoStack.clear()
     }
     
     // push an operand on the stack and return the
@@ -196,6 +197,8 @@ class CalculatorBrain {
         return evaluate()
     }
     
+    // if we have 2 consecutive sign changes we just undo the last one so that
+    // we don't clutter up the stack and the infix rep
     func changeSign() -> Double? {
         guard ((undoStack.cur()! as [Op]).last?.description != OperatorSymbols.PlusMinus) else {
             return undo()

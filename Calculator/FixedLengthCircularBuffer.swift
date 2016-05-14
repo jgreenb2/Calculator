@@ -48,6 +48,12 @@ class FixedLengthCircularBuffer<T> {
         return stack[pos]
     }
     
+    func clear() {
+        pWrite = -1
+        pos = -1
+        stack = [T?](count: size, repeatedValue: nil)
+    }
+    
     private func inc(i: Int) -> Int {
         return (i + 1) % size
     }

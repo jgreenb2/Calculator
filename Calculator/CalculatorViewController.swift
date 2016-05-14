@@ -136,7 +136,11 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
     // process the +/- key
     @IBAction func changeSign() {
         if userIsInTheMiddleOfTypingANumber {
-            display.text = "-" + display.text!
+            if display.text?.characters.first == "-" {
+                display.text = String((display.text!).characters.dropFirst())
+            } else {
+                display.text = "-" + display.text!
+            }
         } else if abs(displayValue!) > 0.0 {
             displayValue = brain.changeSign()!
         }
