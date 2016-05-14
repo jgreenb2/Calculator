@@ -8,55 +8,58 @@
 
 import Foundation
 class FixedLengthCircularBuffer<T> {
-    private var pWrite:Int
-    private var pos:Int
+    private var pEnd:Int
+    private var pCur:Int
     private var size:Int
     private var stack:[T?]
     
     
     init(N: Int) {
-        pWrite = -1
-        pos = -1
+        pEnd = -1
+        pCur = -1
         size = N
         stack = [T?](count: N, repeatedValue: nil)
         stack.reserveCapacity(N)
     }
     
     func add(item: T) {
-        pWrite = inc(pos)
-        pos = pWrite
-        stack[pWrite]=item
+        pEnd = inc(pCur)
+        pCur = pEnd
+        stack[pEnd]=item
     }
     
     func next() -> T? {
-        if (pos == pWrite) {
+        guard (pCur != pEnd) else {
             return nil
         }
-        pos = inc(pos)
-        return stack[pos]
+        
+        pCur = inc(pCur)
+        return stack[pCur]
     }
     
     func prev() -> T? {
-        if (dec(pos) == pWrite || pos < 0 || stack[dec(pos)]==nil ) {
+        guard (dec(pCur) != pEnd && pCur >= 0 && stack[dec(pCur)] != nil ) else {
             return nil
         }
-        pos = dec(pos)
-        return stack[pos]
+        
+        pCur = dec(pCur)
+        return stack[pCur]
     }
     
     func cur() -> T? {
-        return stack[pos]
+        return stack[pCur]
     }
     
     func clear() {
-        pWrite = -1
-        pos = -1
+        pEnd = -1
+        pCur = -1
         stack = [T?](count: size, repeatedValue: nil)
     }
     
     private func inc(i: Int) -> Int {
         return (i + 1) % size
     }
+    
     private func dec(i: Int) -> Int {
         if (i - 1) < 0 {
             return size-1
