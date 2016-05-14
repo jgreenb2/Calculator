@@ -1,5 +1,5 @@
 //
-//  FixedLengthStack.swift
+//  FixedLengthCircularBuffer.swift
 //  Calculator
 //
 //  Created by Jeff Greenberg on 5/6/16.
@@ -7,41 +7,45 @@
 //
 
 import Foundation
-class FixedLengthStack<T> {
+class FixedLengthCircularBuffer<T> {
     private var pWrite:Int
-    private var pRead:Int
+    private var pos:Int
     private var size:Int
     private var stack:[T?]
     
     
     init(N: Int) {
         pWrite = -1
-        pRead = -1
+        pos = -1
         size = N
         stack = [T?](count: N, repeatedValue: nil)
         stack.reserveCapacity(N)
     }
     
     func add(item: T) {
-        pWrite = inc(pWrite)
-        pRead = pWrite
+        pWrite = inc(pos)
+        pos = pWrite
         stack[pWrite]=item
     }
     
     func next() -> T? {
-        if (pRead == pWrite) {
+        if (pos == pWrite) {
             return nil
         }
-        pRead = inc(pRead)
-        return stack[pRead]
+        pos = inc(pos)
+        return stack[pos]
     }
     
     func prev() -> T? {
-        if (dec(pRead) == pWrite || pRead < 0 || stack[dec(pRead)]==nil ) {
+        if (dec(pos) == pWrite || pos < 0 || stack[dec(pos)]==nil ) {
             return nil
         }
-        pRead = dec(pRead)
-        return stack[pRead]
+        pos = dec(pos)
+        return stack[pos]
+    }
+    
+    func cur() -> T? {
+        return stack[pos]
     }
     
     private func inc(i: Int) -> Int {

@@ -65,9 +65,9 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
         static let fixSciKey = "_fixSciKey_"
     }
     
-    // formatMode is an enum which can't be save directly by NSUserDefaults
+    // formatMode is an enum which can't be saved directly by NSUserDefaults.
     // formatMode conforms to the propertyListReadable protocol which allows
-    // it to be serialized for storage
+    // it to be serialized for storage.
     private func loadDisplayModes() {
         let defaults = NSUserDefaults.standardUserDefaults()
         if let format = formatMode(propertyListRepresentation: defaults.dictionaryForKey(DefaultKeys.fixSciKey) as? [String:Int]) {
@@ -93,7 +93,7 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
     @IBOutlet weak var history: UILabel!
     
     // process the 0-9 keys
-    @IBAction func appendDigit(sender: UIButton) {
+    @IBAction func appendDigit(sender: CalculatorDigits) {
         switch entryMode {
             case .FormatFix:
                 outputFormat = formatMode.Fixed(Int(sender.titleLabel!.text!)!)

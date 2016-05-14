@@ -91,7 +91,7 @@ class CalculatorBrain {
     
     
     private var undoOrRedoInProgress = false
-    private var undoStack = FixedLengthStack<[Op]>(N: 10)   // N levels of undo/redo
+    private var undoStack = FixedLengthCircularBuffer<[Op]>(N: 10)   // N levels of undo/redo
     
     // the operator stack, operator and variable dictionarys
     private var opStack = [Op]() {
@@ -197,6 +197,9 @@ class CalculatorBrain {
     }
     
     func changeSign() -> Double? {
+        guard ((undoStack.cur()! as [Op]).last?.description != OperatorSymbols.PlusMinus) else {
+            return undo()
+        }
         return performOperation(OperatorSymbols.PlusMinus)
     }
     
