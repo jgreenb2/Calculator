@@ -1,13 +1,13 @@
 //
-//  FixedLengthCircularBuffer.swift
-//  Calculator
+//  CircularBuffer.swift
+//  circular buffer suitable for managing undo/redo
 //
 //  Created by Jeff Greenberg on 5/6/16.
 //  Copyright © 2016 Jeff Greenberg. All rights reserved.
 //
 
 import Foundation
-class FixedLengthCircularBuffer<T> {
+class CircularBuffer<T> {
     private var pEnd:Int
     private var pCur:Int
     private var size:Int
