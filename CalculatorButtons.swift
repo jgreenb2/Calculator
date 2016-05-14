@@ -43,11 +43,9 @@ class CalculatorButton: UIButton {
     }
 }
 
-@IBDesignable
 class CalculatorDigits: CalculatorButton {    
 }
 
-@IBDesignable
 class ShiftableButton: CalculatorButton {
     var customState:UIControlState = .Normal
     func setShifted(shift:Bool) {

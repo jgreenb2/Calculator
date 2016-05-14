@@ -38,22 +38,22 @@ class GraphView: UIView {
     }
 
     @IBInspectable
-    private var lineWidth: CGFloat = 1 { didSet { setNeedsDisplay() } }
+    var lineWidth: CGFloat = 1 { didSet { setNeedsDisplay() } }
     
     @IBInspectable
-    private var axesColor: UIColor = UIColor.blueColor() { didSet { setNeedsDisplay() } }
+    var axesColor: UIColor = UIColor.blueColor() { didSet { setNeedsDisplay() } }
     
     @IBInspectable
-    private var lineColor: UIColor = UIColor.redColor() { didSet { setNeedsDisplay() } }
+    var lineColor: UIColor = UIColor.redColor() { didSet { setNeedsDisplay() } }
     
     @IBInspectable
-    private var minX:Double = -10
+    var minX:Double = -10
     @IBInspectable
-    private var maxX:Double = 10
+    var maxX:Double = 10
     @IBInspectable
-    private var minY:Double = -10
+    var minY:Double = -10
     @IBInspectable
-    private var maxY:Double = 10
+    var maxY:Double = 10
     
     private var touchCenter:CGPoint = CGPoint(x: 0, y: 0)
     private let radius:CGFloat = 10
