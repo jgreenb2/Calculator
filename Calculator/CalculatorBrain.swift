@@ -43,7 +43,7 @@ class CalculatorBrain {
     private enum Op: CustomStringConvertible {
         case Operand(Double)
         case Constant(String,()->Double)
-        case Symbol(String,(String)-> Double?)
+        case Variable(String,(String)-> Double?)
         case UnaryOperation(String, Double -> Double)
         case BinaryOperation(String, (Double, Double) -> Double)
         
@@ -54,8 +54,8 @@ class CalculatorBrain {
                     return "\(operand)"
                 case .Constant(let constant, _):
                     return constant
-                case .Symbol(let symbol,_):
-                    return symbol
+                case .Variable(let variable,_):
+                    return variable
                 case .UnaryOperation(let symbol,_):
                     return symbol
                 case .BinaryOperation(let symbol, _):
@@ -154,7 +154,7 @@ class CalculatorBrain {
                     } else if let operand = NSNumberFormatter().numberFromString(opSymbol)?.doubleValue {
                         newOpStack.append(.Operand(operand))
                     } else {
-                        newOpStack.append(Op.Symbol(opSymbol,{self.variableValues[$0]}))
+                        newOpStack.append(Op.Variable(opSymbol,{self.variableValues[$0]}))
                     }
                 }
                 opStack = newOpStack
@@ -178,8 +178,8 @@ class CalculatorBrain {
     
     // push a variable on the stack and return the
     // new evaluation
-    func pushOperand(symbol: String) -> Double? {
-        opStack.append(Op.Symbol(symbol,{self.variableValues[$0]}))
+    func pushOperand(variable: String) -> Double? {
+        opStack.append(Op.Variable(variable,{self.variableValues[$0]}))
         return evaluate()
     }
     
@@ -231,8 +231,8 @@ class CalculatorBrain {
             switch op {
             case .Operand(let operand):
                 return (operand, remainingOps)
-            case .Symbol(let symbol, let value):
-                return (value(symbol) ?? 0, remainingOps)
+            case .Variable(let variable, let value):
+                return (value(variable) ?? 0, remainingOps)
             case .Constant( _, let value):
                 return (value(), remainingOps)
             case .UnaryOperation(_, let operation):
@@ -283,8 +283,8 @@ class CalculatorBrain {
             switch token {
                 case .Operand(let value):
                     return ("\(value)", stack,token.precedence)
-                case .Symbol(let symbol,_):
-                    return (symbol, stack, token.precedence)
+                case .Variable(let variable,_):
+                    return (variable, stack, token.precedence)
                 case .Constant(let constant, _):
                     return (constant, stack, token.precedence)
                 case .UnaryOperation(let operation,_):
