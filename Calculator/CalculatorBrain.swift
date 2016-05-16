@@ -35,7 +35,9 @@ class CalculatorBrain {
         static let XInv = "1/x"
         static let yToX = "yˣ"
         static let NaturalLog = "ln"
+        static let Base10Log = "log"
         static let eToX = "ℯˣ"
+        static let tenToX = "10ˣ"
     }
     typealias AlternateName = (name: String, postfix: Bool)
     private var alternateOperatorDescription = [String:AlternateName]()
@@ -112,25 +114,27 @@ class CalculatorBrain {
         func learnOp(op: Op) {
             knownOps[op.description] = op
         }
-        learnOp(Op.BinaryOperation(OperatorSymbols.Multiplication,      *           ))
-        learnOp(Op.BinaryOperation(OperatorSymbols.Subtraction,         {$1 - $0}   ))
-        learnOp(Op.BinaryOperation(OperatorSymbols.Addition,            +           ))
-        learnOp(Op.BinaryOperation(OperatorSymbols.Division,            {$1 / $0}   ))
-        learnOp(Op.UnaryOperation(OperatorSymbols.SquareRoot,           sqrt        ))
-        learnOp(Op.UnaryOperation(OperatorSymbols.Sin,                  calcSin     ))
-        learnOp(Op.UnaryOperation(OperatorSymbols.ASin,                 calcASin    ))
-        learnOp(Op.UnaryOperation(OperatorSymbols.Cos,                  calcCos     ))
-        learnOp(Op.UnaryOperation(OperatorSymbols.ACos,                 calcACos    ))
-        learnOp(Op.UnaryOperation(OperatorSymbols.Tan,                  calcTan     ))
-        learnOp(Op.UnaryOperation(OperatorSymbols.ATan,                 calcATan    ))
-        learnOp(Op.SymbolicConstant(OperatorSymbols.Pi,                 M_PI        ))
-        learnOp(Op.UnaryOperation(OperatorSymbols.PlusMinus,            { -1 * $0 } ))
-        learnOp(Op.UnaryOperation(OperatorSymbols.eToX,                 { exp($0) } ))
-        learnOp(Op.UnaryOperation(OperatorSymbols.NaturalLog,           { log($0) } ))
-        learnOp(Op.UnaryOperation(OperatorSymbols.XCubed,               { $0*$0*$0 }))
-        learnOp(Op.UnaryOperation(OperatorSymbols.XInv,                 { 1/$0 }    ))
-        learnOp(Op.UnaryOperation(OperatorSymbols.XSquared,             { $0*$0 }   ))
-        learnOp(Op.BinaryOperation(OperatorSymbols.yToX,                { pow($1,$0) }))
+        learnOp(Op.BinaryOperation(OperatorSymbols.Multiplication,      *               ))
+        learnOp(Op.BinaryOperation(OperatorSymbols.Subtraction,         {$1 - $0}       ))
+        learnOp(Op.BinaryOperation(OperatorSymbols.Addition,            +               ))
+        learnOp(Op.BinaryOperation(OperatorSymbols.Division,            {$1 / $0}       ))
+        learnOp(Op.UnaryOperation(OperatorSymbols.SquareRoot,           sqrt            ))
+        learnOp(Op.UnaryOperation(OperatorSymbols.Sin,                  calcSin         ))
+        learnOp(Op.UnaryOperation(OperatorSymbols.ASin,                 calcASin        ))
+        learnOp(Op.UnaryOperation(OperatorSymbols.Cos,                  calcCos         ))
+        learnOp(Op.UnaryOperation(OperatorSymbols.ACos,                 calcACos        ))
+        learnOp(Op.UnaryOperation(OperatorSymbols.Tan,                  calcTan         ))
+        learnOp(Op.UnaryOperation(OperatorSymbols.ATan,                 calcATan        ))
+        learnOp(Op.SymbolicConstant(OperatorSymbols.Pi,                 M_PI            ))
+        learnOp(Op.UnaryOperation(OperatorSymbols.PlusMinus,            { -1 * $0 }     ))
+        learnOp(Op.UnaryOperation(OperatorSymbols.eToX,                 { exp($0) }     ))
+        learnOp(Op.UnaryOperation(OperatorSymbols.tenToX,               { pow(10,$0) }  ))
+        learnOp(Op.UnaryOperation(OperatorSymbols.NaturalLog,           { log($0) }     ))
+        learnOp(Op.UnaryOperation(OperatorSymbols.Base10Log,            { log10($0) }   ))
+        learnOp(Op.UnaryOperation(OperatorSymbols.XCubed,               { $0*$0*$0 }    ))
+        learnOp(Op.UnaryOperation(OperatorSymbols.XInv,                 { 1/$0 }        ))
+        learnOp(Op.UnaryOperation(OperatorSymbols.XSquared,             { $0*$0 }       ))
+        learnOp(Op.BinaryOperation(OperatorSymbols.yToX,                { pow($1,$0) }  ))
         
 
         alternateOperatorDescription[OperatorSymbols.eToX] = ("exp", postfix: false)
@@ -138,6 +142,7 @@ class CalculatorBrain {
         alternateOperatorDescription[OperatorSymbols.XInv] = ("inv", postfix: false)
         alternateOperatorDescription[OperatorSymbols.XSquared] = ("²", postfix: true)
         alternateOperatorDescription[OperatorSymbols.yToX] = ("^", postfix: false)
+        alternateOperatorDescription[OperatorSymbols.tenToX] = ("10^", postfix: false)
     }
     
     

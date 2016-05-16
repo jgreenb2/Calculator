@@ -220,7 +220,7 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
     }
     
     // shifted keys are ShiftableButtons. Shifted labels go here.
-    private let shiftLabels:[String:String]=["cos":"acos", "sin":"asin", "tan":"atan", "⤾":"⤿","Fix":"Sci"]
+    private let shiftLabels:[String:String]=["cos":"acos", "sin":"asin", "tan":"atan", "⤾":"⤿","Fix":"Sci", "ℯˣ":"10ˣ", "ln":"log"]
     // track the shift state
     private var shiftedState = false {
         didSet {
