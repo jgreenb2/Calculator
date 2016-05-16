@@ -14,7 +14,6 @@ protocol GraphViewDataSource: class {
 
 @IBDesignable
 class GraphView: UIView {
-    
     // the intersection of the x & y axes expressed in screen coordinates
     // optional because it will be nil when a new GraphView is created
     //
