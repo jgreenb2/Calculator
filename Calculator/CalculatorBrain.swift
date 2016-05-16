@@ -41,8 +41,8 @@ class CalculatorBrain {
     private var alternateOperatorDescription = [String:AlternateName]()
     
     private enum Op: CustomStringConvertible {
-        case Operand(Double)
-        case Constant(String,()->Double)
+        case Number(Double)
+        case SymbolicConstant(String,Double)
         case Variable(String,(String)-> Double?)
         case UnaryOperation(String, Double -> Double)
         case BinaryOperation(String, (Double, Double) -> Double)
@@ -50,9 +50,9 @@ class CalculatorBrain {
         var description: String {
             get {
                 switch self {
-                case .Operand(let operand):
-                    return "\(operand)"
-                case .Constant(let constant, _):
+                case .Number(let number):
+                    return "\(number)"
+                case .SymbolicConstant(let constant, _):
                     return constant
                 case .Variable(let variable,_):
                     return variable
@@ -112,25 +112,25 @@ class CalculatorBrain {
         func learnOp(op: Op) {
             knownOps[op.description] = op
         }
-        learnOp(Op.BinaryOperation(OperatorSymbols.Multiplication, *))
-        learnOp(Op.BinaryOperation(OperatorSymbols.Subtraction) {$1 - $0})
-        learnOp(Op.BinaryOperation(OperatorSymbols.Addition,+))
-        learnOp(Op.BinaryOperation(OperatorSymbols.Division) {$1 / $0})
-        learnOp(Op.UnaryOperation(OperatorSymbols.SquareRoot, sqrt))
-        learnOp(Op.UnaryOperation(OperatorSymbols.Sin, calcSin))
-        learnOp(Op.UnaryOperation(OperatorSymbols.ASin, calcASin))
-        learnOp(Op.UnaryOperation(OperatorSymbols.Cos, calcCos))
-        learnOp(Op.UnaryOperation(OperatorSymbols.ACos, calcACos))
-        learnOp(Op.UnaryOperation(OperatorSymbols.Tan, calcTan))
-        learnOp(Op.UnaryOperation(OperatorSymbols.ATan, calcATan))
-        learnOp(Op.Constant(OperatorSymbols.Pi) {M_PI})
-        learnOp(Op.UnaryOperation(OperatorSymbols.PlusMinus) { -1 * $0 })
-        learnOp(Op.UnaryOperation(OperatorSymbols.eToX) { exp($0) })
-        learnOp(Op.UnaryOperation(OperatorSymbols.NaturalLog) { log($0) })
-        learnOp(Op.UnaryOperation(OperatorSymbols.XCubed) { $0*$0*$0 })
-        learnOp(Op.UnaryOperation(OperatorSymbols.XInv) { 1/$0 })
-        learnOp(Op.UnaryOperation(OperatorSymbols.XSquared) { $0*$0 })
-        learnOp(Op.BinaryOperation(OperatorSymbols.yToX) { pow($1,$0) })
+        learnOp(Op.BinaryOperation(OperatorSymbols.Multiplication,      *           ))
+        learnOp(Op.BinaryOperation(OperatorSymbols.Subtraction,         {$1 - $0}   ))
+        learnOp(Op.BinaryOperation(OperatorSymbols.Addition,            +           ))
+        learnOp(Op.BinaryOperation(OperatorSymbols.Division,            {$1 / $0}   ))
+        learnOp(Op.UnaryOperation(OperatorSymbols.SquareRoot,           sqrt        ))
+        learnOp(Op.UnaryOperation(OperatorSymbols.Sin,                  calcSin     ))
+        learnOp(Op.UnaryOperation(OperatorSymbols.ASin,                 calcASin    ))
+        learnOp(Op.UnaryOperation(OperatorSymbols.Cos,                  calcCos     ))
+        learnOp(Op.UnaryOperation(OperatorSymbols.ACos,                 calcACos    ))
+        learnOp(Op.UnaryOperation(OperatorSymbols.Tan,                  calcTan     ))
+        learnOp(Op.UnaryOperation(OperatorSymbols.ATan,                 calcATan    ))
+        learnOp(Op.SymbolicConstant(OperatorSymbols.Pi,                 M_PI        ))
+        learnOp(Op.UnaryOperation(OperatorSymbols.PlusMinus,            { -1 * $0 } ))
+        learnOp(Op.UnaryOperation(OperatorSymbols.eToX,                 { exp($0) } ))
+        learnOp(Op.UnaryOperation(OperatorSymbols.NaturalLog,           { log($0) } ))
+        learnOp(Op.UnaryOperation(OperatorSymbols.XCubed,               { $0*$0*$0 }))
+        learnOp(Op.UnaryOperation(OperatorSymbols.XInv,                 { 1/$0 }    ))
+        learnOp(Op.UnaryOperation(OperatorSymbols.XSquared,             { $0*$0 }   ))
+        learnOp(Op.BinaryOperation(OperatorSymbols.yToX,                { pow($1,$0) }))
         
 
         alternateOperatorDescription[OperatorSymbols.eToX] = ("exp", postfix: false)
@@ -151,8 +151,8 @@ class CalculatorBrain {
                 for opSymbol in opSymbols {
                     if let op = knownOps[opSymbol] {
                         newOpStack.append(op)
-                    } else if let operand = NSNumberFormatter().numberFromString(opSymbol)?.doubleValue {
-                        newOpStack.append(.Operand(operand))
+                    } else if let number = NSNumberFormatter().numberFromString(opSymbol)?.doubleValue {
+                        newOpStack.append(.Number(number))
                     } else {
                         newOpStack.append(Op.Variable(opSymbol,{self.variableValues[$0]}))
                     }
@@ -171,14 +171,14 @@ class CalculatorBrain {
     
     // push an operand on the stack and return the
     // new evaluation
-    func pushOperand(operand: Double) -> Double? {
-        opStack.append(Op.Operand(operand))
+    func pushNumber(number: Double) -> Double? {
+        opStack.append(Op.Number(number))
         return evaluate()
     }
     
     // push a variable on the stack and return the
     // new evaluation
-    func pushOperand(variable: String) -> Double? {
+    func pushNumber(variable: String) -> Double? {
         opStack.append(Op.Variable(variable,{self.variableValues[$0]}))
         return evaluate()
     }
@@ -229,12 +229,12 @@ class CalculatorBrain {
             var remainingOps = ops
             let op = remainingOps.removeLast()
             switch op {
-            case .Operand(let operand):
-                return (operand, remainingOps)
+            case .Number(let number):
+                return (number, remainingOps)
             case .Variable(let variable, let value):
                 return (value(variable) ?? 0, remainingOps)
-            case .Constant( _, let value):
-                return (value(), remainingOps)
+            case .SymbolicConstant( _, let value):
+                return (value, remainingOps)
             case .UnaryOperation(_, let operation):
                 let operandEvaluation = evaluate(remainingOps)
                 if let operand = operandEvaluation.result {
@@ -281,11 +281,11 @@ class CalculatorBrain {
         if !stack.isEmpty {
             let token = stack.removeLast()
             switch token {
-                case .Operand(let value):
-                    return ("\(value)", stack,token.precedence)
+                case .Number(let number):
+                    return ("\(number)", stack,token.precedence)
                 case .Variable(let variable,_):
                     return (variable, stack, token.precedence)
-                case .Constant(let constant, _):
+                case .SymbolicConstant(let constant, _):
                     return (constant, stack, token.precedence)
                 case .UnaryOperation(let operation,_):
                     let expression = nextExpression(stack)

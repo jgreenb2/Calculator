@@ -199,13 +199,13 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
         if userIsInTheMiddleOfTypingANumber {
             enter()
         }
-        displayValue = brain.pushOperand("M")
+        displayValue = brain.pushNumber("M")
     }
     
     // process enter key
     @IBAction func enter() {
         if displayValue != nil {
-            displayValue = brain.pushOperand(displayValue!)
+            displayValue = brain.pushNumber(displayValue!)
         }
         userIsInTheMiddleOfTypingANumber = false
     }
