@@ -158,17 +158,29 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
             break
         }
     }
-    
-    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOfGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        if gestureRecognizer is UIPanGestureRecognizer {
-            return true
-        } else {
-            return false
-        }
-    }
-    
+        
     func moveOriginBySwipe(gesture: UISwipeGestureRecognizer) {
-        print("swipe")
+        var loc1:CGPoint?
+        var loc2:CGPoint?
+        var beginTime:NSDate?
+
+        switch gesture.state {
+            case .Began:
+                loc1 = gesture.locationOfTouch(1, inView: self)
+                beginTime = NSDate(timeIntervalSinceNow: 0)
+            case .Ended:
+                loc2 = gesture.locationOfTouch(1, inView: self)
+                if let endTime = beginTime?.timeIntervalSinceNow {
+                    let d = distance(from: loc1!, to: loc2!)
+                    let velocity = (loc2! - loc1!)/CGFloat(endTime)
+                    // assume a fixed duration of 2s for now
+                    let dur=CGFloat(2)
+                    let endpoint = loc1! + velocity*dur
+                    print("l1=\(loc1) e1=\(endpoint)")
+                }
+            default:
+                break
+        }
     }
     
     private struct scaleZones {
@@ -253,7 +265,20 @@ private func + (left: CGPoint, right: CGPoint) -> CGPoint {
 private func - (left: CGPoint, right: CGPoint) -> CGPoint {
     return CGPoint(x: left.x-right.x, y: left.y-right.y)
 }
+
+private func distance(from p1:CGPoint, to p2:CGPoint) -> CGFloat {
+    let delta = p2 - p1
+    return sqrt(pow(delta.x,2) + pow(delta.y,2))
+}
+
+private func magnitude(v:CGPoint) -> CGFloat{
+    return sqrt(pow(v.x,2)+pow(v.y,2))
+}
+
 // divide a CGPoint by a scalar
 private func / (left: CGPoint, right: CGFloat) -> CGPoint {
     return CGPoint(x: left.x/right, y: left.y/right)
+}
+private func * (left: CGPoint, right: CGFloat) -> CGPoint {
+    return CGPoint(x: left.x*right, y: left.y*right)
 }
