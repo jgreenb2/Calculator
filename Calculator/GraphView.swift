@@ -143,12 +143,39 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
     }
     
     // gesture handling functions
+    //var swipeVelocity:CGPoint?
+    //var lastPanPos:CGPoint?
+    var beginPanTime:NSDate?
+    let maxSwipeTime = 0.3
     
     func moveOrigin(gesture: UIPanGestureRecognizer) {
         switch gesture.state {
+        case .Began:
+            beginPanTime = NSDate()
         case .Ended:
             simplePlot = false
             setNeedsDisplay()
+            if let delta = beginPanTime?.timeIntervalSinceNow {
+                if -delta < maxSwipeTime {
+                    let swipeVelocity = gesture.velocityInView(self)
+                    let panPos = gesture.locationInView(self)                   
+                    let dur = 2.0
+                    let throwPos = panPos + swipeVelocity * CGFloat(dur)/10.0
+                    //let newCenter = CGPoint(x: XToScreen(Double(throwPos.x)), y: YToScreen(Double(throwPos.y)))
+                    simplePlot = true
+                    UIView.animateWithDuration(2, delay: 0, options: .CurveEaseOut, animations: {
+                        self.center = self.convertPoint(throwPos, toView: self.superview)
+                        }, completion: {(Bool) -> Void in 
+                            self.graphOrigin = throwPos
+                            self.simplePlot=false
+                            self.setNeedsDisplay()
+                    })
+                    //graphOrigin = throwPos
+                    nswipes = nswipes + 1
+                    print("swipe: \(nswipes)")
+                }
+            }
+
         case .Changed:
             simplePlot = true
             let translation = gesture.translationInView(self)
@@ -158,30 +185,27 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
             break
         }
     }
-        
-    func moveOriginBySwipe(gesture: UISwipeGestureRecognizer) {
-        var loc1:CGPoint?
-        var loc2:CGPoint?
-        var beginTime:NSDate?
-
-        switch gesture.state {
-            case .Began:
-                loc1 = gesture.locationOfTouch(1, inView: self)
-                beginTime = NSDate(timeIntervalSinceNow: 0)
-            case .Ended:
-                loc2 = gesture.locationOfTouch(1, inView: self)
-                if let endTime = beginTime?.timeIntervalSinceNow {
-                    let d = distance(from: loc1!, to: loc2!)
-                    let velocity = (loc2! - loc1!)/CGFloat(endTime)
-                    // assume a fixed duration of 2s for now
-                    let dur=CGFloat(2)
-                    let endpoint = loc1! + velocity*dur
-                    print("l1=\(loc1) e1=\(endpoint)")
-                }
-            default:
-                break
-        }
-    }
+    var nswipes=0    
+//    func moveOriginBySwipe(gesture: UISwipeGestureRecognizer) {
+//        switch gesture.state {
+//             case .Ended:
+//                // predict end location of the 'throw'
+//                if let endPos = lastPanPos {
+//                    let dur = 2.0
+//                    let throwPos = endPos + swipeVelocity! * CGFloat(dur)/10.0
+////                    UIView.animateWithDuration(dur, delay: 0, options: .CurveEaseInOut, animations: {
+////                        self.graphOrigin = throwPos
+////                        }, completion: nil)
+//                    lastPanPos = nil
+//                    graphOrigin = throwPos
+//                    nswipes = nswipes + 1
+//                    print("swipe: \(nswipes)")
+//                    setNeedsDisplay()
+//            }
+//             default:
+//                break
+//        }
+//    }
     
     private struct scaleZones {
         static let scaleXYZoneMin = -67.5

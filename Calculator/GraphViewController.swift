@@ -8,12 +8,11 @@
 
 import UIKit
 
-class GraphViewController: UIViewController, GraphViewDataSource {
+class GraphViewController: UIViewController, GraphViewDataSource, UIGestureRecognizerDelegate {
     
     var graphBrain = CalculatorBrain()
     var panGraphRecognizer:UIPanGestureRecognizer?
     var swipeFromLeftEdge:UIScreenEdgePanGestureRecognizer!
-    var swipeToPanGraphRecognizer:UISwipeGestureRecognizer?
     
     // reset the origin on a layout change
     override func viewDidLayoutSubviews() {
@@ -28,12 +27,9 @@ class GraphViewController: UIViewController, GraphViewDataSource {
         let tapRecognizer = UITapGestureRecognizer(target: graphView, action: #selector(graphView.jumpToOrigin(_:)))
         tapRecognizer.numberOfTapsRequired = 2
         graphView.addGestureRecognizer(tapRecognizer)
-        swipeToPanGraphRecognizer = UISwipeGestureRecognizer(target: graphView, action: #selector(graphView.moveOriginBySwipe(_:)))
-        swipeToPanGraphRecognizer?.direction = [.Right, .Left, .Up, .Down]
 
-        panGraphRecognizer.requireGestureRecognizerToFail(swipeToPanGraphRecognizer!)
+        //panGraphRecognizer.requireGestureRecognizerToFail(swipeToPanGraphRecognizer!)
         
-        graphView.addGestureRecognizer(swipeToPanGraphRecognizer!)
         if let svc = splitViewController as? GlobalUISplitViewController {
             swipeFromLeftEdge = UIScreenEdgePanGestureRecognizer(target: svc, action: #selector(svc.showMaster))
             swipeFromLeftEdge.edges = .Left
@@ -43,6 +39,10 @@ class GraphViewController: UIViewController, GraphViewDataSource {
         navigationItem.leftItemsSupplementBackButton = true
         super.viewDidLoad()
     }
+    
+//    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+//        return (gestureRecognizer == swipeToPanGraphRecognizer ? true : false )
+//    }
     
     @IBOutlet weak var graphView: GraphView! {
         didSet {
