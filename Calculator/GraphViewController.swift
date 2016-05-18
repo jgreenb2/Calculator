@@ -8,12 +8,12 @@
 
 import UIKit
 
-class GraphViewController: UIViewController, GraphViewDataSource, UIGestureRecognizerDelegate {
+class GraphViewController: UIViewController, GraphViewDataSource {
     
     var graphBrain = CalculatorBrain()
     var panGraphRecognizer:UIPanGestureRecognizer?
-    var swipeRecognizerRight:UISwipeGestureRecognizer?
     var swipeFromLeftEdge:UIScreenEdgePanGestureRecognizer!
+    var swipeToPanGraphRecognizer:UISwipeGestureRecognizer?
     
     // reset the origin on a layout change
     override func viewDidLayoutSubviews() {
@@ -28,11 +28,19 @@ class GraphViewController: UIViewController, GraphViewDataSource, UIGestureRecog
         let tapRecognizer = UITapGestureRecognizer(target: graphView, action: #selector(graphView.jumpToOrigin(_:)))
         tapRecognizer.numberOfTapsRequired = 2
         graphView.addGestureRecognizer(tapRecognizer)
+        swipeToPanGraphRecognizer = UISwipeGestureRecognizer(target: graphView, action: #selector(graphView.moveOriginBySwipe(_:)))
+        swipeToPanGraphRecognizer?.direction = [.Right, .Left, .Up, .Down]
+
+        panGraphRecognizer.requireGestureRecognizerToFail(swipeToPanGraphRecognizer!)
+        
+        graphView.addGestureRecognizer(swipeToPanGraphRecognizer!)
         if let svc = splitViewController as? GlobalUISplitViewController {
             swipeFromLeftEdge = UIScreenEdgePanGestureRecognizer(target: svc, action: #selector(svc.showMaster))
             swipeFromLeftEdge.edges = .Left
             graphView.addGestureRecognizer(swipeFromLeftEdge)
         }
+        navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem()
+        navigationItem.leftItemsSupplementBackButton = true
         super.viewDidLoad()
     }
     

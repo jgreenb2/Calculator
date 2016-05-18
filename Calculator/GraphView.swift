@@ -13,7 +13,7 @@ protocol GraphViewDataSource: class {
 }
 
 @IBDesignable
-class GraphView: UIView {
+class GraphView: UIView, UIGestureRecognizerDelegate {
     // the intersection of the x & y axes expressed in screen coordinates
     // optional because it will be nil when a new GraphView is created
     //
@@ -157,6 +157,18 @@ class GraphView: UIView {
         default:
             break
         }
+    }
+    
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOfGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        if gestureRecognizer is UIPanGestureRecognizer {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func moveOriginBySwipe(gesture: UISwipeGestureRecognizer) {
+        print("swipe")
     }
     
     private struct scaleZones {
