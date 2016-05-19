@@ -158,21 +158,19 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
             if let delta = beginPanTime?.timeIntervalSinceNow {
                 if -delta < maxSwipeTime {
                     let swipeVelocity = gesture.velocityInView(self)
-                    let panPos = gesture.locationInView(self)                   
                     let dur = 2.0
-                    let throwPos = panPos + swipeVelocity * CGFloat(dur)/10.0
-                    //let newCenter = CGPoint(x: XToScreen(Double(throwPos.x)), y: YToScreen(Double(throwPos.y)))
+                    let delta = swipeVelocity * CGFloat(dur)/10.0
+                    let oldCenter = center
+                    let newCenter = center + convertPoint(delta, toView: superview)
                     simplePlot = true
-                    UIView.animateWithDuration(2, delay: 0, options: .CurveEaseOut, animations: {
-                        self.center = self.convertPoint(throwPos, toView: self.superview)
-                        }, completion: {(Bool) -> Void in 
-                            self.graphOrigin = throwPos
+                    UIView.animateWithDuration(dur, delay: 0, options: [.CurveEaseOut, .AllowAnimatedContent], animations: {
+                        self.center = newCenter
+                        }, completion: {(Bool) -> Void in
+                            self.center = oldCenter
+                            self.graphOrigin = self.graphCenter + delta
                             self.simplePlot=false
                             self.setNeedsDisplay()
                     })
-                    //graphOrigin = throwPos
-                    nswipes = nswipes + 1
-                    print("swipe: \(nswipes)")
                 }
             }
 
