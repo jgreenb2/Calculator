@@ -12,8 +12,12 @@ protocol GraphViewDataSource: class {
     func functionValue(sender: GraphView, atXEquals: Double) -> Double?
 }
 
+protocol graphAnimation: class {
+    func animationCompleted()
+}
+
 @IBDesignable
-class GraphView: UIView, UIGestureRecognizerDelegate {
+class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     // the intersection of the x & y axes expressed in screen coordinates
     // optional because it will be nil when a new GraphView is created
     //
@@ -147,7 +151,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
     //var lastPanPos:CGPoint?
     var beginPanTime:NSDate?
     let maxSwipeTime = 0.3
-    
+
     func moveOrigin(gesture: UIPanGestureRecognizer) {
         switch gesture.state {
         case .Began:
@@ -158,19 +162,16 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
             if let delta = beginPanTime?.timeIntervalSinceNow {
                 if -delta < maxSwipeTime {
                     let swipeVelocity = gesture.velocityInView(self)
-                    let dur = 2.0
-                    let delta = swipeVelocity * CGFloat(dur)/10.0
-                    let oldCenter = center
-                    let newCenter = center + convertPoint(delta, toView: superview)
                     simplePlot = true
-                    UIView.animateWithDuration(dur, delay: 0, options: [.CurveEaseOut, .AllowAnimatedContent], animations: {
-                        self.center = newCenter
-                        }, completion: {(Bool) -> Void in
-                            self.center = oldCenter
-                            self.graphOrigin = self.graphCenter + delta
-                            self.simplePlot=false
-                            self.setNeedsDisplay()
-                    })
+                    startAnimation(swipeVelocity)
+//                    UIView.animateWithDuration(dur, delay: 0, options: [.CurveEaseOut, .AllowAnimatedContent], animations: {
+//                        self.center = newCenter
+//                        }, completion: {(Bool) -> Void in
+//                            self.center = oldCenter
+//                            self.graphOrigin = self.graphCenter + delta
+//                            self.simplePlot=false
+//                            self.setNeedsDisplay()
+//                    })
                 }
             }
 
@@ -275,6 +276,53 @@ class GraphView: UIView, UIGestureRecognizerDelegate {
     func jumpToOrigin(gesture: UITapGestureRecognizer) {
         if gesture.state == .Ended {
             graphOrigin = gesture.locationInView(self)
+        }
+    }
+
+    var friction:moveWithFriction?
+    func cancelAnimation() {
+        if let friction = friction {
+            animator().removeAnimation(friction)
+        }
+    }
+    
+    func startAnimation(initialVelocity:CGPoint) {
+        cancelAnimation()
+        friction = moveWithFriction(graphView: self, with: initialVelocity)
+        friction?.delegate = self
+        animator().addAnimation(friction)
+    }
+    
+    func animationCompleted() {
+        simplePlot = false
+        setNeedsDisplay()
+    }
+}
+
+class moveWithFriction: Animation {
+    var velocity:CGPoint!
+    var view:GraphView!
+    weak var delegate:graphAnimation?
+    let mu = CGFloat(5)
+    let velocityThreshold = CGFloat(10)
+    
+    init(graphView:GraphView, with initialVelocity:CGPoint) {
+        velocity = initialVelocity
+        view = graphView
+    }
+    
+    func animationTick(dt: CFTimeInterval, inout finished: Bool) {
+        let time = CGFloat(dt)
+        let frictionForce = velocity * mu 
+        
+        velocity = velocity - frictionForce * time
+        
+        let speed = magnitude(velocity)
+        
+        view.graphOrigin = view.graphCenter + velocity * time
+        
+        if speed < velocityThreshold {
+            delegate?.animationCompleted()
         }
     }
 }
