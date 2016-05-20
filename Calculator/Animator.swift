@@ -15,23 +15,15 @@ protocol Animation: class {
 }
 
 class Animator: NSObject {
-    static var driver:Animator?
     var displayLink:CADisplayLink?
-    weak var animationDelegate:Animation?
     var animations=NSMutableSet()
 
+    static let sharedInstance: Animator = {
+        let screen = UIScreen.mainScreen()
+        let instance = Animator(screen: screen)
+        return instance
+    }()
     
-    func animatorWithScreen(screen:UIScreen?) -> Animator {
-        var screen = screen
-        if screen == nil {
-            screen = UIScreen.mainScreen()
-        }
-        
-        if Animator.driver == nil {
-            //            Animator.driver = init(_: screen)
-        }
-        return Animator.driver!
-    }
     
     init(screen:UIScreen) {
         super.init()
@@ -74,7 +66,7 @@ class Animator: NSObject {
 
 extension UIView {
     func animator() -> Animator {
-        return Animator(screen: window?.screen)
+        return Animator.sharedInstance
     }
 }
 
