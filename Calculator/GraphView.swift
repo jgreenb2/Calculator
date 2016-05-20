@@ -148,8 +148,10 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     }
     
     // gesture handling functions
-    //var swipeVelocity:CGPoint?
-    //var lastPanPos:CGPoint?
+    
+    // pan gestures that last for less than maxSwipeTime
+    // are treated as swipes that start an inertial scrolling
+    // animation
     var beginPanTime:NSDate?
     let maxSwipeTime = 0.3
 
@@ -158,16 +160,9 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         case .Began:
             beginPanTime = NSDate()
         case .Ended:
-            simplePlot = false
-            setNeedsDisplay()
-            if let delta = beginPanTime?.timeIntervalSinceNow {
-                if -delta < maxSwipeTime {
-                    let swipeVelocity = gesture.velocityInView(self)
-                    simplePlot = true
-                    startAnimation(swipeVelocity)
-                }
-            }
-
+            drawDetailedPlot()
+            // start an inertial animation if needed
+            finishPanGesture(gesture.velocityInView(self))
         case .Changed:
             simplePlot = true
             let translation = gesture.translationInView(self)
@@ -177,27 +172,25 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
             break
         }
     }
-    var nswipes=0    
-//    func moveOriginBySwipe(gesture: UISwipeGestureRecognizer) {
-//        switch gesture.state {
-//             case .Ended:
-//                // predict end location of the 'throw'
-//                if let endPos = lastPanPos {
-//                    let dur = 2.0
-//                    let throwPos = endPos + swipeVelocity! * CGFloat(dur)/10.0
-////                    UIView.animateWithDuration(dur, delay: 0, options: .CurveEaseInOut, animations: {
-////                        self.graphOrigin = throwPos
-////                        }, completion: nil)
-//                    lastPanPos = nil
-//                    graphOrigin = throwPos
-//                    nswipes = nswipes + 1
-//                    print("swipe: \(nswipes)")
-//                    setNeedsDisplay()
-//            }
-//             default:
-//                break
-//        }
-//    }
+    
+    // if speed is greater than threshold, kickoff an animation
+    // that implements inertial scrolling
+    func finishPanGesture(velocity: CGPoint) {
+        if let delta = beginPanTime?.timeIntervalSinceNow {
+            if -delta < maxSwipeTime {
+                simplePlot = true
+                startInertialAnimation(velocity)
+            }
+        }
+    }
+
+    // on any touch in the window cancel any existing inertial
+    // animation
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        cancelAnimation()
+        animationCompleted()
+        super.touchesBegan(touches, withEvent: event)
+    }
     
     private struct scaleZones {
         static let scaleXYZoneMin = -67.5
@@ -259,36 +252,43 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
                 gesture.scale=1
             }
         case .Ended:
-            simplePlot = false
-            setNeedsDisplay()
+            drawDetailedPlot()
         default:
             break
         }
     }
     
+    // turn off reduced resolution plotting
+    func drawDetailedPlot() {
+        simplePlot = false
+        setNeedsDisplay()        
+    }
+    
+    // move graph origin to the tap location
     func jumpToOrigin(gesture: UITapGestureRecognizer) {
         if gesture.state == .Ended {
             graphOrigin = gesture.locationInView(self)
         }
     }
 
-    var friction:moveWithFriction?
+    // inertial animation functions
+    
+    var inertialAnimation:moveGraphWithInertia?
     func cancelAnimation() {
-        if let friction = friction {
-            animator().removeAnimation(friction)
+        if let inertialAnimation = inertialAnimation {
+            animator().removeAnimation(inertialAnimation)
         }
     }
     
-    func startAnimation(initialVelocity:CGPoint) {
+    func startInertialAnimation(initialVelocity:CGPoint) {
         cancelAnimation()
-        friction = moveWithFriction(initialVelocity: initialVelocity)
-        friction?.delegate = self
-        animator().addAnimation(friction)
+        inertialAnimation = moveGraphWithInertia(initialVelocity: initialVelocity)
+        inertialAnimation?.delegate = self
+        animator().addAnimation(inertialAnimation)
     }
     
     func animationCompleted() {
-        simplePlot = false
-        setNeedsDisplay()
+        drawDetailedPlot()
     }
     
     func updateGraphPosition(deltaPosition: CGPoint) {
@@ -296,8 +296,9 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     }
 }
 
-class moveWithFriction: Animation {
-    var velocity:CGPoint!
+// computes graph movement with simple newtonian friction model
+class moveGraphWithInertia: Animation {
+    var velocity:CGPoint
     weak var delegate:graphAnimation?
     
     let mu = CGFloat(5)
@@ -308,6 +309,8 @@ class moveWithFriction: Animation {
     }
     
     func animationTick(dt: CFTimeInterval) {
+        assert(delegate != nil, "The graphAnimation delegate is not set")
+        
         let time = CGFloat(dt)
         let frictionForce = velocity * mu 
         

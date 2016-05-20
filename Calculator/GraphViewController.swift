@@ -18,32 +18,33 @@ class GraphViewController: UIViewController, GraphViewDataSource, UIGestureRecog
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         graphView.graphOrigin = nil
-        graphView.animator().setScreen(graphView.window?.screen)
     }
     
     override func viewDidLoad() {
+        // add pan, pinch and tap recognizers
         let panGraphRecognizer = UIPanGestureRecognizer(target: graphView, action: #selector(graphView.moveOrigin(_:)))
         graphView.addGestureRecognizer(panGraphRecognizer)
         graphView.addGestureRecognizer(UIPinchGestureRecognizer(target: graphView, action: #selector(graphView.scaleGraph(_:))))
         let tapRecognizer = UITapGestureRecognizer(target: graphView, action: #selector(graphView.jumpToOrigin(_:)))
         tapRecognizer.numberOfTapsRequired = 2
         graphView.addGestureRecognizer(tapRecognizer)
-
-        //panGraphRecognizer.requireGestureRecognizerToFail(swipeToPanGraphRecognizer!)
         
+        // set the animator that implements inertial scrolling to use the screen
+        // associated with the graphView
+        graphView.animator().setScreen(graphView.window?.screen)
+        
+        // you can reveal the master view by swiping from the left edge...
         if let svc = splitViewController as? GlobalUISplitViewController {
             swipeFromLeftEdge = UIScreenEdgePanGestureRecognizer(target: svc, action: #selector(svc.showMaster))
             swipeFromLeftEdge.edges = .Left
             graphView.addGestureRecognizer(swipeFromLeftEdge)
         }
+        
+        // ...or by using the bar button
         navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem()
         navigationItem.leftItemsSupplementBackButton = true
         super.viewDidLoad()
     }
-    
-//    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-//        return (gestureRecognizer == swipeToPanGraphRecognizer ? true : false )
-//    }
     
     @IBOutlet weak var graphView: GraphView! {
         didSet {
