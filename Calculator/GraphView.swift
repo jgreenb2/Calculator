@@ -14,6 +14,7 @@ protocol GraphViewDataSource: class {
 
 protocol graphAnimation: class {
     func animationCompleted()
+    func updateGraphPosition(deltaPosition:CGPoint)
 }
 
 @IBDesignable
@@ -164,14 +165,6 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
                     let swipeVelocity = gesture.velocityInView(self)
                     simplePlot = true
                     startAnimation(swipeVelocity)
-//                    UIView.animateWithDuration(dur, delay: 0, options: [.CurveEaseOut, .AllowAnimatedContent], animations: {
-//                        self.center = newCenter
-//                        }, completion: {(Bool) -> Void in
-//                            self.center = oldCenter
-//                            self.graphOrigin = self.graphCenter + delta
-//                            self.simplePlot=false
-//                            self.setNeedsDisplay()
-//                    })
                 }
             }
 
@@ -288,7 +281,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     
     func startAnimation(initialVelocity:CGPoint) {
         cancelAnimation()
-        friction = moveWithFriction(graphView: self, with: initialVelocity)
+        friction = moveWithFriction(initialVelocity: initialVelocity)
         friction?.delegate = self
         animator().addAnimation(friction)
     }
@@ -297,30 +290,34 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         simplePlot = false
         setNeedsDisplay()
     }
+    
+    func updateGraphPosition(deltaPosition: CGPoint) {
+        graphOrigin = graphCenter + deltaPosition
+    }
 }
 
 class moveWithFriction: Animation {
     var velocity:CGPoint!
-    var view:GraphView!
     weak var delegate:graphAnimation?
+    
     let mu = CGFloat(5)
     let velocityThreshold = CGFloat(10)
     
-    init(graphView:GraphView, with initialVelocity:CGPoint) {
+    init(initialVelocity:CGPoint) {
         velocity = initialVelocity
-        view = graphView
     }
     
-    func animationTick(dt: CFTimeInterval, inout finished: Bool) {
+    func animationTick(dt: CFTimeInterval) {
         let time = CGFloat(dt)
         let frictionForce = velocity * mu 
         
         velocity = velocity - frictionForce * time
         
-        let speed = magnitude(velocity)
+
+        let delta = velocity * time
+        delegate?.updateGraphPosition(delta)
         
-        view.graphOrigin = view.graphCenter + velocity * time
-        
+        let speed = magnitude(velocity)      
         if speed < velocityThreshold {
             delegate?.animationCompleted()
         }
@@ -335,20 +332,22 @@ private func + (left: CGPoint, right: CGPoint) -> CGPoint {
 private func - (left: CGPoint, right: CGPoint) -> CGPoint {
     return CGPoint(x: left.x-right.x, y: left.y-right.y)
 }
-
-private func distance(from p1:CGPoint, to p2:CGPoint) -> CGFloat {
-    let delta = p2 - p1
-    return sqrt(pow(delta.x,2) + pow(delta.y,2))
-}
-
+// L2 norm of CGPoint
 private func magnitude(v:CGPoint) -> CGFloat{
     return sqrt(pow(v.x,2)+pow(v.y,2))
+}
+// cartesian distance from p1 to p2
+private func distance(from p1:CGPoint, to p2:CGPoint) -> CGFloat {
+    let delta = p2 - p1
+    return magnitude(delta)
 }
 
 // divide a CGPoint by a scalar
 private func / (left: CGPoint, right: CGFloat) -> CGPoint {
     return CGPoint(x: left.x/right, y: left.y/right)
 }
+
+// multiply a CGPoint by a scalar
 private func * (left: CGPoint, right: CGFloat) -> CGPoint {
     return CGPoint(x: left.x*right, y: left.y*right)
 }

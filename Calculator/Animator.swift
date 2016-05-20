@@ -11,7 +11,7 @@
 import UIKit
 
 protocol Animation: class {
-    func animationTick(dt:CFTimeInterval, inout finished:Bool)
+    func animationTick(dt:CFTimeInterval)
 }
 
 class Animator: NSObject {
@@ -19,8 +19,7 @@ class Animator: NSObject {
     var animations=NSMutableSet()
 
     static let sharedInstance: Animator = {
-        let screen = UIScreen.mainScreen()
-        let instance = Animator(screen: screen)
+        let instance = Animator(screen: UIScreen.mainScreen())
         return instance
     }()
     
@@ -29,6 +28,16 @@ class Animator: NSObject {
         super.init()
         displayLink = screen.displayLinkWithTarget(self, selector: #selector(self.animationTick(_:)))
         displayLink?.paused = true
+        displayLink?.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSRunLoopCommonModes)
+    }
+    
+    func setScreen(screen:UIScreen?) {
+        guard screen != nil else { return }
+        guard displayLink != nil else { return }
+        
+        displayLink?.paused = true
+        displayLink?.removeFromRunLoop(NSRunLoop.mainRunLoop(), forMode: NSRunLoopCommonModes)
+        displayLink = screen!.displayLinkWithTarget(self, selector: #selector(self.animationTick(_:)))
         displayLink?.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSRunLoopCommonModes)
     }
     
@@ -58,8 +67,7 @@ class Animator: NSObject {
         let dt = displayLink.duration
         for a in animations {
             let anim = a as! Animation
-            var isFinished = false
-            anim.animationTick(dt, finished: &isFinished)
+            anim.animationTick(dt)
         }
     }
 }

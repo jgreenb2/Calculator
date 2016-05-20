@@ -18,6 +18,7 @@ class GraphViewController: UIViewController, GraphViewDataSource, UIGestureRecog
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         graphView.graphOrigin = nil
+        graphView.animator().setScreen(graphView.window?.screen)
     }
     
     override func viewDidLoad() {
