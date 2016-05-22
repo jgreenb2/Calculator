@@ -11,6 +11,10 @@
 //  Switching from NSMutableSet to Swift Set sends us down a Protocol
 //  Oriented Programming rabbit hole. We avoid it by using a Dictionary instead.
 //
+//  Animator is a Singleton that encapsulates iOS's CADisplayLink timer. It allows
+//  any class or type conforming to the Animation protocol to be called at the screen
+//  refresh frequency.
+//
 import UIKit
 
 protocol Animation {
