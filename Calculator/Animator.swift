@@ -6,17 +6,22 @@
 //  Copyright © 2016 Jeff Greenberg. All rights reserved.
 //
 //  Based on objective-C Animator example at
-//  http://www.objc.io (see 12, "implementing animations")
+//  http://www.objc.io (see chapter 12, "implementing animations")
+//
+//  Switching from NSMutableSet to Swift Set sends us down a Protocol
+//  Oriented Programming rabbit hole. We avoid it by using a Dictionary instead.
 //
 import UIKit
 
-protocol Animation: class {
+protocol Animation {
     func animationTick(dt:CFTimeInterval)
+    var animationIdentifier:String { get }
+    
 }
 
-class Animator: NSObject {
+class Animator {
     var displayLink:CADisplayLink?
-    var animations=NSMutableSet()
+    var animations=[String:Animation]()
 
     static let sharedInstance: Animator = {
         let instance = Animator(screen: UIScreen.mainScreen())
@@ -25,7 +30,6 @@ class Animator: NSObject {
     
     
     init(screen:UIScreen) {
-        super.init()
         setDisplayLinkScreen(screen)
     }
     
@@ -46,8 +50,9 @@ class Animator: NSObject {
     
     func addAnimation(animation:Animation?) {
         guard let animation = animation else { return }
-        
-        animations.addObject(animation)
+        guard animations.indexForKey(animation.animationIdentifier) == nil else { return }
+
+        animations[animation.animationIdentifier] = animation
         if animations.count == 1 {
             displayLink?.paused = false
         }
@@ -56,16 +61,15 @@ class Animator: NSObject {
     func removeAnimation(animation:Animation?) {
         guard let animation = animation else { return }
         
-        animations.removeObject(animation)
+        animations.removeValueForKey(animation.animationIdentifier)
         if animations.count == 0 {
             displayLink?.paused = true
         }
     }
     
-    func animationTick(displayLink: CADisplayLink) {
+    @objc func animationTick(displayLink: CADisplayLink) {
         let dt = displayLink.duration
-        for a in animations {
-            let anim = a as! Animation
+        for (_, anim) in animations {
             anim.animationTick(dt)
         }
     }

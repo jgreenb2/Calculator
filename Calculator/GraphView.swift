@@ -298,6 +298,8 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
 
 // computes graph movement with simple newtonian friction model
 class moveGraphWithInertia: Animation {
+    let animationIdentifier = "inertialAnimation"
+    
     var velocity:CGPoint
     weak var delegate:graphAnimation?
     
