@@ -60,9 +60,6 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     @IBInspectable
     var maxY:Double = 10
     
-    private var touchCenter:CGPoint = CGPoint(x: 0, y: 0)
-    private let radius:CGFloat = 10
-
     private var simplePlot:Bool = false
     
     private var density: (x: CGFloat, y: CGFloat) = (25,25) {
@@ -242,11 +239,11 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
                 density = (densityX, densityY)
 
                 // compute the center of the pinch
-                let deltaTouch = touch2 - touch1
-                touchCenter = touch1 + deltaTouch/2.0
+                let touchCenter = gesture.locationInView(self)
                 
                 // now compute the amount the origin has to move to keep this point 
                 // in the same position on the screen
+
                 let translation = CGPoint(x: (touchCenter.x-graphCenter.x)*(1.0-scalex), y: (touchCenter.y-graphCenter.y)*(1.0-scaley))
                 graphOrigin = graphCenter + translation
                 
