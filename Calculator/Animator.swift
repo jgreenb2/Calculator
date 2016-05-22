@@ -33,7 +33,7 @@ class Animator {
     }()
     
     
-    init(screen:UIScreen) {
+    private init(screen:UIScreen) {
         setDisplayLinkScreen(screen)
     }
     
@@ -46,7 +46,7 @@ class Animator {
         setDisplayLinkScreen(screen)
     }
     
-    func setDisplayLinkScreen(screen:UIScreen) {
+    private func setDisplayLinkScreen(screen:UIScreen) {
         displayLink = screen.displayLinkWithTarget(self, selector: #selector(self.animationTick(_:)))
         displayLink?.paused = true
         displayLink?.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSRunLoopCommonModes)
