@@ -46,6 +46,11 @@ class GraphViewController: UIViewController, GraphViewDataSource, UIGestureRecog
         super.viewDidLoad()
     }
     
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        graphView.cancelAnimation()
+    }
+    
     @IBOutlet weak var graphView: GraphView! {
         didSet {
             graphView.dataSource = self
