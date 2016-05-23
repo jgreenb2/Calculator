@@ -23,6 +23,10 @@ class GlobalUISplitViewController: UISplitViewController, UISplitViewControllerD
         if traitCollection.horizontalSizeClass == UIUserInterfaceSizeClass.Regular {
             delay(0.02){self.preferredDisplayMode = UISplitViewControllerDisplayMode.PrimaryOverlay}
         }
+        
+        let minimumWidth = min(view.bounds.width,view.bounds.height);
+        minimumPrimaryColumnWidth = minimumWidth / 2;
+        maximumPrimaryColumnWidth = minimumWidth;
     }
     
     func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController: UIViewController, ontoPrimaryViewController primaryViewController: UIViewController) -> Bool {
