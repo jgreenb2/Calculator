@@ -93,7 +93,7 @@ class CalculatorBrain {
     
     
     private var undoOrRedoInProgress = false
-    private var undoStack = UndoBuffer<[Op]>(N: 10)   // N levels of undo/redo
+    private var undoStack = RingBuffer<[Op]>(N: 10)   // N levels of undo/redo
     
     // the operator stack, operator and variable dictionarys
     private var opStack = [Op]() {

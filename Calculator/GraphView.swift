@@ -59,7 +59,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     var minY:Double = -10
     @IBInspectable
     var maxY:Double = 10
-    
+        
     private var simplePlot:Bool = false
     
     private var density: (x: CGFloat, y: CGFloat) = (25,25) {
@@ -93,16 +93,35 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     // We are careful NOT to draw lines to or from 
     // undefined points
     weak var dataSource: GraphViewDataSource?
-
+    typealias Interval = (x0: Double, xf: Double)
+    var xInterval:Interval?
+    
+    class PlotData {
+        var data:RingBuffer<Double?>
+        var interval:Interval
+        
+        init(N: Int, i: Interval) {
+            data = RingBuffer(N: N)
+            interval = i
+        }
+    }
+    
+    var plotData:PlotData?
+    
     private func plotFunction(rect: CGRect, simple:Bool = false) {
         var prevValueUndefined = true
         let resolutionFactor:CGFloat = (simple ? 2.0 : 1.0)
         let curve = UIBezierPath()
         let increment = (1/contentScaleFactor)*resolutionFactor
+        
+        let xrange = Interval(x0: ScreenToX(0), xf: ScreenToX(rect.width))
+        let delta = (xrange.xf - xrange.x0)/Double(bounds.width)
+        funcData(&plotData, xrange: xrange, dx: delta)
         var i:CGFloat = 0
         while ( i < rect.width) {
             let x = ScreenToX(i)
-            if let y = dataSource?.functionValue(self, atXEquals: x) {
+            //if let y = dataSource?.functionValue(self, atXEquals: x) {
+            if let value = plotData!.data.next(), y = value {
                 if !prevValueUndefined {
                     curve.addLineToPoint(XYToPoint(x,y))
                 } else {
@@ -117,6 +136,33 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         curve.lineWidth=lineWidth
         lineColor.set()
         curve.stroke()
+    }
+    
+    func funcData(inout plotData:PlotData?, xrange: Interval, dx: Double) {
+        if plotData == nil {
+            plotData = PlotData(N: Int(bounds.width*contentScaleFactor), i: xrange)
+            var x = xrange.x0
+            while x < xrange.xf {
+                plotData!.data.add(dataSource!.functionValue(self, atXEquals: x))
+                x += dx
+            }
+        } else if xrange.x0 < plotData!.interval.x0 {
+            plotData!.data.reset()
+            var x = plotData!.interval.x0 - dx
+            while x >= xrange.x0 {
+                plotData!.data.prepend(dataSource!.functionValue(self, atXEquals: x))
+                x -= dx
+            }
+        } else if xrange.xf > plotData!.interval.xf {
+            plotData!.data.reset()
+            var x = plotData!.interval.xf + dx
+            while x < xrange.xf {
+                plotData!.data.append(dataSource!.functionValue(self, atXEquals: x))
+                x += dx
+            }
+        }
+        plotData?.interval = xrange
+        plotData?.data.reset()
     }
     
     // coord transform functions
