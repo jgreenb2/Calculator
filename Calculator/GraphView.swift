@@ -114,9 +114,10 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         let curve = UIBezierPath()
         let increment = (1/contentScaleFactor)*resolutionFactor
         
-        let xrange = Interval(x0: ScreenToX(0), xf: ScreenToX(rect.width))
-        let delta = (xrange.xf - xrange.x0)/Double(rect.width)
-        funcData(&plotData, xrange: xrange, dx: delta)
+        let nPoints = rect.width*contentScaleFactor
+        let xrange = Interval(x0: ScreenToX(0), xf: ScreenToX(nPoints-1))
+        let delta = (xrange.xf - xrange.x0)/Double(nPoints-1)
+        funcData(&plotData, dataSize: Int(nPoints),  xrange: xrange, dx: delta)
         var i:CGFloat = 0
         while ( i < rect.width) {
             let x = ScreenToX(i)
@@ -138,27 +139,41 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         curve.stroke()
     }
     
-    func funcData(inout plotData:PlotData?, xrange: Interval, dx: Double) {
-        if plotData == nil {
-            plotData = PlotData(N: Int(bounds.width*contentScaleFactor), i: xrange)
+    func funcData(inout plotData:PlotData?, dataSize: Int, xrange: Interval, dx: Double) {
+        struct staticVars {
+            static var size = 0
+            static var increment:Double = 0
+        }
+        
+        var iter1 = 0
+        var iter2 = 0
+        var iter3 = 0
+        if plotData == nil || staticVars.size != dataSize || staticVars.increment != dx {
+            staticVars.size = dataSize
+            staticVars.increment = dx
+            
+            plotData = PlotData(N: dataSize, i: xrange)
             var x = xrange.x0
-            while x < xrange.xf {
+            while x < xrange.xf - dx/2.0 {
                 plotData!.data.add(dataSource!.functionValue(self, atXEquals: x))
                 x += dx
+                iter1 += 1
             }
         } else if xrange.x0 < plotData!.interval.x0 {
             plotData!.data.reset()
             var x = plotData!.interval.x0 - dx
-            while x >= xrange.x0 {
-                plotData!.data.prepend(dataSource!.functionValue(self, atXEquals: x)!+3)
+            while x > xrange.x0 + dx/2.0 {
+                plotData!.data.prepend(dataSource!.functionValue(self, atXEquals: x)!)
                 x -= dx
+                iter2 += 1
             }
         } else if xrange.xf > plotData!.interval.xf {
             plotData!.data.reset()
-            var x = plotData!.interval.xf + dx
-            while x < xrange.xf {
-                plotData!.data.append(dataSource!.functionValue(self, atXEquals: x)!-3)
+            var x = plotData!.interval.xf
+            while x < xrange.xf - dx/2.0 {
+                plotData!.data.append(dataSource!.functionValue(self, atXEquals: x)!)
                 x += dx
+                iter3 += 1
             }
         }
         plotData?.interval = xrange
