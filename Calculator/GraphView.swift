@@ -110,12 +110,12 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     
     private func plotFunction(rect: CGRect, simple:Bool = false) {
         var prevValueUndefined = true
-        let resolutionFactor:CGFloat = (simple ? 2.0 : 1.0)
+        let resolutionFactor:CGFloat = (simple ? 1.0 : 1.0)
         let curve = UIBezierPath()
         let increment = (1/contentScaleFactor)*resolutionFactor
         
         let xrange = Interval(x0: ScreenToX(0), xf: ScreenToX(rect.width))
-        let delta = (xrange.xf - xrange.x0)/Double(bounds.width)
+        let delta = (xrange.xf - xrange.x0)/Double(rect.width)
         funcData(&plotData, xrange: xrange, dx: delta)
         var i:CGFloat = 0
         while ( i < rect.width) {
@@ -150,14 +150,14 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
             plotData!.data.reset()
             var x = plotData!.interval.x0 - dx
             while x >= xrange.x0 {
-                plotData!.data.prepend(dataSource!.functionValue(self, atXEquals: x))
+                plotData!.data.prepend(dataSource!.functionValue(self, atXEquals: x)!+3)
                 x -= dx
             }
         } else if xrange.xf > plotData!.interval.xf {
             plotData!.data.reset()
             var x = plotData!.interval.xf + dx
             while x < xrange.xf {
-                plotData!.data.append(dataSource!.functionValue(self, atXEquals: x))
+                plotData!.data.append(dataSource!.functionValue(self, atXEquals: x)!-3)
                 x += dx
             }
         }
@@ -332,6 +332,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     }
     
     func animationCompleted() {
+        cancelAnimation()
         drawDetailedPlot()
     }
     
