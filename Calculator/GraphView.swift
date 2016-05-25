@@ -115,13 +115,17 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         let increment = (1/contentScaleFactor)*resolutionFactor
         
         let nPoints = rect.width*contentScaleFactor
-        let xrange = Interval(x0: ScreenToX(0), xf: ScreenToX(nPoints-1))
-        let delta = (xrange.xf - xrange.x0)/Double(nPoints-1)
-        funcData(&plotData, dataSize: Int(nPoints),  xrange: xrange, dx: delta)
+//        let xrange = Interval(x0: ScreenToX(0), xf: ScreenToX(nPoints-1))
+//        let delta = (xrange.xf - xrange.x0)/Double(nPoints-1)
+//        
+//        funcData(&plotData, dataSize: Int(nPoints),  xrange: xrange, dx: delta)
+        let x0 = ScreenToX(0)
+        let xf = ScreenToX(nPoints-1)
+        let xrange = Interval(x0: x0, xf: xf)
+        funcData(&plotData, dataSize: Int(nPoints), xrange: xrange, dx: Double(1/density.x))
         var i:CGFloat = 0
         while ( i < rect.width) {
             let x = ScreenToX(i)
-            //if let y = dataSource?.functionValue(self, atXEquals: x) {
             if let value = plotData!.data.next(), y = value {
                 if !prevValueUndefined {
                     curve.addLineToPoint(XYToPoint(x,y))
@@ -142,41 +146,47 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     func funcData(inout plotData:PlotData?, dataSize: Int, xrange: Interval, dx: Double) {
         struct staticVars {
             static var size = 0
-            static var increment:Double = 0
+            static var dx:Double = 0
         }
         
         var iter1 = 0
         var iter2 = 0
         var iter3 = 0
-        if plotData == nil || staticVars.size != dataSize || staticVars.increment != dx {
+        if plotData == nil || staticVars.size != dataSize || staticVars.dx != dx {
             staticVars.size = dataSize
-            staticVars.increment = dx
+            staticVars.dx = dx
             
             plotData = PlotData(N: dataSize, i: xrange)
             var x = xrange.x0
-            while x < xrange.xf - dx/2.0 {
+            while iter1 < dataSize {
                 plotData!.data.add(dataSource!.functionValue(self, atXEquals: x))
                 x += dx
                 iter1 += 1
             }
+            plotData?.interval = xrange
         } else if xrange.x0 < plotData!.interval.x0 {
             plotData!.data.reset()
+            let n = Int(round((plotData!.interval.x0 - xrange.x0)/dx))
             var x = plotData!.interval.x0 - dx
-            while x > xrange.x0 + dx/2.0 {
+            while iter2 < n {
                 plotData!.data.prepend(dataSource!.functionValue(self, atXEquals: x)!)
                 x -= dx
                 iter2 += 1
             }
+            if n > 0  { plotData?.interval = xrange }
         } else if xrange.xf > plotData!.interval.xf {
             plotData!.data.reset()
+            let n = Int(round((xrange.xf - plotData!.interval.xf)/dx))
             var x = plotData!.interval.xf
-            while x < xrange.xf - dx/2.0 {
+            while iter3 < n {
                 plotData!.data.append(dataSource!.functionValue(self, atXEquals: x)!)
                 x += dx
                 iter3 += 1
             }
+            if n > 0  { plotData?.interval = xrange }
         }
-        plotData?.interval = xrange
+        
+
         plotData?.data.reset()
     }
     
