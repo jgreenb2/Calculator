@@ -85,46 +85,56 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         let axes = AxesDrawer(color: axesColor, contentScaleFactor: contentScaleFactor)
         if simplePlot {
             axes.drawAxesInRect(bounds, origin: graphCenter, pointsPerUnit: density, drawHashMarks: false)
-            plotFunction(rect,simple: true)
+            drawFunctionPlot(rect,simple: true)
         } else {
             axes.drawAxesInRect(bounds, origin: graphCenter, pointsPerUnit: density, drawHashMarks: true)
-            plotFunction(rect,simple: false)
+            drawFunctionPlot(rect,simple: false)
         }
     }
     
-    // plot the function using the appropriate protocol
-    // We are careful NOT to draw lines to or from 
-    // undefined points
     weak var dataSource: GraphViewDataSource?
     private var xInterval:Interval?
     
+    // define a class to hold the function data that will be used
+    // to generate a plot
     class PlotData {
         var data:RingBuffer<Double?>
         private var interval:Interval
+        var stale=false
         
-        private init(N: Int, i: Interval) {
-            data = RingBuffer(N: N)
-            interval = i
+        private init(npoints: Int, xrange: Interval) {
+            data = RingBuffer(N: npoints)
+            interval = xrange
         }
     }
     
+    // store the function data in the plotData object.
     lazy var plotData:PlotData = { [unowned self] in 
         let nPoints = self.bounds.width
         let xrange = Interval(x0: self.ScreenToX(0), xf: self.ScreenToX(nPoints-1))
-        return PlotData(N: Int(nPoints*self.contentScaleFactor),i: xrange)
+        return PlotData(npoints: Int(nPoints*self.contentScaleFactor),xrange: xrange)
         }()
 
-    private func plotFunction(rect: CGRect, simple:Bool = false) {
+    // draw the actual graph
+    private func drawFunctionPlot(rect: CGRect, simple:Bool = false) {
+        // make sure we have a dataSource or a program to plot
         guard  let dataSource = dataSource else { return }
         guard  dataSource.programSet() else { return }
         
         var prevValueUndefined = true
         let curve = UIBezierPath()
         
+        // set the viewport parameters
         let nPoints = rect.width
         let xrange = Interval(x0: ScreenToX(0), xf: ScreenToX(nPoints-1))
         let increment = 1/contentScaleFactor
+        
+        // retrieve the data that will be plotted
         funcData(&plotData, dataSize: Int(nPoints*contentScaleFactor), xrange: xrange, dx: Double(increment/density.x))
+        
+        // do the drawing but be
+        // careful NOT to draw lines to or from 
+        // undefined points
         var i:CGFloat = 0
         while ( i < nPoints) {
             let x = ScreenToX(i)
@@ -145,6 +155,12 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         curve.stroke()
     }
     
+    // evaluate the function. only recalculate the newly exposed portions of the
+    // plot axis.
+    //
+    // there are 3 cases: 1) recalculate the entire function
+    // 2) calculate new values on the left
+    // 3) claculate new values on the right
     func funcData(inout plotData:PlotData, dataSize: Int, xrange: Interval, dx: Double) {
         struct staticVars {
             static var size = 0
@@ -153,11 +169,14 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
 
         var iter1=0, iter2=0, iter3=0
 
-        if staticVars.size != dataSize || staticVars.dx != dx {
+        // if the xaxis scaling has changed or the axis has a different number of points
+        // we need to recalculate the entire function
+        if staticVars.size != dataSize || staticVars.dx != dx || plotData.stale {
             staticVars.size = dataSize
             staticVars.dx = dx
+            plotData.stale = false
             
-            plotData = PlotData(N: dataSize, i: xrange)
+            plotData = PlotData(npoints: dataSize, xrange: xrange)
             var x = xrange.x0
             while iter1 < dataSize {
                 plotData.data.addAtCurrentPosition(dataSource?.functionValue(self, atXEquals: x))
@@ -165,6 +184,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
                 iter1 += 1
             }
             plotData.interval = xrange
+        // If the plot is scrolling to the right we just need to calculate the 'earlier' points
         } else if xrange.x0 < plotData.interval.x0 {
             plotData.data.reset()
             let n = Int(round((plotData.interval.x0 - xrange.x0)/dx))
@@ -176,6 +196,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
                 x -= dx
                 iter2 += 1
             }
+        // ...or if it's scrolling to the left we add points to the end
          } else if xrange.xf > plotData.interval.xf {
             plotData.data.reset()
             let n = Int(round((xrange.xf - plotData.interval.xf)/dx))

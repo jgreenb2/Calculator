@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GraphViewController: UIViewController, GraphViewDataSource, UIGestureRecognizerDelegate {
+class GraphViewController: UIViewController, GraphViewDataSource, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
     
     var graphBrain = CalculatorBrain()
     var panGraphRecognizer:UIPanGestureRecognizer?
@@ -43,8 +43,16 @@ class GraphViewController: UIViewController, GraphViewDataSource, UIGestureRecog
         // ...or by using the bar button
         navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem()
         navigationItem.leftItemsSupplementBackButton = true
-                
+        
+        navigationController?.delegate = self
         super.viewDidLoad()
+    }
+    
+    // if we have just segued to the graphView, then mark the current graphView plotData as invalid
+    func navigationController(navigationController: UINavigationController, didShowViewController viewController: UIViewController, animated: Bool) {
+        if viewController is GraphViewController {
+            graphView.plotData.stale = true
+        }
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -57,7 +65,7 @@ class GraphViewController: UIViewController, GraphViewDataSource, UIGestureRecog
             graphView.dataSource = self
         }
     }
-        
+    
     func functionValue(sender: GraphView, atXEquals: Double) -> Double? {
         if let result = graphBrain.setVariable("M", value: atXEquals) {
             if result.isNormal || result.isZero {
