@@ -111,23 +111,16 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     
     private func plotFunction(rect: CGRect, simple:Bool = false) {
         var prevValueUndefined = true
-        let resolutionFactor:CGFloat = (simple ? 1.0 : 1.0)
         let curve = UIBezierPath()
-        let increment = (1/contentScaleFactor)*resolutionFactor
         
         let nPoints = rect.width
-//        let xrange = Interval(x0: ScreenToX(0), xf: ScreenToX(nPoints-1))
-//        let delta = (xrange.xf - xrange.x0)/Double(nPoints-1)
-//        
-//        funcData(&plotData, dataSize: Int(nPoints),  xrange: xrange, dx: delta)
-        let x0 = ScreenToX(0)
-        let xf = ScreenToX(nPoints-1)
-        let xrange = Interval(x0: x0, xf: xf)
+        let xrange = Interval(x0: ScreenToX(0), xf: ScreenToX(nPoints-1))
+        let increment = 1/contentScaleFactor
         funcData(&plotData, dataSize: Int(nPoints*contentScaleFactor), xrange: xrange, dx: Double(increment/density.x))
         var i:CGFloat = 0
-        while ( i < rect.width) {
+        while ( i < nPoints) {
             let x = ScreenToX(i)
-            if let value = plotData!.data.next(), y = value {
+            if let y = plotData!.data.next() ?? nil {
                 if !prevValueUndefined {
                     curve.addLineToPoint(XYToPoint(x,y))
                 } else {
@@ -137,7 +130,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
             } else {
                 prevValueUndefined = true
             }
-            i+=increment
+            i += increment
         }
         curve.lineWidth=lineWidth
         lineColor.set()
@@ -150,9 +143,8 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
             static var dx:Double = 0
         }
 
-        var iter1 = 0
-        var iter2 = 0
-        var iter3 = 0
+        var iter1=0, iter2=0, iter3=0
+
         if plotData == nil || staticVars.size != dataSize || staticVars.dx != dx {
             staticVars.size = dataSize
             staticVars.dx = dx
@@ -170,27 +162,23 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
             let n = Int(round((plotData!.interval.x0 - xrange.x0)/dx))
             var x = plotData!.interval.x0 - dx
             while iter2 < n {
-                plotData!.data.prepend(dataSource!.functionValue(self, atXEquals: x)!)
-                plotData?.interval = (plotData?.interval)! - dx
+                plotData!.data.prepend(dataSource!.functionValue(self, atXEquals: x))
+                plotData?.interval -= dx
                 
                 x -= dx
                 iter2 += 1
             }
-            // if n > 0  { plotData?.interval = xrange }
-        } else if xrange.xf > plotData!.interval.xf {
+         } else if xrange.xf > plotData!.interval.xf {
             plotData!.data.reset()
             let n = Int(round((xrange.xf - plotData!.interval.xf)/dx))
             var x = plotData!.interval.xf + dx
             while iter3 < n {
-                plotData!.data.append(dataSource!.functionValue(self, atXEquals: x)!)
-//                plotData?.interval.x0 += dx
-//                plotData?.interval.xf += dx
-                plotData?.interval = (plotData?.interval)! + dx
+                plotData!.data.append(dataSource!.functionValue(self, atXEquals: x))
+                plotData?.interval += dx
 
                 x += dx
                 iter3 += 1
             }
-            //if n > 0  { plotData?.interval = xrange }
         }
         
         plotData?.data.reset()
@@ -372,14 +360,6 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     }
     
 }
-// increment an interval
-private func + (left: Interval, right: Double) -> Interval {
-    return Interval(x0: left.x0 + right, xf: left.xf + right)
-}
-
-private func - (left: Interval, right: Double) -> Interval {
-    return Interval(x0: left.x0 - right, xf: left.xf - right)
-}
 
 // computes graph movement with simple newtonian friction model
 class moveGraphWithInertia: Animation {
@@ -442,3 +422,17 @@ private func / (left: CGPoint, right: CGFloat) -> CGPoint {
 private func * (left: CGPoint, right: CGFloat) -> CGPoint {
     return CGPoint(x: left.x*right, y: left.y*right)
 }
+
+// increment or decrement an interval
+
+private func += (inout left:Interval, right: Double)  {
+    left.x0 += right
+    left.xf += right
+}
+
+private func -= (inout left:Interval, right: Double) {
+    left.x0 -= right
+    left.xf -= right
+}
+
+
