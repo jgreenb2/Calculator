@@ -17,6 +17,8 @@ protocol graphAnimation: class {
     func updateGraphPosition(deltaPosition:CGPoint)
 }
 
+typealias Interval = (x0: Double, xf: Double)
+
 @IBDesignable
 class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     
@@ -93,14 +95,13 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     // We are careful NOT to draw lines to or from 
     // undefined points
     weak var dataSource: GraphViewDataSource?
-    typealias Interval = (x0: Double, xf: Double)
-    var xInterval:Interval?
+    private var xInterval:Interval?
     
     class PlotData {
         var data:RingBuffer<Double?>
-        var interval:Interval
+        private var interval:Interval
         
-        init(N: Int, i: Interval) {
+        private init(N: Int, i: Interval) {
             data = RingBuffer(N: N)
             interval = i
         }
@@ -114,7 +115,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         let curve = UIBezierPath()
         let increment = (1/contentScaleFactor)*resolutionFactor
         
-        let nPoints = rect.width*contentScaleFactor
+        let nPoints = rect.width
 //        let xrange = Interval(x0: ScreenToX(0), xf: ScreenToX(nPoints-1))
 //        let delta = (xrange.xf - xrange.x0)/Double(nPoints-1)
 //        
@@ -122,7 +123,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         let x0 = ScreenToX(0)
         let xf = ScreenToX(nPoints-1)
         let xrange = Interval(x0: x0, xf: xf)
-        funcData(&plotData, dataSize: Int(nPoints), xrange: xrange, dx: Double(1/density.x))
+        funcData(&plotData, dataSize: Int(nPoints*contentScaleFactor), xrange: xrange, dx: Double(increment/density.x))
         var i:CGFloat = 0
         while ( i < rect.width) {
             let x = ScreenToX(i)
@@ -148,7 +149,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
             static var size = 0
             static var dx:Double = 0
         }
-        
+
         var iter1 = 0
         var iter2 = 0
         var iter3 = 0
@@ -170,23 +171,28 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
             var x = plotData!.interval.x0 - dx
             while iter2 < n {
                 plotData!.data.prepend(dataSource!.functionValue(self, atXEquals: x)!)
+                plotData?.interval = (plotData?.interval)! - dx
+                
                 x -= dx
                 iter2 += 1
             }
-            if n > 0  { plotData?.interval = xrange }
+            // if n > 0  { plotData?.interval = xrange }
         } else if xrange.xf > plotData!.interval.xf {
             plotData!.data.reset()
             let n = Int(round((xrange.xf - plotData!.interval.xf)/dx))
-            var x = plotData!.interval.xf
+            var x = plotData!.interval.xf + dx
             while iter3 < n {
                 plotData!.data.append(dataSource!.functionValue(self, atXEquals: x)!)
+//                plotData?.interval.x0 += dx
+//                plotData?.interval.xf += dx
+                plotData?.interval = (plotData?.interval)! + dx
+
                 x += dx
                 iter3 += 1
             }
-            if n > 0  { plotData?.interval = xrange }
+            //if n > 0  { plotData?.interval = xrange }
         }
         
-
         plotData?.data.reset()
     }
     
@@ -364,6 +370,15 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     func updateGraphPosition(deltaPosition: CGPoint) {
         graphOrigin = graphCenter + deltaPosition
     }
+    
+}
+// increment an interval
+private func + (left: Interval, right: Double) -> Interval {
+    return Interval(x0: left.x0 + right, xf: left.xf + right)
+}
+
+private func - (left: Interval, right: Double) -> Interval {
+    return Interval(x0: left.x0 - right, xf: left.xf - right)
 }
 
 // computes graph movement with simple newtonian friction model
@@ -398,6 +413,7 @@ class moveGraphWithInertia: Animation {
         }
     }
 }
+
 
 // add two CGpoints
 private func + (left: CGPoint, right: CGPoint) -> CGPoint {
