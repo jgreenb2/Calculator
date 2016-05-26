@@ -152,7 +152,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
             plotData = PlotData(N: dataSize, i: xrange)
             var x = xrange.x0
             while iter1 < dataSize {
-                plotData!.data.add(dataSource!.functionValue(self, atXEquals: x))
+                plotData?.data.addAtCurrentPosition(dataSource?.functionValue(self, atXEquals: x))
                 x += dx
                 iter1 += 1
             }
@@ -162,7 +162,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
             let n = Int(round((plotData!.interval.x0 - xrange.x0)/dx))
             var x = plotData!.interval.x0 - dx
             while iter2 < n {
-                plotData!.data.prepend(dataSource!.functionValue(self, atXEquals: x))
+                plotData?.data.prependToBeginning(dataSource?.functionValue(self, atXEquals: x))
                 plotData?.interval -= dx
                 
                 x -= dx
@@ -173,7 +173,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
             let n = Int(round((xrange.xf - plotData!.interval.xf)/dx))
             var x = plotData!.interval.xf + dx
             while iter3 < n {
-                plotData!.data.append(dataSource!.functionValue(self, atXEquals: x))
+                plotData?.data.appendToEnd(dataSource?.functionValue(self, atXEquals: x))
                 plotData?.interval += dx
 
                 x += dx

@@ -99,7 +99,7 @@ class CalculatorBrain {
     private var opStack = [Op]() {
         willSet(newOpStack) {
             if !undoOrRedoInProgress {
-                undoStack.add(newOpStack)
+                undoStack.addAtCurrentPosition(newOpStack)
             }
         }
     }

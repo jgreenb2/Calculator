@@ -34,7 +34,7 @@ class RingBuffer<T> {
         buffer.reserveCapacity(N)
     }
     
-    func add(item: T) {
+    func addAtCurrentPosition(item: T) {
         pWrite = inc(pRead)
         pRead = pWrite
         pEnd = pWrite
@@ -42,7 +42,7 @@ class RingBuffer<T> {
         buffer[pWrite]=item
     }
     
-    func append(item: T) {
+    func appendToEnd(item: T) {
         pEnd = inc(pEnd)
         pBeg = inc(pBeg)
         pWrite = pEnd
@@ -57,7 +57,7 @@ class RingBuffer<T> {
         resetState = true
     }
     
-    func prepend(item: T) {
+    func prependToBeginning(item: T) {
         pBeg = dec(pBeg)
         pEnd = dec(pEnd)
         pWrite = pBeg
