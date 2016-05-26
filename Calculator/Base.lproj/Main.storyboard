@@ -42,7 +42,7 @@
                                 </userDefinedRuntimeAttributes>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="FjV-NG-IlK" customClass="CalculatorDigits" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="271" y="276.5" width="75.5" height="56.5"/>
+                                <rect key="frame" x="271" y="276" width="75" height="57"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="38" id="lxR-gt-z0J"/>
@@ -63,15 +63,12 @@
                                         <exclude reference="tz2-ea-92x"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="209" y="196" width="55" height="40"/>
-                                </variation>
                                 <connections>
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7Ia-dk-xhm"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="GTd-sq-XKF" customClass="CalculatorDigits" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="354.5" y="276.5" width="75.5" height="56.5"/>
+                                <rect key="frame" x="354" y="276" width="76" height="57"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="GTd-sq-XKF" secondAttribute="height" multiplier="45:41" id="5MY-ut-wj4"/>
@@ -91,9 +88,6 @@
                                         <exclude reference="5MY-ut-wj4"/>
                                         <exclude reference="KAN-m6-6Bj"/>
                                     </mask>
-                                </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="271" y="196" width="55" height="40"/>
                                 </variation>
                                 <connections>
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uSB-gw-73f"/>
@@ -116,8 +110,7 @@
                                         <exclude reference="vrh-Xa-qac"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="333" y="147" width="55" height="40"/>
+                                <variation key="heightClass=compact">
                                     <mask key="constraints">
                                         <exclude reference="j6N-cN-dUb"/>
                                     </mask>
@@ -141,9 +134,6 @@
                                         <exclude reference="kE4-AQ-lCA"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="333" y="196" width="55" height="40"/>
-                                </variation>
                                 <connections>
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jZm-Qd-5ai"/>
                                 </connections>
@@ -163,9 +153,6 @@
                                         <exclude reference="HhX-db-Hgf"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="333" y="244" width="55" height="40"/>
-                                </variation>
                                 <connections>
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Qhj-Xz-l1I"/>
                                 </connections>
@@ -184,9 +171,6 @@
                                     <mask key="constraints">
                                         <exclude reference="S9z-q4-QHH"/>
                                     </mask>
-                                </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="333" y="292" width="55" height="40"/>
                                 </variation>
                                 <connections>
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AQV-Gf-lc6"/>
@@ -212,15 +196,12 @@
                                         <exclude reference="4qu-4L-pG4"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="146" y="196" width="55" height="40"/>
-                                </variation>
                                 <connections>
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IjO-Mi-7wb"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="DR8-ED-fNs" customClass="CalculatorDigits" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="271" y="341" width="75.5" height="57"/>
+                                <rect key="frame" x="271" y="341" width="75" height="57"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="DR8-ED-fNs" secondAttribute="height" multiplier="45:41" id="rhA-Oy-uCM"/>
@@ -239,15 +220,12 @@
                                         <exclude reference="rhA-Oy-uCM"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="209" y="244" width="55" height="40"/>
-                                </variation>
                                 <connections>
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sc7-uE-ar9"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="9p4-1C-fmd" customClass="CalculatorDigits" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="354.5" y="341" width="75.5" height="57"/>
+                                <rect key="frame" x="354" y="341" width="76" height="57"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="9p4-1C-fmd" secondAttribute="height" multiplier="45:41" id="P7J-G9-fcF"/>
@@ -265,9 +243,6 @@
                                     <mask key="constraints">
                                         <exclude reference="P7J-G9-fcF"/>
                                     </mask>
-                                </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="271" y="244" width="55" height="40"/>
                                 </variation>
                                 <connections>
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FvD-6y-Pl4"/>
@@ -293,15 +268,12 @@
                                         <exclude reference="8nk-Qf-Fg7"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="146" y="244" width="55" height="40"/>
-                                </variation>
                                 <connections>
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8IX-CW-RFW"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="jQs-nv-Rn2" customClass="CalculatorDigits" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="354.5" y="406" width="75.5" height="56.5"/>
+                                <rect key="frame" x="354" y="406" width="76" height="57"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="jQs-nv-Rn2" secondAttribute="height" multiplier="45:41" id="idL-Lb-IhZ"/>
@@ -319,9 +291,6 @@
                                     <mask key="constraints">
                                         <exclude reference="idL-Lb-IhZ"/>
                                     </mask>
-                                </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="271" y="292" width="55" height="40"/>
                                 </variation>
                                 <connections>
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Wzj-My-UaR"/>
@@ -347,8 +316,7 @@
                                         <exclude reference="UgT-dW-h8C"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="209" y="147" width="55" height="40"/>
+                                <variation key="heightClass=compact">
                                     <mask key="constraints">
                                         <exclude reference="KgG-JN-AOO"/>
                                     </mask>
@@ -377,8 +345,7 @@
                                         <exclude reference="m0W-Cf-OxT"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="146" y="147" width="55" height="40"/>
+                                <variation key="heightClass=compact">
                                     <mask key="constraints">
                                         <exclude reference="m0W-Cf-OxT"/>
                                     </mask>
@@ -388,7 +355,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="HPB-O2-hOX" customClass="CalculatorButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="103.5" y="147" width="75.5" height="56.5"/>
+                                <rect key="frame" x="104" y="147" width="75" height="57"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="41" id="C2N-2X-NaT"/>
                                     <constraint firstAttribute="width" constant="54" id="I3e-GC-rn1"/>
@@ -409,8 +376,7 @@
                                         <exclude reference="sUU-Tb-o9m"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="82" y="147" width="55" height="40"/>
+                                <variation key="heightClass=compact">
                                     <mask key="constraints">
                                         <exclude reference="C2N-2X-NaT"/>
                                         <exclude reference="I3e-GC-rn1"/>
@@ -441,15 +407,12 @@
                                         <exclude reference="hsM-Xe-NVL"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="271" y="340" width="54" height="40"/>
-                                </variation>
                                 <connections>
                                     <action selector="changeSign" destination="BYZ-38-t0r" eventType="touchUpInside" id="y8M-v7-lUA"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="clip" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xLl-gW-bTq" customClass="CalculatorButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="103.5" y="276.5" width="75.5" height="56.5"/>
+                                <rect key="frame" x="104" y="276" width="75" height="57"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="41" id="R8X-GE-lt5"/>
                                     <constraint firstAttribute="width" constant="45" id="SsU-VC-fkQ"/>
@@ -487,8 +450,7 @@
                                         <exclude reference="TXZ-fX-OhH"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="82" y="196" width="55" height="40"/>
+                                <variation key="heightClass=compact">
                                     <mask key="constraints">
                                         <exclude reference="R8X-GE-lt5"/>
                                         <exclude reference="SsU-VC-fkQ"/>
@@ -511,9 +473,6 @@
                                     <mask key="constraints">
                                         <exclude reference="cmr-0z-bMB"/>
                                     </mask>
-                                </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="83" y="244" width="55" height="40"/>
                                 </variation>
                                 <connections>
                                     <action selector="memGet" destination="BYZ-38-t0r" eventType="touchUpInside" id="eIx-vI-X8t"/>
@@ -539,15 +498,12 @@
                                         <exclude reference="l8n-4I-GTX"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="146" y="340" width="55" height="40"/>
-                                </variation>
                                 <connections>
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vvH-I3-8m3"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="vWf-eO-UAe" customClass="CalculatorDigits" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="271" y="406" width="75.5" height="56.5"/>
+                                <rect key="frame" x="271" y="406" width="75" height="57"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="vWf-eO-UAe" secondAttribute="height" multiplier="45:41" id="Fz4-x9-mgU"/>
@@ -565,9 +521,6 @@
                                     <mask key="constraints">
                                         <exclude reference="Fz4-x9-mgU"/>
                                     </mask>
-                                </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="209" y="292" width="55" height="40"/>
                                 </variation>
                                 <connections>
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gDa-Fg-Zts"/>
@@ -592,9 +545,6 @@
                                     <mask key="constraints">
                                         <exclude reference="HZS-Al-07D"/>
                                     </mask>
-                                </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="146" y="292" width="55" height="40"/>
                                 </variation>
                                 <connections>
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ua5-i4-D3d"/>
@@ -636,9 +586,6 @@
                                         <exclude reference="0Cg-8n-g16"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="271" y="147" width="54" height="40"/>
-                                </variation>
                                 <connections>
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1HC-yc-RQP"/>
                                 </connections>
@@ -657,9 +604,6 @@
                                     <mask key="constraints">
                                         <exclude reference="x4g-JG-ea5"/>
                                     </mask>
-                                </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="396" y="244" width="55" height="40"/>
                                 </variation>
                                 <connections>
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AXu-1H-lPz"/>
@@ -680,15 +624,12 @@
                                         <exclude reference="rPR-O9-ApV"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="459" y="244" width="55" height="40"/>
-                                </variation>
                                 <connections>
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rh7-WY-c4C"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="oAP-5k-9bA" customClass="CalculatorButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="271" y="147" width="75.5" height="56.5"/>
+                                <rect key="frame" x="271" y="147" width="75" height="57"/>
                                 <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="oAP-5k-9bA" secondAttribute="height" multiplier="45:41" id="S2c-UD-cM8"/>
@@ -702,15 +643,12 @@
                                         <exclude reference="S2c-UD-cM8"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="396" y="292" width="55" height="40"/>
-                                </variation>
                                 <connections>
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OB9-XW-gvG"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="Rj9-Uc-OEE" customClass="CalculatorButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="354.5" y="147" width="75.5" height="56.5"/>
+                                <rect key="frame" x="354" y="147" width="76" height="57"/>
                                 <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Rj9-Uc-OEE" secondAttribute="height" multiplier="45:41" id="nTk-UI-YPs"/>
@@ -723,9 +661,6 @@
                                     <mask key="constraints">
                                         <exclude reference="nTk-UI-YPs"/>
                                     </mask>
-                                </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="459" y="196" width="55" height="40"/>
                                 </variation>
                                 <connections>
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MIm-W5-MZt"/>
@@ -746,15 +681,12 @@
                                         <exclude reference="wzG-05-t3j"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="396" y="196" width="55" height="40"/>
-                                </variation>
                                 <connections>
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BcV-ed-Tx3"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="VGc-iv-HBi" customClass="ShiftableButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="103.5" y="406" width="75.5" height="56.5"/>
+                                <rect key="frame" x="104" y="406" width="75" height="57"/>
                                 <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="45" id="2G7-b8-3Fh"/>
@@ -772,8 +704,7 @@
                                         <exclude reference="qzo-AD-RAF"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="396" y="147" width="55" height="40"/>
+                                <variation key="heightClass=compact">
                                     <mask key="constraints">
                                         <exclude reference="2G7-b8-3Fh"/>
                                         <exclude reference="EQF-MK-DdH"/>
@@ -801,8 +732,7 @@
                                         <exclude reference="uHg-8N-aFg"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="459" y="147" width="55" height="40"/>
+                                <variation key="heightClass=compact">
                                     <mask key="constraints">
                                         <exclude reference="6Kb-DN-lbh"/>
                                         <exclude reference="uHg-8N-aFg"/>
@@ -831,8 +761,7 @@
                                         <exclude reference="Vxa-eN-JgA"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="20" y="244" width="55" height="40"/>
+                                <variation key="heightClass=compact">
                                     <mask key="constraints">
                                         <include reference="Vxa-eN-JgA"/>
                                     </mask>
@@ -862,8 +791,7 @@
                                         <exclude reference="sFs-PG-WfM"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="20" y="147" width="55" height="40"/>
+                                <variation key="heightClass=compact">
                                     <mask key="constraints">
                                         <exclude reference="DHv-TV-IuS"/>
                                         <exclude reference="dFt-sc-2Kt"/>
@@ -895,15 +823,12 @@
                                         <exclude reference="pm7-V1-Sse"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="333" y="340" width="181" height="40"/>
-                                </variation>
                                 <connections>
                                     <action selector="enter" destination="BYZ-38-t0r" eventType="touchUpInside" id="2Fz-H6-sG5"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="l9X-Z8-pTl" customClass="CalculatorButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="103.5" y="341" width="75.5" height="57"/>
+                                <rect key="frame" x="104" y="341" width="75" height="57"/>
                                 <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="l9X-Z8-pTl" secondAttribute="height" multiplier="45:41" id="Wd3-V6-oAm"/>
@@ -921,8 +846,7 @@
                                         <exclude reference="gZG-8c-ih3"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="459" y="292" width="56" height="40"/>
+                                <variation key="heightClass=compact">
                                     <mask key="constraints">
                                         <exclude reference="gNn-J3-5CR"/>
                                         <exclude reference="gZG-8c-ih3"/>
@@ -953,9 +877,6 @@
                                         <exclude reference="rds-Ib-twH"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="20" y="340" width="118" height="40"/>
-                                </variation>
                                 <connections>
                                     <action selector="shiftLock:forEvent:" destination="BYZ-38-t0r" eventType="touchDownRepeat" id="A7T-W6-qw3"/>
                                     <action selector="shiftOnSingleTap:" destination="BYZ-38-t0r" eventType="touchDown" id="aaK-JH-Mp0"/>
@@ -977,8 +898,7 @@
                                         <exclude reference="ugS-9f-J3N"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="83" y="292" width="55" height="40"/>
+                                <variation key="heightClass=compact">
                                     <mask key="constraints">
                                         <exclude reference="uAW-nu-aIL"/>
                                         <exclude reference="ugS-9f-J3N"/>
@@ -1012,9 +932,6 @@
                                         <exclude reference="gwS-O2-ZZ9"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="522" y="196" width="55" height="40"/>
-                                </variation>
                                 <connections>
                                     <action selector="degRadMode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wCs-Md-TqZ"/>
                                 </connections>
@@ -1039,9 +956,6 @@
                                         <exclude reference="kjE-g2-Hrn"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="209" y="340" width="55" height="40"/>
-                                </variation>
                                 <connections>
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sGe-lj-lXh"/>
                                 </connections>
@@ -1064,8 +978,7 @@
                                         <exclude reference="jEY-7n-BTQ"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="20" y="196" width="55" height="40"/>
+                                <variation key="heightClass=compact">
                                     <mask key="constraints">
                                         <exclude reference="UjS-5O-SLX"/>
                                         <exclude reference="jEY-7n-BTQ"/>
@@ -1076,7 +989,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="a1w-j3-Q1G" customClass="ShiftableButton" customModule="Calculator" customModuleProvider="target">
-                                <rect key="frame" x="271" y="535" width="75.5" height="56.5"/>
+                                <rect key="frame" x="271" y="535" width="75" height="57"/>
                                 <color key="backgroundColor" red="0.66666666669999997" green="0.62383493680000002" blue="0.36977383740000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="a1w-j3-Q1G" secondAttribute="height" multiplier="45:41" id="IWH-AT-CnI"/>
@@ -1098,9 +1011,6 @@
                                         <exclude reference="Nml-8j-cRY"/>
                                         <exclude reference="qhI-Pk-R8v"/>
                                     </mask>
-                                </variation>
-                                <variation key="heightClass=compact" misplaced="YES">
-                                    <rect key="frame" x="522" y="147" width="55" height="40"/>
                                 </variation>
                                 <connections>
                                     <action selector="setFormat:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3c9-ke-MNd"/>
