@@ -63,6 +63,9 @@
                                         <exclude reference="tz2-ea-92x"/>
                                     </mask>
                                 </variation>
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="209" y="196" width="55" height="40"/>
+                                </variation>
                                 <connections>
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7Ia-dk-xhm"/>
                                 </connections>
@@ -89,6 +92,9 @@
                                         <exclude reference="KAN-m6-6Bj"/>
                                     </mask>
                                 </variation>
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="271" y="196" width="55" height="40"/>
+                                </variation>
                                 <connections>
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uSB-gw-73f"/>
                                 </connections>
@@ -110,7 +116,8 @@
                                         <exclude reference="vrh-Xa-qac"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact">
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="333" y="147" width="55" height="40"/>
                                     <mask key="constraints">
                                         <exclude reference="j6N-cN-dUb"/>
                                     </mask>
@@ -134,6 +141,9 @@
                                         <exclude reference="kE4-AQ-lCA"/>
                                     </mask>
                                 </variation>
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="333" y="196" width="55" height="40"/>
+                                </variation>
                                 <connections>
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jZm-Qd-5ai"/>
                                 </connections>
@@ -153,6 +163,9 @@
                                         <exclude reference="HhX-db-Hgf"/>
                                     </mask>
                                 </variation>
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="333" y="244" width="55" height="40"/>
+                                </variation>
                                 <connections>
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Qhj-Xz-l1I"/>
                                 </connections>
@@ -171,6 +184,9 @@
                                     <mask key="constraints">
                                         <exclude reference="S9z-q4-QHH"/>
                                     </mask>
+                                </variation>
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="333" y="292" width="55" height="40"/>
                                 </variation>
                                 <connections>
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AQV-Gf-lc6"/>
@@ -196,6 +212,9 @@
                                         <exclude reference="4qu-4L-pG4"/>
                                     </mask>
                                 </variation>
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="146" y="196" width="55" height="40"/>
+                                </variation>
                                 <connections>
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IjO-Mi-7wb"/>
                                 </connections>
@@ -219,6 +238,9 @@
                                     <mask key="constraints">
                                         <exclude reference="rhA-Oy-uCM"/>
                                     </mask>
+                                </variation>
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="209" y="244" width="55" height="40"/>
                                 </variation>
                                 <connections>
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sc7-uE-ar9"/>
@@ -244,6 +266,9 @@
                                         <exclude reference="P7J-G9-fcF"/>
                                     </mask>
                                 </variation>
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="271" y="244" width="55" height="40"/>
+                                </variation>
                                 <connections>
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FvD-6y-Pl4"/>
                                 </connections>
@@ -267,6 +292,9 @@
                                     <mask key="constraints">
                                         <exclude reference="8nk-Qf-Fg7"/>
                                     </mask>
+                                </variation>
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="146" y="244" width="55" height="40"/>
                                 </variation>
                                 <connections>
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8IX-CW-RFW"/>
@@ -292,6 +320,9 @@
                                         <exclude reference="idL-Lb-IhZ"/>
                                     </mask>
                                 </variation>
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="271" y="292" width="55" height="40"/>
+                                </variation>
                                 <connections>
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Wzj-My-UaR"/>
                                 </connections>
@@ -316,7 +347,8 @@
                                         <exclude reference="UgT-dW-h8C"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact">
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="209" y="147" width="55" height="40"/>
                                     <mask key="constraints">
                                         <exclude reference="KgG-JN-AOO"/>
                                     </mask>
@@ -345,7 +377,8 @@
                                         <exclude reference="m0W-Cf-OxT"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact">
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="146" y="147" width="55" height="40"/>
                                     <mask key="constraints">
                                         <exclude reference="m0W-Cf-OxT"/>
                                     </mask>
@@ -376,7 +409,8 @@
                                         <exclude reference="sUU-Tb-o9m"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact">
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="82" y="147" width="55" height="40"/>
                                     <mask key="constraints">
                                         <exclude reference="C2N-2X-NaT"/>
                                         <exclude reference="I3e-GC-rn1"/>
@@ -406,6 +440,9 @@
                                     <mask key="constraints">
                                         <exclude reference="hsM-Xe-NVL"/>
                                     </mask>
+                                </variation>
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="271" y="340" width="54" height="40"/>
                                 </variation>
                                 <connections>
                                     <action selector="changeSign" destination="BYZ-38-t0r" eventType="touchUpInside" id="y8M-v7-lUA"/>
@@ -450,7 +487,8 @@
                                         <exclude reference="TXZ-fX-OhH"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact">
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="82" y="196" width="55" height="40"/>
                                     <mask key="constraints">
                                         <exclude reference="R8X-GE-lt5"/>
                                         <exclude reference="SsU-VC-fkQ"/>
@@ -473,6 +511,9 @@
                                     <mask key="constraints">
                                         <exclude reference="cmr-0z-bMB"/>
                                     </mask>
+                                </variation>
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="83" y="244" width="55" height="40"/>
                                 </variation>
                                 <connections>
                                     <action selector="memGet" destination="BYZ-38-t0r" eventType="touchUpInside" id="eIx-vI-X8t"/>
@@ -498,6 +539,9 @@
                                         <exclude reference="l8n-4I-GTX"/>
                                     </mask>
                                 </variation>
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="146" y="340" width="55" height="40"/>
+                                </variation>
                                 <connections>
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vvH-I3-8m3"/>
                                 </connections>
@@ -522,6 +566,9 @@
                                         <exclude reference="Fz4-x9-mgU"/>
                                     </mask>
                                 </variation>
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="209" y="292" width="55" height="40"/>
+                                </variation>
                                 <connections>
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gDa-Fg-Zts"/>
                                 </connections>
@@ -545,6 +592,9 @@
                                     <mask key="constraints">
                                         <exclude reference="HZS-Al-07D"/>
                                     </mask>
+                                </variation>
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="146" y="292" width="55" height="40"/>
                                 </variation>
                                 <connections>
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ua5-i4-D3d"/>
@@ -586,6 +636,9 @@
                                         <exclude reference="0Cg-8n-g16"/>
                                     </mask>
                                 </variation>
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="271" y="147" width="54" height="40"/>
+                                </variation>
                                 <connections>
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1HC-yc-RQP"/>
                                 </connections>
@@ -604,6 +657,9 @@
                                     <mask key="constraints">
                                         <exclude reference="x4g-JG-ea5"/>
                                     </mask>
+                                </variation>
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="396" y="244" width="55" height="40"/>
                                 </variation>
                                 <connections>
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AXu-1H-lPz"/>
@@ -624,6 +680,9 @@
                                         <exclude reference="rPR-O9-ApV"/>
                                     </mask>
                                 </variation>
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="459" y="244" width="55" height="40"/>
+                                </variation>
                                 <connections>
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rh7-WY-c4C"/>
                                 </connections>
@@ -642,6 +701,9 @@
                                     <mask key="constraints">
                                         <exclude reference="S2c-UD-cM8"/>
                                     </mask>
+                                </variation>
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="396" y="292" width="55" height="40"/>
                                 </variation>
                                 <connections>
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OB9-XW-gvG"/>
@@ -662,6 +724,9 @@
                                         <exclude reference="nTk-UI-YPs"/>
                                     </mask>
                                 </variation>
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="459" y="196" width="55" height="40"/>
+                                </variation>
                                 <connections>
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MIm-W5-MZt"/>
                                 </connections>
@@ -680,6 +745,9 @@
                                     <mask key="constraints">
                                         <exclude reference="wzG-05-t3j"/>
                                     </mask>
+                                </variation>
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="396" y="196" width="55" height="40"/>
                                 </variation>
                                 <connections>
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BcV-ed-Tx3"/>
@@ -704,7 +772,8 @@
                                         <exclude reference="qzo-AD-RAF"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact">
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="396" y="147" width="55" height="40"/>
                                     <mask key="constraints">
                                         <exclude reference="2G7-b8-3Fh"/>
                                         <exclude reference="EQF-MK-DdH"/>
@@ -732,7 +801,8 @@
                                         <exclude reference="uHg-8N-aFg"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact">
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="459" y="147" width="55" height="40"/>
                                     <mask key="constraints">
                                         <exclude reference="6Kb-DN-lbh"/>
                                         <exclude reference="uHg-8N-aFg"/>
@@ -761,7 +831,8 @@
                                         <exclude reference="Vxa-eN-JgA"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact">
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="20" y="244" width="55" height="40"/>
                                     <mask key="constraints">
                                         <include reference="Vxa-eN-JgA"/>
                                     </mask>
@@ -791,7 +862,8 @@
                                         <exclude reference="sFs-PG-WfM"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact">
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="20" y="147" width="55" height="40"/>
                                     <mask key="constraints">
                                         <exclude reference="DHv-TV-IuS"/>
                                         <exclude reference="dFt-sc-2Kt"/>
@@ -823,6 +895,9 @@
                                         <exclude reference="pm7-V1-Sse"/>
                                     </mask>
                                 </variation>
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="333" y="340" width="181" height="40"/>
+                                </variation>
                                 <connections>
                                     <action selector="enter" destination="BYZ-38-t0r" eventType="touchUpInside" id="2Fz-H6-sG5"/>
                                 </connections>
@@ -846,7 +921,8 @@
                                         <exclude reference="gZG-8c-ih3"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact">
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="459" y="292" width="56" height="40"/>
                                     <mask key="constraints">
                                         <exclude reference="gNn-J3-5CR"/>
                                         <exclude reference="gZG-8c-ih3"/>
@@ -877,6 +953,9 @@
                                         <exclude reference="rds-Ib-twH"/>
                                     </mask>
                                 </variation>
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="20" y="340" width="118" height="40"/>
+                                </variation>
                                 <connections>
                                     <action selector="shiftLock:forEvent:" destination="BYZ-38-t0r" eventType="touchDownRepeat" id="A7T-W6-qw3"/>
                                     <action selector="shiftOnSingleTap:" destination="BYZ-38-t0r" eventType="touchDown" id="aaK-JH-Mp0"/>
@@ -898,7 +977,8 @@
                                         <exclude reference="ugS-9f-J3N"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact">
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="83" y="292" width="55" height="40"/>
                                     <mask key="constraints">
                                         <exclude reference="uAW-nu-aIL"/>
                                         <exclude reference="ugS-9f-J3N"/>
@@ -932,6 +1012,9 @@
                                         <exclude reference="gwS-O2-ZZ9"/>
                                     </mask>
                                 </variation>
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="522" y="196" width="55" height="40"/>
+                                </variation>
                                 <connections>
                                     <action selector="degRadMode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wCs-Md-TqZ"/>
                                 </connections>
@@ -956,6 +1039,9 @@
                                         <exclude reference="kjE-g2-Hrn"/>
                                     </mask>
                                 </variation>
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="209" y="340" width="55" height="40"/>
+                                </variation>
                                 <connections>
                                     <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sGe-lj-lXh"/>
                                 </connections>
@@ -978,7 +1064,8 @@
                                         <exclude reference="jEY-7n-BTQ"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=compact">
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="20" y="196" width="55" height="40"/>
                                     <mask key="constraints">
                                         <exclude reference="UjS-5O-SLX"/>
                                         <exclude reference="jEY-7n-BTQ"/>
@@ -1011,6 +1098,9 @@
                                         <exclude reference="Nml-8j-cRY"/>
                                         <exclude reference="qhI-Pk-R8v"/>
                                     </mask>
+                                </variation>
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="522" y="147" width="55" height="40"/>
                                 </variation>
                                 <connections>
                                     <action selector="setFormat:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3c9-ke-MNd"/>

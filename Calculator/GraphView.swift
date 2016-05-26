@@ -10,6 +10,7 @@ import UIKit
 
 protocol GraphViewDataSource: class {
     func functionValue(sender: GraphView, atXEquals: Double) -> Double?
+    func programSet() -> Bool
 }
 
 protocol graphAnimation: class {
@@ -107,9 +108,16 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         }
     }
     
-    var plotData:PlotData?
-    
+    lazy var plotData:PlotData = { [unowned self] in 
+        let nPoints = self.bounds.width
+        let xrange = Interval(x0: self.ScreenToX(0), xf: self.ScreenToX(nPoints-1))
+        return PlotData(N: Int(nPoints*self.contentScaleFactor),i: xrange)
+        }()
+
     private func plotFunction(rect: CGRect, simple:Bool = false) {
+        guard  let dataSource = dataSource else { return }
+        guard  dataSource.programSet() else { return }
+        
         var prevValueUndefined = true
         let curve = UIBezierPath()
         
@@ -120,7 +128,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         var i:CGFloat = 0
         while ( i < nPoints) {
             let x = ScreenToX(i)
-            if let y = plotData!.data.next() ?? nil {
+            if let y = plotData.data.next() ?? nil {
                 if !prevValueUndefined {
                     curve.addLineToPoint(XYToPoint(x,y))
                 } else {
@@ -137,7 +145,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         curve.stroke()
     }
     
-    func funcData(inout plotData:PlotData?, dataSize: Int, xrange: Interval, dx: Double) {
+    func funcData(inout plotData:PlotData, dataSize: Int, xrange: Interval, dx: Double) {
         struct staticVars {
             static var size = 0
             static var dx:Double = 0
@@ -145,43 +153,43 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
 
         var iter1=0, iter2=0, iter3=0
 
-        if plotData == nil || staticVars.size != dataSize || staticVars.dx != dx {
+        if staticVars.size != dataSize || staticVars.dx != dx {
             staticVars.size = dataSize
             staticVars.dx = dx
             
             plotData = PlotData(N: dataSize, i: xrange)
             var x = xrange.x0
             while iter1 < dataSize {
-                plotData?.data.addAtCurrentPosition(dataSource?.functionValue(self, atXEquals: x))
+                plotData.data.addAtCurrentPosition(dataSource?.functionValue(self, atXEquals: x))
                 x += dx
                 iter1 += 1
             }
-            plotData?.interval = xrange
-        } else if xrange.x0 < plotData!.interval.x0 {
-            plotData!.data.reset()
-            let n = Int(round((plotData!.interval.x0 - xrange.x0)/dx))
-            var x = plotData!.interval.x0 - dx
+            plotData.interval = xrange
+        } else if xrange.x0 < plotData.interval.x0 {
+            plotData.data.reset()
+            let n = Int(round((plotData.interval.x0 - xrange.x0)/dx))
+            var x = plotData.interval.x0 - dx
             while iter2 < n {
-                plotData?.data.prependToBeginning(dataSource?.functionValue(self, atXEquals: x))
-                plotData?.interval -= dx
+                plotData.data.prependToBeginning(dataSource?.functionValue(self, atXEquals: x))
+                plotData.interval -= dx
                 
                 x -= dx
                 iter2 += 1
             }
-         } else if xrange.xf > plotData!.interval.xf {
-            plotData!.data.reset()
-            let n = Int(round((xrange.xf - plotData!.interval.xf)/dx))
-            var x = plotData!.interval.xf + dx
+         } else if xrange.xf > plotData.interval.xf {
+            plotData.data.reset()
+            let n = Int(round((xrange.xf - plotData.interval.xf)/dx))
+            var x = plotData.interval.xf + dx
             while iter3 < n {
-                plotData?.data.appendToEnd(dataSource?.functionValue(self, atXEquals: x))
-                plotData?.interval += dx
+                plotData.data.appendToEnd(dataSource?.functionValue(self, atXEquals: x))
+                plotData.interval += dx
 
                 x += dx
                 iter3 += 1
             }
         }
         
-        plotData?.data.reset()
+        plotData.data.reset()
     }
     
     // coord transform functions
