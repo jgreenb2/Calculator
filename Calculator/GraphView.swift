@@ -8,6 +8,7 @@
 
 import UIKit
 
+// MARK: - Protocols
 protocol GraphViewDataSource: class {
     func functionValue(sender: GraphView, atXEquals: Double) -> Double?
     func programSet() -> Bool
@@ -22,6 +23,8 @@ typealias Interval = (x0: Double, xf: Double)
 
 @IBDesignable
 class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
+
+    // MARK: - General graph and view properties
     
     // the intersection of the x & y axes expressed in screen coordinates
     // optional because it will be nil when a new GraphView is created
@@ -80,7 +83,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         return (Double(-origin.x/density), Double((bounds.maxX-origin.x)/density))
     }
     
-
+    // MARK: - Plotting
     override func drawRect(rect: CGRect) {
         let axes = AxesDrawer(color: axesColor, contentScaleFactor: contentScaleFactor)
         if simplePlot {
@@ -161,7 +164,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     // there are 3 cases: 1) recalculate the entire function
     // 2) calculate new values on the left
     // 3) claculate new values on the right
-    func funcData(inout plotData:PlotData, dataSize: Int, xrange: Interval, dx: Double) {
+    private func funcData(inout plotData:PlotData, dataSize: Int, xrange: Interval, dx: Double) {
         struct staticVars {
             static var size = 0
             static var dx:Double = 0
@@ -220,7 +223,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         plotData.data.reset()
     }
     
-    // coord transform functions
+    // MARK: - coord transforms
     
     private func XYToPoint(x: Double, _ y: Double) -> CGPoint {
         return CGPoint(x: XToScreen(x), y: YToScreen(y))
@@ -246,13 +249,13 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         return CGPoint(x: ScreenToX(p.x), y: ScreenToY(p.y))
     }
     
-    // gesture handling functions
+    // MARK: - gesture handling
     
     // pan gestures that last for less than maxSwipeTime
     // are treated as swipes that start an inertial scrolling
     // animation
-    var beginPanTime:NSDate?
-    let maxSwipeTime = 0.3
+    private var beginPanTime:NSDate?
+    private let maxSwipeTime = 0.3
 
     func moveOrigin(gesture: UIPanGestureRecognizer) {
         switch gesture.state {
@@ -291,6 +294,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         super.touchesBegan(touches, withEvent: event)
     }
     
+    // zones are in degrees
     private struct scaleZones {
         static let scaleXYZoneMin = -67.5
         static let scaleXYZoneMax = 67.5
@@ -358,7 +362,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     }
     
     // turn off reduced resolution plotting
-    func drawDetailedPlot() {
+    private func drawDetailedPlot() {
         simplePlot = false
         setNeedsDisplay()        
     }
@@ -370,35 +374,35 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         }
     }
 
-    // inertial animation functions
+    // MARK: - inertial animation
     
-    var inertialAnimation:moveGraphWithInertia?
+    private var inertialAnimation:moveGraphWithInertia?
     func cancelAnimation() {
         if let inertialAnimation = inertialAnimation {
             animator().removeAnimation(inertialAnimation)
         }
     }
     
-    func startInertialAnimation(initialVelocity:CGPoint) {
+    private func startInertialAnimation(initialVelocity:CGPoint) {
         cancelAnimation()
         inertialAnimation = moveGraphWithInertia(initialVelocity: initialVelocity)
         inertialAnimation?.delegate = self
         animator().addAnimation(inertialAnimation)
     }
     
-    func animationCompleted() {
+    internal func animationCompleted() {
         cancelAnimation()
         drawDetailedPlot()
     }
     
-    func updateGraphPosition(deltaPosition: CGPoint) {
+    internal func updateGraphPosition(deltaPosition: CGPoint) {
         graphOrigin = graphCenter + deltaPosition
     }
     
 }
 
-// computes graph movement with simple newtonian friction model
-class moveGraphWithInertia: Animation {
+// MARK: - computes graph movement with simple newtonian friction model
+private class moveGraphWithInertia: Animation {
     let animationIdentifier = "inertialAnimation"
     
     var velocity:CGPoint
@@ -430,6 +434,7 @@ class moveGraphWithInertia: Animation {
     }
 }
 
+// MARK: - Operator overloads for convenient arithmetic
 
 // add two CGpoints
 private func + (left: CGPoint, right: CGPoint) -> CGPoint {
