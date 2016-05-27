@@ -98,7 +98,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     // define a class to hold the function data that will be used
     // to generate a plot
     class PlotData {
-        var data:RingBuffer<Double?>
+        private var data:RingBuffer<Double?>
         private var interval:Interval
         var stale=false
         
@@ -117,7 +117,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
 
     // draw the actual graph
     private func drawFunctionPlot(rect: CGRect, simple:Bool = false) {
-        // make sure we have a dataSource or a program to plot
+        // make sure we have a dataSource and a program to plot
         guard  let dataSource = dataSource else { return }
         guard  dataSource.programSet() else { return }
         
@@ -138,7 +138,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         var i:CGFloat = 0
         while ( i < nPoints) {
             let x = ScreenToX(i)
-            if let y = plotData.data.next() ?? nil {
+            if let y = plotData.data.next() ?? nil {    // plotData.data.next() returns a Double??
                 if !prevValueUndefined {
                     curve.addLineToPoint(XYToPoint(x,y))
                 } else {
@@ -170,7 +170,11 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         var iter1=0, iter2=0, iter3=0
 
         // if the xaxis scaling has changed or the axis has a different number of points
-        // we need to recalculate the entire function
+        // we need to recalculate the entire function. 
+        //
+        // plotData.stale is set true on a segue which usually
+        // means that the user initiated plotting of a new function
+        
         if staticVars.size != dataSize || staticVars.dx != dx || plotData.stale {
             staticVars.size = dataSize
             staticVars.dx = dx
@@ -184,10 +188,11 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
                 iter1 += 1
             }
             plotData.interval = xrange
+            
         // If the plot is scrolling to the right we just need to calculate the 'earlier' points
+            
         } else if xrange.x0 < plotData.interval.x0 {
-            plotData.data.reset()
-            let n = Int(round((plotData.interval.x0 - xrange.x0)/dx))
+             let n = Int(round((plotData.interval.x0 - xrange.x0)/dx))
             var x = plotData.interval.x0 - dx
             while iter2 < n {
                 plotData.data.prependToBeginning(dataSource?.functionValue(self, atXEquals: x))
@@ -196,9 +201,10 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
                 x -= dx
                 iter2 += 1
             }
+            
         // ...or if it's scrolling to the left we add points to the end
+            
          } else if xrange.xf > plotData.interval.xf {
-            plotData.data.reset()
             let n = Int(round((xrange.xf - plotData.interval.xf)/dx))
             var x = plotData.interval.xf + dx
             while iter3 < n {
@@ -210,6 +216,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
             }
         }
         
+        // set the read pointer to the beginning before returning
         plotData.data.reset()
     }
     
