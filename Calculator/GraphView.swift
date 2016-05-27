@@ -96,11 +96,10 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     }
     
     weak var dataSource: GraphViewDataSource?
-    private var xInterval:Interval?
     
     // define a class to hold the function data that will be used
     // to generate a plot
-    class PlotData {
+    struct PlotData {
         private var data:RingBuffer<Double?>
         private var interval:Interval
         var stale=true
@@ -110,7 +109,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
             interval = xrange
         }
         
-        convenience init() {
+        init() {
             self.init(npoints: 0, xrange: Interval(x0: 0, xf: 0))
         }
     }
@@ -133,7 +132,10 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         let increment = 1/contentScaleFactor
         
         // retrieve the data that will be plotted
-        funcData(&plotData, dataSize: Int(nPoints*contentScaleFactor), xrange: xrange, dx: Double(increment/density.x))
+        funcData(&plotData,
+                 dataSize: Int(nPoints*contentScaleFactor),
+                 xrange: xrange,
+                 dx: Double(increment/density.x))
         
         // do the drawing but be
         // careful NOT to draw lines to or from 
