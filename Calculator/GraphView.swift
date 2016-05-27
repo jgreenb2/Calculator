@@ -103,20 +103,20 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     class PlotData {
         private var data:RingBuffer<Double?>
         private var interval:Interval
-        var stale=false
+        var stale=true
         
         private init(npoints: Int, xrange: Interval) {
             data = RingBuffer(N: npoints)
             interval = xrange
         }
+        
+        convenience init() {
+            self.init(npoints: 0, xrange: Interval(x0: 0, xf: 0))
+        }
     }
     
     // store the function data in the plotData object.
-    lazy var plotData:PlotData = { [unowned self] in 
-        let nPoints = self.bounds.width
-        let xrange = Interval(x0: self.ScreenToX(0), xf: self.ScreenToX(nPoints-1))
-        return PlotData(npoints: Int(nPoints*self.contentScaleFactor),xrange: xrange)
-        }()
+    var plotData = PlotData()
 
     // draw the actual graph
     private func drawFunctionPlot(rect: CGRect, simple:Bool = false) {
@@ -181,7 +181,6 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         if staticVars.size != dataSize || staticVars.dx != dx || plotData.stale {
             staticVars.size = dataSize
             staticVars.dx = dx
-            plotData.stale = false
             
             plotData = PlotData(npoints: dataSize, xrange: xrange)
             var x = xrange.x0
@@ -191,6 +190,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
                 iter1 += 1
             }
             plotData.interval = xrange
+            plotData.stale = false
             
         // If the plot is scrolling to the right we just need to calculate the 'earlier' points
             
