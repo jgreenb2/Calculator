@@ -93,7 +93,29 @@ class CalculatorBrain {
 
     
     private var undoOrRedoInProgress = false
-    private var undoStack = RingBuffer<[Op]>(N: 10)   // N levels of undo/redo
+    private class UndoStack:RingBuffer<[Op]> {
+        var description: [String] {
+            get {
+                var stringDescription=[String]()
+                stringDescription.insert(self.cur()?.description ?? "", atIndex: 0)
+                while self.prev() != nil {
+                    stringDescription.append((self.cur()?.description)!)
+                }
+                return stringDescription
+            }
+        }
+        
+        override init(N: Int) {
+            super.init(N: N)
+        }
+        
+        init(opDescriptions:[String]) {
+            for s in opDescriptions {
+                self.addAtCurrentPosition(stringToOp(s))
+            }
+        }
+    }
+    private var undoStack = UndoStack(N: 10)   // N levels of undo/redo
     
     // the operator stack, operator and variable dictionarys
     private var opStack = [Op]() {
@@ -154,16 +176,20 @@ class CalculatorBrain {
             if let opSymbols = newValue as? Array<String> {
                 var newOpStack = [Op]()
                 for opSymbol in opSymbols {
-                    if let op = knownOps[opSymbol] {
-                        newOpStack.append(op)
-                    } else if let number = NSNumberFormatter().numberFromString(opSymbol)?.doubleValue {
-                        newOpStack.append(.Number(number))
-                    } else {
-                        newOpStack.append(Op.Variable(opSymbol,{self.variableValues[$0]}))
-                    }
+                    newOpStack.append(stringToOp(opSymbol))
                 }
                 opStack = newOpStack
             }
+        }
+    }
+    
+    private func stringToOp(s: String) -> Op {
+        if let op = knownOps[s] {
+            return op
+        } else if let number = NSNumberFormatter().numberFromString(s)?.doubleValue {
+            return .Number(number)
+        } else {
+            return Op.Variable(s,{self.variableValues[$0]})
         }
     }
 
