@@ -11,7 +11,7 @@ import UIKit
 // MARK: - Protocols
 protocol GraphViewDataSource: class {
     func functionValue(sender: GraphView, atXEquals: Double) -> Double?
-    func programSet() -> Bool
+    func programIsSet() -> Bool
 }
 
 protocol graphAnimation: class {
@@ -97,7 +97,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     
     weak var dataSource: GraphViewDataSource?
     
-    // define a class to hold the function data that will be used
+    // define a holder for the function data that will be used
     // to generate a plot
     struct PlotData {
         private var data:RingBuffer<Double?>
@@ -114,14 +114,14 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         }
     }
     
-    // store the function data in the plotData object.
+    // store the function data in plotData.
     var plotData = PlotData()
 
     // draw the actual graph
     private func drawFunctionPlot(rect: CGRect, simple:Bool = false) {
         // make sure we have a dataSource and a program to plot
         guard  let dataSource = dataSource else { return }
-        guard  dataSource.programSet() else { return }
+        guard  dataSource.programIsSet() else { return }
         
         var prevValueUndefined = true
         let curve = UIBezierPath()
@@ -172,8 +172,6 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
             static var dx:Double = 0
         }
 
-        var iter1=0, iter2=0, iter3=0
-
         // if the xaxis scaling has changed or the axis has a different number of points
         // we need to recalculate the entire function. 
         //
@@ -186,10 +184,9 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
             
             plotData = PlotData(npoints: dataSize, xrange: xrange)
             var x = xrange.x0
-            while iter1 < dataSize {
+            while x <= xrange.xf {
                 plotData.data.addAtCurrentPosition(dataSource?.functionValue(self, atXEquals: x))
                 x += dx
-                iter1 += 1
             }
             plotData.interval = xrange
             plotData.stale = false
@@ -197,32 +194,30 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         // If the plot is scrolling to the right we just need to calculate the 'earlier' points
             
         } else if xrange.x0 < plotData.interval.x0 {
-             let n = Int(round((plotData.interval.x0 - xrange.x0)/dx))
             var x = plotData.interval.x0 - dx
-            while iter2 < n {
+            while x >= plotData.interval.x0 - roundToDx(plotData.interval.x0 - xrange.x0, dx: dx) {
                 plotData.data.prependToBeginning(dataSource?.functionValue(self, atXEquals: x))
-                plotData.interval -= dx
-                
+                plotData.interval -= dx                
                 x -= dx
-                iter2 += 1
             }
-            
+
         // ...or if it's scrolling to the left we add points to the end
             
          } else if xrange.xf > plotData.interval.xf {
-            let n = Int(round((xrange.xf - plotData.interval.xf)/dx))
             var x = plotData.interval.xf + dx
-            while iter3 < n {
+            while x <= plotData.interval.xf + roundToDx(xrange.xf - plotData.interval.xf, dx: dx) {
                 plotData.data.appendToEnd(dataSource?.functionValue(self, atXEquals: x))
                 plotData.interval += dx
-
                 x += dx
-                iter3 += 1
             }
         }
         
         // set the read pointer to the beginning before returning
         plotData.data.reset()
+    }
+    
+    private func roundToDx(x:Double, dx: Double) -> Double {
+        return floor(round(x/dx))*dx
     }
     
     // MARK: - coord transforms

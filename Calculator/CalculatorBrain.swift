@@ -90,7 +90,7 @@ class CalculatorBrain {
             }
         }
     }
-    
+
     
     private var undoOrRedoInProgress = false
     private var undoStack = RingBuffer<[Op]>(N: 10)   // N levels of undo/redo
@@ -357,11 +357,13 @@ class CalculatorBrain {
         static let programKey = "_programKey_"
         static let variablesKey = "_variablesKey_"
         static let degRadModeKey = "_degRadModeKey_"
+        static let undoStackKey = "_undoStackKey_"
     }
     
     func saveProgram() {
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(program, forKey: SavedProgramKeys.programKey)
+
         defaults.setObject(variableValues, forKey: SavedProgramKeys.variablesKey)
         defaults.setBool(degMode, forKey: SavedProgramKeys.degRadModeKey)
     }

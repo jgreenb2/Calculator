@@ -75,7 +75,7 @@ class GraphViewController: UIViewController, GraphViewDataSource, UIGestureRecog
         return nil
     }
     
-    func programSet() -> Bool {
+    func programIsSet() -> Bool {
         let p = graphBrain.program as! [String]
         return p.count > 0
     }
