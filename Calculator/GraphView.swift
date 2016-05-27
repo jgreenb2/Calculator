@@ -19,7 +19,7 @@ protocol graphAnimation: class {
     func updateGraphPosition(deltaPosition:CGPoint)
 }
 
-typealias Interval = (x0: Double, xf: Double)
+private typealias Interval = (x0: Double, xf: Double)
 
 @IBDesignable
 class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
