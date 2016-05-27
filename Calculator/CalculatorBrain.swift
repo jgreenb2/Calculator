@@ -108,13 +108,7 @@ class CalculatorBrain {
         override init(N: Int) {
             super.init(N: N)
         }
-        
-        init(opDescriptions:[String]) {
-            for s in opDescriptions {
-                self.addAtCurrentPosition(stringToOp(s))
             }
-        }
-    }
     private var undoStack = UndoStack(N: 10)   // N levels of undo/redo
     
     // the operator stack, operator and variable dictionarys
@@ -190,6 +184,13 @@ class CalculatorBrain {
             return .Number(number)
         } else {
             return Op.Variable(s,{self.variableValues[$0]})
+        }
+    }
+    
+    func foo(opDescriptions:[String]) {
+        var buffer=UndoStack(N: opDescriptions.count)
+        for s in opDescriptions {
+            buffer.addAtCurrentPosition(stringToOp(s))
         }
     }
 
