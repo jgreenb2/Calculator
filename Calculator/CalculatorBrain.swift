@@ -170,27 +170,16 @@ class CalculatorBrain {
             if let opSymbols = newValue as? Array<String> {
                 var newOpStack = [Op]()
                 for opSymbol in opSymbols {
-                    newOpStack.append(stringToOp(opSymbol))
+                    if let op = knownOps[opSymbol] {
+                        newOpStack.append(op)
+                    } else if let number = NSNumberFormatter().numberFromString(opSymbol)?.doubleValue {
+                        newOpStack.append(.Number(number))
+                    } else {
+                        newOpStack.append(Op.Variable(opSymbol,{self.variableValues[$0]}))
+                    }
                 }
                 opStack = newOpStack
             }
-        }
-    }
-    
-    private func stringToOp(s: String) -> Op {
-        if let op = knownOps[s] {
-            return op
-        } else if let number = NSNumberFormatter().numberFromString(s)?.doubleValue {
-            return .Number(number)
-        } else {
-            return Op.Variable(s,{self.variableValues[$0]})
-        }
-    }
-    
-    func foo(opDescriptions:[String]) {
-        var buffer=UndoStack(N: opDescriptions.count)
-        for s in opDescriptions {
-            buffer.addAtCurrentPosition(stringToOp(s))
         }
     }
 
