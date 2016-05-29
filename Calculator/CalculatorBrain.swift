@@ -105,12 +105,11 @@ class CalculatorBrain {
 
                 var op = curOpStack.map { $0.description }
                 stringDescription.append(op)
-                let undoCopy = self
-                while undoCopy.prev() != nil {
-                    op = undoCopy.cur()!.map { $0.description }
+                while self.prev() != nil {
+                    op = self.cur()!.map { $0.description }
                     stringDescription.append(op)
                 }
-                //self.setToEnd()
+                while self.next() != nil {}
                 return stringDescription
             }
         }
@@ -122,13 +121,12 @@ class CalculatorBrain {
     
     private func undoStackFromStringRep(strings: [[String]]) -> UndoStack {
         let newUndoStack = UndoStack(N: strings.count)
-
-        for opAsString in strings {
+        for opAsString in strings.reverse() {
             var newOpStack = [Op]()
             for s in opAsString {
                 newOpStack.append(stringToOp(s))
             }
-            newUndoStack.appendToEnd(newOpStack)
+            newUndoStack.addAtCurrentPosition(newOpStack)
         }
         return newUndoStack
     }
@@ -421,13 +419,14 @@ class CalculatorBrain {
         if let restoredMode = defaults.objectForKey(SavedProgramKeys.degRadModeKey) as? Bool {
             degMode = restoredMode
         }
-        if let restoredUndoStack = defaults.objectForKey(SavedProgramKeys.undoStackKey) as? [[String]]{
+        if let restoredUndoStack = defaults.objectForKey(SavedProgramKeys.undoStackKey) as? [[String]] {
             undoStack = undoStackFromStringRep(restoredUndoStack)
         }
+
         if let restoredProgram = defaults.objectForKey(SavedProgramKeys.programKey) {
-            undoOrRedoInProgress = true
+            undoOrRedoInProgress=true
             program = restoredProgram
-            undoOrRedoInProgress = false
+            undoOrRedoInProgress=false
             return evaluate()
         } else {
             return 0

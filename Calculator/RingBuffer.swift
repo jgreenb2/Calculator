@@ -89,6 +89,7 @@ class RingBuffer<T> {
     }
     
     func cur() -> T? {
+        guard pRead >= 0 else { return nil }
         return buffer[pRead]
     }
     
