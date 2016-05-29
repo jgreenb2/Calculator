@@ -94,13 +94,23 @@ class CalculatorBrain {
     
     private var undoOrRedoInProgress = false
     private class UndoStack:RingBuffer<[Op]> {
-        var description: [String] {
+        var description: [[String]] {
             get {
-                var stringDescription=[String]()
-                stringDescription.insert(self.cur()?.description ?? "", atIndex: 0)
-                while self.prev() != nil {
-                    stringDescription.append((self.cur()?.description)!)
+                var stringDescription=[[String]]()
+                guard let curOpStack = self.cur() else {
+                    stringDescription.append([""])
+                    return stringDescription
                 }
+                
+
+                var op = curOpStack.map { $0.description }
+                stringDescription.append(op)
+                let undoCopy = self
+                while undoCopy.prev() != nil {
+                    op = undoCopy.cur()!.map { $0.description }
+                    stringDescription.append(op)
+                }
+                //self.setToEnd()
                 return stringDescription
             }
         }
@@ -108,14 +118,28 @@ class CalculatorBrain {
         override init(N: Int) {
             super.init(N: N)
         }
+    }
+    
+    private func undoStackFromStringRep(strings: [[String]]) -> UndoStack {
+        let newUndoStack = UndoStack(N: strings.count)
+
+        for opAsString in strings {
+            var newOpStack = [Op]()
+            for s in opAsString {
+                newOpStack.append(stringToOp(s))
             }
+            newUndoStack.appendToEnd(newOpStack)
+        }
+        return newUndoStack
+    }
+
     private var undoStack = UndoStack(N: 10)   // N levels of undo/redo
     
     // the operator stack, operator and variable dictionarys
     private var opStack = [Op]() {
-        willSet(newOpStack) {
+        didSet {
             if !undoOrRedoInProgress {
-                undoStack.addAtCurrentPosition(newOpStack)
+                undoStack.addAtCurrentPosition(opStack)
             }
         }
     }
@@ -170,17 +194,22 @@ class CalculatorBrain {
             if let opSymbols = newValue as? Array<String> {
                 var newOpStack = [Op]()
                 for opSymbol in opSymbols {
-                    if let op = knownOps[opSymbol] {
-                        newOpStack.append(op)
-                    } else if let number = NSNumberFormatter().numberFromString(opSymbol)?.doubleValue {
-                        newOpStack.append(.Number(number))
-                    } else {
-                        newOpStack.append(Op.Variable(opSymbol,{self.variableValues[$0]}))
-                    }
+                    newOpStack.append(stringToOp(opSymbol))
                 }
                 opStack = newOpStack
             }
         }
+    }
+    
+    private func stringToOp(s: String) -> Op {
+        if let op = knownOps[s] {
+            return op
+        } else if let number = NSNumberFormatter().numberFromString(s)?.doubleValue {
+            return .Number(number)
+        } else {
+            return Op.Variable(s,{self.variableValues[$0]})
+        }
+        
     }
 
     // clear the stack and variable memory
@@ -379,7 +408,7 @@ class CalculatorBrain {
     func saveProgram() {
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(program, forKey: SavedProgramKeys.programKey)
-
+        defaults.setObject(undoStack.description, forKey: SavedProgramKeys.undoStackKey)
         defaults.setObject(variableValues, forKey: SavedProgramKeys.variablesKey)
         defaults.setBool(degMode, forKey: SavedProgramKeys.degRadModeKey)
     }
@@ -392,8 +421,13 @@ class CalculatorBrain {
         if let restoredMode = defaults.objectForKey(SavedProgramKeys.degRadModeKey) as? Bool {
             degMode = restoredMode
         }
+        if let restoredUndoStack = defaults.objectForKey(SavedProgramKeys.undoStackKey) as? [[String]]{
+            undoStack = undoStackFromStringRep(restoredUndoStack)
+        }
         if let restoredProgram = defaults.objectForKey(SavedProgramKeys.programKey) {
+            undoOrRedoInProgress = true
             program = restoredProgram
+            undoOrRedoInProgress = false
             return evaluate()
         } else {
             return 0

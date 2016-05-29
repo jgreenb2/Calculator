@@ -57,6 +57,11 @@ class RingBuffer<T> {
         resetState = true
     }
     
+    func setToEnd() {
+        self.reset()
+        while self.next() != nil {}
+    }
+    
     func prependToBeginning(item: T) {
         pBeg = dec(pBeg)
         pEnd = dec(pEnd)
