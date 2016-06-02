@@ -117,6 +117,13 @@ class CalculatorBrain {
         }
     }
     
+    /**
+     Creates an UndoStack from a string serialization
+     
+     - parameter strings: the string serialization
+     
+     - returns: an UndoStack
+     */
     private func undoStackFromStringRep(strings: [[String]]) -> UndoStack {
         let newUndoStack = UndoStack(N: strings.count)
         for opAsString in strings.reverse() {
@@ -196,7 +203,13 @@ class CalculatorBrain {
             }
         }
     }
-    
+    /**
+     Converts a string representation of an operation into an Op
+     
+     - parameter s: the string version of the operator
+     
+     - returns: the equivalent Op
+     */
     private func stringToOp(s: String) -> Op {
         if let op = knownOps[s] {
             return op
@@ -208,15 +221,23 @@ class CalculatorBrain {
         
     }
 
-    // clear the stack and variable memory
+    /**
+     clear the stack and variable memory
+     */
     func clear() {
         opStack.removeAll(keepCapacity: false)
         variableValues.removeAll(keepCapacity: false)
         undoStack.clear()
     }
     
-    // push an operand on the stack and return the
-    // new evaluation
+    /**
+     push a number on the stack and return the
+     new evaluation
+     
+     - parameter number: a number to push on the stack
+     
+     - returns: the new stack evaluation
+     */
     func pushNumber(number: Double) -> Double? {
         opStack.append(Op.Number(number))
         return evaluate()

@@ -21,29 +21,49 @@ protocol graphAnimation: class {
 
 private typealias Interval = (x0: Double, xf: Double)
 
+/**  
+    GraphView is a UIView used to render the function plot.
+ 
+    Although we allow panning and zooming, GraphView is not a
+    UIScrollView. It provides a fixed-size viewport for drawing that is
+    based on the available screen real estate. Transformations (e.g.
+    panning/zooming) are handled manually by changing the coordinate
+    transformation between the view coordinates and the function coordinates.
+ 
+    Panning is acheived by changing the graphOrigin variable. Zooming occurs by 
+    changing the density variable. Changing these values forces a setsNeedsDisplay
+    which will redraw the entire graph.
+ 
+    To improve peformance, function values are cached in the plotData struct and 
+    a full function evaluation is only done for new abscissa values or if the abscissa
+    scaling has changed.
+ 
+    Pan gestures implement inertial scrolling by animating the graphOrigin variable if
+    the velocity at the end of the pan gesture exceeds a threshold value.
+*/
 @IBDesignable
 class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
 
     // MARK: - General graph and view properties
     
-    // the intersection of the x & y axes expressed in screen coordinates
-    // optional because it will be nil when a new GraphView is created
-    //
-    // used indirectly by graphCenter. This value is set directly when
-    // moving the origin through dragging or tapping
+    /// the intersection of the x & y axes expressed in screen coordinates
+    /// optional because it will be nil when a new GraphView is created
+    ///
+    /// used indirectly by graphCenter. This value is set directly when
+    /// moving the origin through dragging or tapping
     var graphOrigin:CGPoint? {
         didSet {
             if graphOrigin != nil {
-                (minX,maxX) = newXRange(density.x, origin: graphCenter)
-                (minY,maxY) = newYRange(density.y, origin: graphCenter)
+                (minX,maxX) = xRange(density.x, origin: graphCenter)
+                (minY,maxY) = yRange(density.y, origin: graphCenter)
                 setNeedsDisplay()
              }
         }
     }
     
-    // a computed version of the origin that returns the default center position
-    // OR the graphOrigin if it's been set. Whenever anyone wants to know what
-    // the current origin is, this is what you pass them
+    /// a computed version of the origin that returns the default center position
+    /// OR the graphOrigin if it's been set. Whenever anyone wants to know what
+    /// the current origin is, this is what you pass them
     private var graphCenter: CGPoint {
         return graphOrigin ?? convertPoint(center, fromCoordinateSpace: superview!)
     }
@@ -53,7 +73,6 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     
     @IBInspectable
     var axesColor: UIColor = UIColor.blueColor() { didSet { setNeedsDisplay() } }
-    
     @IBInspectable
     var lineColor: UIColor = UIColor.redColor() { didSet { setNeedsDisplay() } }
     
@@ -67,38 +86,52 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     var maxY:Double = 10
         
     private var simplePlot:Bool = false
-    
+    /// Density is a tuple that defines the number of view coordiante points per unit in
+    /// function space. Changing the density triggers a recomputation of the view boundaries
+    /// in function space.
     private var density: (x: CGFloat, y: CGFloat) = (25,25) {
         didSet {
-            (minX,maxX) = newXRange(density.x, origin: graphCenter)
-            (minY,maxY) = newYRange(density.y, origin: graphCenter)
+            (minX,maxX) = xRange(density.x, origin: graphCenter)
+            (minY,maxY) = yRange(density.y, origin: graphCenter)
         }
     }
     
-    private func newYRange(density: CGFloat, origin: CGPoint) -> (yMin:Double, yMax:Double) {
+    /**
+     compute a tuple that defines the vertical range of the current view in function space
+     
+     - parameter density: view density
+     - parameter origin:  view origin
+     
+     - returns: vertical range
+     */
+    private func yRange(density: CGFloat, origin: CGPoint) -> (yMin:Double, yMax:Double) {
         return (Double(-origin.y/density), Double((bounds.maxY-origin.y)/density))
     }
-    
-    private func newXRange(density: CGFloat, origin: CGPoint) -> (xMin:Double, xMax:Double) {
+    /**
+     compute a tuple that defines the horizontal range of the current view in function space
+     
+     - parameter density: view density
+     - parameter origin:  view origin
+     
+     - returns: horizontal range
+     */
+    private func xRange(density: CGFloat, origin: CGPoint) -> (xMin:Double, xMax:Double) {
         return (Double(-origin.x/density), Double((bounds.maxX-origin.x)/density))
     }
     
     // MARK: - Plotting
+    lazy var axes:AxesDrawer = { AxesDrawer(color: self.axesColor, contentScaleFactor: self.contentScaleFactor) }()
     override func drawRect(rect: CGRect) {
-        let axes = AxesDrawer(color: axesColor, contentScaleFactor: contentScaleFactor)
-        if simplePlot {
-            axes.drawAxesInRect(bounds, origin: graphCenter, pointsPerUnit: density, drawHashMarks: false)
-            drawFunctionPlot(rect,simple: true)
-        } else {
-            axes.drawAxesInRect(bounds, origin: graphCenter, pointsPerUnit: density, drawHashMarks: true)
-            drawFunctionPlot(rect,simple: false)
-        }
+        axes.drawAxesInRect(bounds, origin: graphCenter, pointsPerUnit: density, drawHashMarks: !simplePlot)
+        drawFunctionPlot(rect,simple: simplePlot)
     }
     
     weak var dataSource: GraphViewDataSource?
     
-    // define a holder for the function data that will be used
-    // to generate a plot
+    /**
+     *  A holder for the function data used
+        to generate a plot
+     */
     struct PlotData {
         private var data:RingBuffer<Double?>
         private var interval:Interval
@@ -117,7 +150,13 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     // store the function data in plotData.
     var plotData = PlotData()
 
-    // draw the actual graph
+    /**
+     draw the actual graph
+     
+     - parameter rect:   The  rect that defines the viewport
+     - parameter simple: Set to true to suppress axis labels. May also
+                         simplify plotting in other unspecified ways
+     */
     private func drawFunctionPlot(rect: CGRect, simple:Bool = false) {
         // make sure we have a dataSource and a program to plot
         guard  let dataSource = dataSource else { return }
@@ -160,12 +199,20 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         curve.stroke()
     }
     
-    // evaluate the function. only recalculate the newly exposed portions of the
-    // plot axis.
-    //
-    // there are 3 cases: 1) recalculate the entire function
-    // 2) calculate new values on the left
-    // 3) claculate new values on the right
+    /**
+      evaluate the function. only recalculate the newly exposed portions of the
+      plot axis.
+     
+      There are 3 cases: 
+      1) recalculate the entire function
+      2) calculate new values on the left
+      3) claculate new values on the right
+     
+     - parameter plotData: Holder for the data. Will be updated by funcData
+     - parameter dataSize: the number of data points for a full function evaluation
+     - parameter xrange:   An inclusive x-axis interval
+     - parameter dx:       The x-axis increment
+     */
     private func funcData(inout plotData:PlotData, dataSize: Int, xrange: Interval, dx: Double) {
         struct staticVars {
             static var size = 0
@@ -216,32 +263,77 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         plotData.data.reset()
     }
     
+    /**
+     Rounds a Double to the nearest 'dx'
+     
+     - parameter x:  The value to round
+     - parameter dx: The increment to round to
+     
+     - returns: The rounded value
+     */
     private func roundToDx(x:Double, dx: Double) -> Double {
         return floor(round(x/dx))*dx
     }
     
     // MARK: - coord transforms
-    
+    /**
+     convert point in function space to view coordinates
+     
+     - parameter x: function abscissa
+     - parameter y: function ordinate
+     
+     - returns: CGPoint in view
+     */
     private func XYToPoint(x: Double, _ y: Double) -> CGPoint {
         return CGPoint(x: XToScreen(x), y: YToScreen(y))
     }
-    
+    /**
+     convert horizontal view coordinate to abscissa
+     
+     - parameter i: horizontal point
+     
+     - returns: abscissa value
+     */
     private func ScreenToX(i: CGFloat) -> Double {
         return Double((i - graphCenter.x)/density.x)
     }
-    
+    /**
+     convert vertical view coordinate to ordinate
+     
+     - parameter i: vertical point
+     
+     - returns: ordinate value
+     */
     private func ScreenToY(i: CGFloat) -> Double {
         return Double((graphCenter.y - i)/density.y)
     }
-    
+    /**
+     convert abscissa to horizontal view coordinate
+     
+     - parameter x: abscissa value
+     
+     - returns: horizontal view coordinate
+     */
     private func XToScreen(x: Double) -> CGFloat {
         return CGFloat(x)*density.x + graphCenter.x
     }
-    
+    /**
+     convert ordinate to vertical view coordinate
+     
+     - parameter y: ordinate value
+     
+     - returns: vertical view coordiante
+     */
     private func YToScreen(y: Double) -> CGFloat {
         return -CGFloat(y)*density.y + graphCenter.y
     }
-    
+    /**
+     convert point in view to an abscissa and ordinate
+     
+     - parameter p: point in view
+     
+     - returns: CGPoint containing abscissa and ordinate
+     */
     private func ScreenToXY(p: CGPoint) -> CGPoint {
         return CGPoint(x: ScreenToX(p.x), y: ScreenToY(p.y))
     }
@@ -253,7 +345,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     // animation
     private var beginPanTime:NSDate?
     private let maxSwipeTime = 0.3
-
+    
     func moveOrigin(gesture: UIPanGestureRecognizer) {
         switch gesture.state {
         case .Began:
@@ -298,7 +390,23 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         static let scaleXZoneMin = -22.5
         static let scaleXZoneMax = 22.5
     }
-    
+    /**
+     Respond to a pinch/zoom gesture by changing the x and/or y axis scaling.
+     We handle 3 cases:
+     
+     - 'vertical' pinch/zoom scales the y-axis only
+     - 'horizontal' pinch/zoom scales the x-axis only
+     - 'diagonal' pinch/zoom scales both the x and y axes simultaneously
+     
+     The defintion of vertial/horizontal/diagonal is based on the angular 
+     definitions in the scaleZones struct.
+     
+     Zooming occurs around the centroid of the pinch/zoom gesture. This is
+     accomplished by simultaneously changing the transformation density as well
+     as the graphOrigin.
+     
+     - parameter gesture: the pinch/zoom gesture recognizer
+     */
     func scaleGraph(gesture: UIPinchGestureRecognizer) {
         switch gesture.state {
         case .Changed:
