@@ -97,19 +97,17 @@ class CalculatorBrain {
         var description: [[String]] {
             get {
                 var stringDescription=[[String]]()
-                guard let curOpStack = self.cur() else {
+                guard self.cur() != nil else {
                     stringDescription.append([""])
                     return stringDescription
                 }
-                
 
-                var op = curOpStack.map { $0.description }
-                stringDescription.append(op)
-                while self.prev() != nil {
-                    op = self.cur()!.map { $0.description }
+                repeat {
+                    let op = self.cur()!.map {$0.description}
                     stringDescription.append(op)
-                }
+                } while self.next() != nil
                 while self.next() != nil {}
+                
                 return stringDescription
             }
         }
