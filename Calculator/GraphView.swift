@@ -340,12 +340,15 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     
     // MARK: - gesture handling
     
-    // pan gestures that last for less than maxSwipeTime
-    // are treated as swipes that start an inertial scrolling
-    // animation
     private var beginPanTime:NSDate?
     private let maxSwipeTime = 0.3
-    
+    /**
+     Handle the pan gesture. Pan gestures that last for less than
+     maxSwipeTime are treated as swipes that start an inertial
+     scrolling animation.
+     
+     - parameter gesture: the recognized pan gesture
+     */
     func moveOrigin(gesture: UIPanGestureRecognizer) {
         switch gesture.state {
         case .Began:
@@ -364,8 +367,14 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         }
     }
     
-    // if speed is greater than threshold, kickoff an animation
-    // that implements inertial scrolling
+    /**
+        Executed when a pan gesture is in the .Ended state.
+        if speed is greater than threshold, kickoff an animation
+        that implements inertial scrolling
+     
+     - parameter velocity: vector velocity at the end of the gesture
+       in points/second
+     */
     func finishPanGesture(velocity: CGPoint) {
         if let delta = beginPanTime?.timeIntervalSinceNow {
             if -delta < maxSwipeTime {
@@ -383,7 +392,14 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         super.touchesBegan(touches, withEvent: event)
     }
     
-    // zones are in degrees
+    /**
+        Define regions used by scaleGraph to
+        determine the direction to move the
+        plot. Zones are in degrees.
+     
+     - seealso: scaleGraph
+
+     */
     private struct scaleZones {
         static let scaleXYZoneMin = -67.5
         static let scaleXYZoneMax = 67.5
@@ -465,14 +481,19 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
             break
         }
     }
-    
-    // turn off reduced resolution plotting
+    /**
+     turn off reduced resolution plotting
+     */
     private func drawDetailedPlot() {
         simplePlot = false
         setNeedsDisplay()        
     }
-    
-    // move graph origin to the tap location
+
+    /**
+     move graph origin to the tap location
+     
+     - parameter gesture: the tap gesture
+     */
     func jumpToOrigin(gesture: UITapGestureRecognizer) {
         if gesture.state == .Ended {
             graphOrigin = gesture.locationInView(self)
