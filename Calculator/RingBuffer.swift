@@ -69,13 +69,13 @@ class RingBuffer<T> {
         buffer[pWrite] = item
     }
     
-    func next() -> T? {
-        guard (pRead != pEnd || resetState) else {
-            return nil
+    func next(nSkip:Int = 1) -> T? {
+       
+        for _ in [1...nSkip] {
+            guard (pRead != pEnd || resetState) else { return nil }
+            resetState = false
+            pRead = inc(pRead)
         }
-        
-        resetState = false
-        pRead = inc(pRead)
         return buffer[pRead]
     }
     

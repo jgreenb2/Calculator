@@ -149,7 +149,8 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     
     // store the function data in plotData.
     var plotData = PlotData()
-
+    var speedFactor:Int = 1
+    
     /**
      draw the actual graph
      
@@ -162,13 +163,16 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         guard  let dataSource = dataSource else { return }
         guard  dataSource.programIsSet() else { return }
         
+        if !simple { speedFactor = 1 }
+        
+        let start = NSDate()
         var prevValueUndefined = true
         let curve = UIBezierPath()
         
         // set the viewport parameters
         let nPoints = rect.width
         let xrange = Interval(x0: ScreenToX(0), xf: ScreenToX(nPoints-1))
-        let increment = 1/contentScaleFactor
+        let increment = CGFloat(speedFactor)/contentScaleFactor
         
         // retrieve the data that will be plotted
         funcData(&plotData,
@@ -182,7 +186,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         var i:CGFloat = 0
         while ( i < nPoints) {
             let x = ScreenToX(i)
-            if let y = plotData.data.next() ?? nil {    // plotData.data.next() returns a Double??
+            if let y = plotData.data.next(speedFactor) ?? nil {    // plotData.data.next() returns a Double??
                 if !prevValueUndefined {
                     curve.addLineToPoint(XYToPoint(x,y))
                 } else {
@@ -197,6 +201,11 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         curve.lineWidth=lineWidth
         lineColor.set()
         curve.stroke()
+        let end = NSDate()
+        let elapsed = end.timeIntervalSinceDate(start)
+        speedFactor = max(Int(elapsed*60.0),1)
+        speedFactor = min(speedFactor,8)
+        //print("speed = \(speedFactor)")
     }
     
     /**
