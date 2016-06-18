@@ -18,11 +18,11 @@ class CircularBuffer<T> {
         pEnd = -1
         pCur = -1
         size = N
-        stack = [T?](count: N, repeatedValue: nil)
+        stack = [T?](repeating: nil, count: N)
         stack.reserveCapacity(N)
     }
     
-    func add(item: T) {
+    func add(_ item: T) {
         pEnd = inc(pCur)
         pCur = pEnd
         stack[pEnd]=item
@@ -53,14 +53,14 @@ class CircularBuffer<T> {
     func clear() {
         pEnd = -1
         pCur = -1
-        stack = [T?](count: size, repeatedValue: nil)
+        stack = [T?](repeating: nil, count: size)
     }
     
-    private func inc(i: Int) -> Int {
+    private func inc(_ i: Int) -> Int {
         return (i + 1) % size
     }
     
-    private func dec(i: Int) -> Int {
+    private func dec(_ i: Int) -> Int {
         if (i - 1) < 0 {
             return size-1
         } else {

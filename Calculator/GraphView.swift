@@ -9,12 +9,12 @@
 import UIKit
 
 protocol GraphViewDataSource: class {
-    func functionValue(sender: GraphView, atXEquals: Double) -> Double?
+    func functionValue(_ sender: GraphView, atXEquals: Double) -> Double?
 }
 
 protocol graphAnimation: class {
     func animationCompleted()
-    func updateGraphPosition(deltaPosition:CGPoint)
+    func updateGraphPosition(_ deltaPosition:CGPoint)
 }
 
 @IBDesignable
@@ -39,17 +39,17 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     // OR the graphOrigin if it's been set. Whenever anyone wants to know what
     // the current origin is, this is what you pass them
     private var graphCenter: CGPoint {
-        return graphOrigin ?? convertPoint(center, fromCoordinateSpace: superview!)
+        return graphOrigin ?? convert(center, from: superview!)
     }
 
     @IBInspectable
     var lineWidth: CGFloat = 1 { didSet { setNeedsDisplay() } }
     
     @IBInspectable
-    var axesColor: UIColor = UIColor.blueColor() { didSet { setNeedsDisplay() } }
+    var axesColor: UIColor = UIColor.blue() { didSet { setNeedsDisplay() } }
     
     @IBInspectable
-    var lineColor: UIColor = UIColor.redColor() { didSet { setNeedsDisplay() } }
+    var lineColor: UIColor = UIColor.red() { didSet { setNeedsDisplay() } }
     
     @IBInspectable
     var minX:Double = -10
@@ -69,16 +69,16 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         }
     }
     
-    private func newYRange(density: CGFloat, origin: CGPoint) -> (yMin:Double, yMax:Double) {
+    private func newYRange(_ density: CGFloat, origin: CGPoint) -> (yMin:Double, yMax:Double) {
         return (Double(-origin.y/density), Double((bounds.maxY-origin.y)/density))
     }
     
-    private func newXRange(density: CGFloat, origin: CGPoint) -> (xMin:Double, xMax:Double) {
+    private func newXRange(_ density: CGFloat, origin: CGPoint) -> (xMin:Double, xMax:Double) {
         return (Double(-origin.x/density), Double((bounds.maxX-origin.x)/density))
     }
     
 
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         let axes = AxesDrawer(color: axesColor, contentScaleFactor: contentScaleFactor)
         if simplePlot {
             axes.drawAxesInRect(bounds, origin: graphCenter, pointsPerUnit: density, drawHashMarks: false)
@@ -94,7 +94,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     // undefined points
     weak var dataSource: GraphViewDataSource?
 
-    private func plotFunction(rect: CGRect, simple:Bool = false) {
+    private func plotFunction(_ rect: CGRect, simple:Bool = false) {
         var prevValueUndefined = true
         let resolutionFactor:CGFloat = (simple ? 2.0 : 1.0)
         let curve = UIBezierPath()
@@ -104,9 +104,9 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
             let x = ScreenToX(i)
             if let y = dataSource?.functionValue(self, atXEquals: x) {
                 if !prevValueUndefined {
-                    curve.addLineToPoint(XYToPoint(x,y))
+                    curve.addLine(to: XYToPoint(x,y))
                 } else {
-                    curve.moveToPoint(XYToPoint(x,y))
+                    curve.move(to: XYToPoint(x,y))
                 }
                 prevValueUndefined = false
             } else {
@@ -121,27 +121,27 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     
     // coord transform functions
     
-    private func XYToPoint(x: Double, _ y: Double) -> CGPoint {
+    private func XYToPoint(_ x: Double, _ y: Double) -> CGPoint {
         return CGPoint(x: XToScreen(x), y: YToScreen(y))
     }
     
-    private func ScreenToX(i: CGFloat) -> Double {
+    private func ScreenToX(_ i: CGFloat) -> Double {
         return Double((i - graphCenter.x)/density.x)
     }
     
-    private func ScreenToY(i: CGFloat) -> Double {
+    private func ScreenToY(_ i: CGFloat) -> Double {
         return Double((graphCenter.y - i)/density.y)
     }
     
-    private func XToScreen(x: Double) -> CGFloat {
+    private func XToScreen(_ x: Double) -> CGFloat {
         return CGFloat(x)*density.x + graphCenter.x
     }
     
-    private func YToScreen(y: Double) -> CGFloat {
+    private func YToScreen(_ y: Double) -> CGFloat {
         return -CGFloat(y)*density.y + graphCenter.y
     }
     
-    private func ScreenToXY(p: CGPoint) -> CGPoint {
+    private func ScreenToXY(_ p: CGPoint) -> CGPoint {
         return CGPoint(x: ScreenToX(p.x), y: ScreenToY(p.y))
     }
     
@@ -150,22 +150,22 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     // pan gestures that last for less than maxSwipeTime
     // are treated as swipes that start an inertial scrolling
     // animation
-    var beginPanTime:NSDate?
+    var beginPanTime:Date?
     let maxSwipeTime = 0.3
 
-    func moveOrigin(gesture: UIPanGestureRecognizer) {
+    func moveOrigin(_ gesture: UIPanGestureRecognizer) {
         switch gesture.state {
-        case .Began:
-            beginPanTime = NSDate()
-        case .Ended:
+        case .began:
+            beginPanTime = Date()
+        case .ended:
             drawDetailedPlot()
             // start an inertial animation if needed
-            finishPanGesture(gesture.velocityInView(self))
-        case .Changed:
+            finishPanGesture(gesture.velocity(in: self))
+        case .changed:
             simplePlot = true
-            let translation = gesture.translationInView(self)
+            let translation = gesture.translation(in: self)
             graphOrigin = graphCenter + translation
-            gesture.setTranslation(CGPointZero, inView: self)
+            gesture.setTranslation(CGPoint.zero, in: self)
         default:
             break
         }
@@ -173,7 +173,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     
     // if speed is greater than threshold, kickoff an animation
     // that implements inertial scrolling
-    func finishPanGesture(velocity: CGPoint) {
+    func finishPanGesture(_ velocity: CGPoint) {
         if let delta = beginPanTime?.timeIntervalSinceNow {
             if -delta < maxSwipeTime {
                 simplePlot = true
@@ -184,10 +184,10 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
 
     // on any touch in the window cancel any existing inertial
     // animation
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         cancelAnimation()
         animationCompleted()
-        super.touchesBegan(touches, withEvent: event)
+        super.touchesBegan(touches, with: event)
     }
     
     private struct scaleZones {
@@ -197,16 +197,16 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         static let scaleXZoneMax = 22.5
     }
     
-    func scaleGraph(gesture: UIPinchGestureRecognizer) {
+    func scaleGraph(_ gesture: UIPinchGestureRecognizer) {
         switch gesture.state {
-        case .Changed:
+        case .changed:
             // if we don't have exactly 2 touchpoints we
             // don't know what's going on
             if gesture.numberOfTouches() == 2 {
                 simplePlot = true
                 // get the touchpoints
-                let touch1 = gesture.locationOfTouch(0, inView: self)
-                let touch2 = gesture.locationOfTouch(1, inView: self)
+                let touch1 = gesture.location(ofTouch: 0, in: self)
+                let touch2 = gesture.location(ofTouch: 1, in: self)
                 
                 var densityX = density.x
                 var densityY = density.y
@@ -239,7 +239,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
                 density = (densityX, densityY)
 
                 // compute the center of the pinch
-                let touchCenter = gesture.locationInView(self)
+                let touchCenter = gesture.location(in: self)
                 
                 // now compute the amount the origin has to move to keep this point 
                 // in the same position on the screen
@@ -249,7 +249,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
                 
                 gesture.scale=1
             }
-        case .Ended:
+        case .ended:
             drawDetailedPlot()
         default:
             break
@@ -263,9 +263,9 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     }
     
     // move graph origin to the tap location
-    func jumpToOrigin(gesture: UITapGestureRecognizer) {
-        if gesture.state == .Ended {
-            graphOrigin = gesture.locationInView(self)
+    func jumpToOrigin(_ gesture: UITapGestureRecognizer) {
+        if gesture.state == .ended {
+            graphOrigin = gesture.location(in: self)
         }
     }
 
@@ -278,7 +278,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         }
     }
     
-    func startInertialAnimation(initialVelocity:CGPoint) {
+    func startInertialAnimation(_ initialVelocity:CGPoint) {
         cancelAnimation()
         inertialAnimation = moveGraphWithInertia(initialVelocity: initialVelocity)
         inertialAnimation?.delegate = self
@@ -289,7 +289,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         drawDetailedPlot()
     }
     
-    func updateGraphPosition(deltaPosition: CGPoint) {
+    func updateGraphPosition(_ deltaPosition: CGPoint) {
         graphOrigin = graphCenter + deltaPosition
     }
 }
@@ -308,7 +308,7 @@ class moveGraphWithInertia: Animation {
         velocity = initialVelocity
     }
     
-    func animationTick(dt: CFTimeInterval) {
+    func animationTick(_ dt: CFTimeInterval) {
         assert(delegate != nil, "The graphAnimation delegate is not set")
         
         let time = CGFloat(dt)
@@ -336,7 +336,7 @@ private func - (left: CGPoint, right: CGPoint) -> CGPoint {
     return CGPoint(x: left.x-right.x, y: left.y-right.y)
 }
 // L2 norm of CGPoint
-private func magnitude(v:CGPoint) -> CGFloat{
+private func magnitude(_ v:CGPoint) -> CGFloat{
     return sqrt(pow(v.x,2)+pow(v.y,2))
 }
 // cartesian distance from p1 to p2

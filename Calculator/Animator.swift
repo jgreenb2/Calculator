@@ -18,7 +18,7 @@
 import UIKit
 
 protocol Animation {
-    func animationTick(dt:CFTimeInterval)
+    func animationTick(_ dt:CFTimeInterval)
     var animationIdentifier:String { get }
     
 }
@@ -28,7 +28,7 @@ class Animator {
     var animations=[String:Animation]()
 
     static let sharedInstance: Animator = {
-        let instance = Animator(screen: UIScreen.mainScreen())
+        let instance = Animator(screen: UIScreen.main())
         return instance
     }()
     
@@ -37,41 +37,41 @@ class Animator {
         setDisplayLinkScreen(screen)
     }
     
-    func setScreen(screen:UIScreen?) {
+    func setScreen(_ screen:UIScreen?) {
         guard let screen = screen else { return }
         guard let displayLink = displayLink else { return }
         
-        displayLink.paused = true
-        displayLink.removeFromRunLoop(NSRunLoop.mainRunLoop(), forMode: NSRunLoopCommonModes)
+        displayLink.isPaused = true
+        displayLink.remove(from: RunLoop.main(), forMode: RunLoopMode.commonModes.rawValue)
         setDisplayLinkScreen(screen)
     }
     
-    private func setDisplayLinkScreen(screen:UIScreen) {
-        displayLink = screen.displayLinkWithTarget(self, selector: #selector(self.animationTick(_:)))
-        displayLink?.paused = true
-        displayLink?.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSRunLoopCommonModes)
+    private func setDisplayLinkScreen(_ screen:UIScreen) {
+        displayLink = screen.displayLink(withTarget: self, selector: #selector(self.animationTick(_:)))
+        displayLink?.isPaused = true
+        displayLink?.add(to: RunLoop.main(), forMode: RunLoopMode.commonModes.rawValue)
     }
     
-    func addAnimation(animation:Animation?) {
+    func addAnimation(_ animation:Animation?) {
         guard let animation = animation else { return }
-        guard animations.indexForKey(animation.animationIdentifier) == nil else { return }
+        guard animations.index(forKey: animation.animationIdentifier) == nil else { return }
 
         animations[animation.animationIdentifier] = animation
         if animations.count == 1 {
-            displayLink?.paused = false
+            displayLink?.isPaused = false
         }
     }
     
-    func removeAnimation(animation:Animation?) {
+    func removeAnimation(_ animation:Animation?) {
         guard let animation = animation else { return }
         
-        animations.removeValueForKey(animation.animationIdentifier)
+        animations.removeValue(forKey: animation.animationIdentifier)
         if animations.count == 0 {
-            displayLink?.paused = true
+            displayLink?.isPaused = true
         }
     }
     
-    @objc func animationTick(displayLink: CADisplayLink) {
+    @objc func animationTick(_ displayLink: CADisplayLink) {
         let dt = displayLink.duration
         for (_, anim) in animations {
             anim.animationTick(dt)

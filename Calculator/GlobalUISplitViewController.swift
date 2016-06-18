@@ -20,8 +20,8 @@ class GlobalUISplitViewController: UISplitViewController, UISplitViewControllerD
         //
         // a trivial delay keeps iOS from being confused and issuing an unmatched begin/end
         // transition warning
-        if traitCollection.horizontalSizeClass == UIUserInterfaceSizeClass.Regular {
-            delay(0.02){self.preferredDisplayMode = UISplitViewControllerDisplayMode.PrimaryOverlay}
+        if traitCollection.horizontalSizeClass == UIUserInterfaceSizeClass.regular {
+            delay(0.02){self.preferredDisplayMode = UISplitViewControllerDisplayMode.primaryOverlay}
         }
         
         let minimumWidth = min(view.bounds.width,view.bounds.height);
@@ -29,24 +29,20 @@ class GlobalUISplitViewController: UISplitViewController, UISplitViewControllerD
         maximumPrimaryColumnWidth = minimumWidth;
     }
     
-    func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController: UIViewController, ontoPrimaryViewController primaryViewController: UIViewController) -> Bool {
+    func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
         return true
     }  
     
     func showMaster() {
-        UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
-            self.preferredDisplayMode = .PrimaryOverlay
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+            self.preferredDisplayMode = .primaryOverlay
             }, completion: nil)
     }
 }
 
 
 
-func delay(delay:Double, closure:()->()) {
-    dispatch_after(
-        dispatch_time(
-            DISPATCH_TIME_NOW,
-            Int64(delay * Double(NSEC_PER_SEC))
-        ),
-        dispatch_get_main_queue(), closure)
+func delay(_ delay:Double, closure:()->()) {
+   let later = DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+   DispatchQueue.main.after(when: later, execute: closure)
 }

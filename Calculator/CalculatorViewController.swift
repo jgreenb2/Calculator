@@ -46,7 +46,7 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
     }
     
     // restore programs and modes from the last session
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadDisplayModes()
         displayValue = brain.loadProgram()
@@ -54,7 +54,7 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
     }
     
     // save current program and modes
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         brain.saveProgram()
         saveDisplayModes()
@@ -69,15 +69,15 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
     // formatMode conforms to the propertyListReadable protocol which allows
     // it to be serialized for storage.
     private func loadDisplayModes() {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if let format = formatMode(propertyListRepresentation: defaults.dictionaryForKey(DefaultKeys.fixSciKey) as? [String:Int]) {
+        let defaults = UserDefaults.standard()
+        if let format = formatMode(propertyListRepresentation: defaults.dictionary(forKey: DefaultKeys.fixSciKey) as? [String:Int]) {
             outputFormat = format
         }
     }
     
     private func saveDisplayModes() {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(outputFormat.propertyListRepresentation(), forKey: DefaultKeys.fixSciKey)
+        let defaults = UserDefaults.standard()
+        defaults.set(outputFormat.propertyListRepresentation(), forKey: DefaultKeys.fixSciKey)
     }
 
     // the main numeric display
@@ -93,21 +93,21 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
     @IBOutlet weak var history: UILabel!
     
     // process the 0-9 keys
-    @IBAction func appendDigit(sender: CalculatorDigits) {
+    @IBAction func appendDigit(_ sender: CalculatorDigits) {
         switch entryMode {
-            case .FormatFix:
-                outputFormat = formatMode.Fixed(Int(sender.titleLabel!.text!)!)
+            case .formatFix:
+                outputFormat = formatMode.fixed(Int(sender.titleLabel!.text!)!)
                 displayValue = displayRegister
-                entryMode = digitEntryModes.Normal
-            case .FormatSci:
-                outputFormat = formatMode.Sci(Int(sender.titleLabel!.text!)!)
+                entryMode = digitEntryModes.normal
+            case .formatSci:
+                outputFormat = formatMode.sci(Int(sender.titleLabel!.text!)!)
                 displayValue = displayRegister
-                entryMode = digitEntryModes.Normal
+                entryMode = digitEntryModes.normal
                 shiftedState = false
-            case .Normal:
+            case .normal:
                 let digit = sender.currentTitle!
                 if userIsInTheMiddleOfTypingANumber {
-                    if digit == "."  && display.text!.rangeOfString(".") != nil {
+                    if digit == "."  && display.text!.range(of: ".") != nil {
                         return
                     }
                     display.text = display.text! + digit
@@ -119,17 +119,17 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
     }
 
     // process deg/rad key
-    @IBAction func degRadMode(sender: CalculatorButton) {
+    @IBAction func degRadMode(_ sender: CalculatorButton) {
         degMode = !degMode
         brain.degMode(degMode)
     }
     
     // the key label displays the current mode
-    private func setDegButtonTitle(mode:Bool) {
+    private func setDegButtonTitle(_ mode:Bool) {
         if mode {
-            degModeButton.setTitle("Deg", forState: .Normal)
+            degModeButton.setTitle("Deg", for: UIControlState())
         } else {
-            degModeButton.setTitle("Rad", forState: .Normal)
+            degModeButton.setTitle("Rad", for: UIControlState())
         }
     }
     
@@ -168,13 +168,13 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
     }
     
     // process math operations. some of these have shifted functions.
-    @IBAction func operate(sender: UIButton) {
+    @IBAction func operate(_ sender: UIButton) {
         if userIsInTheMiddleOfTypingANumber {
             enter()
         }
         var operation:String?
         if sender.state.contains(.Shifted) {
-            operation = sender.titleForState(.Shifted)
+            operation = sender.title(for: .Shifted)
         } else {
             operation = sender.currentTitle
         }
@@ -233,8 +233,8 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
     
     // delay the single tap on the shift key for a short interval in case the user is
     // actually doing a double tap. Then toggle the shift state.
-    @IBAction func shiftOnSingleTap(sender: ShiftableButton) {
-        performSelector(#selector(self.toggleShift), withObject: nil, afterDelay: 0.25)
+    @IBAction func shiftOnSingleTap(_ sender: ShiftableButton) {
+        perform(#selector(self.toggleShift), with: nil, afterDelay: 0.25)
     }
     
     func toggleShift() {
@@ -243,14 +243,14 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
     
     // if there's a double tap, cancel the previous single tap and lock the
     // shift button down.
-    @IBAction func shiftLock(sender: ShiftableButton, forEvent event: UIEvent) {
-        NSObject.cancelPreviousPerformRequestsWithTarget(self)
+    @IBAction func shiftLock(_ sender: ShiftableButton, forEvent event: UIEvent) {
+        NSObject.cancelPreviousPerformRequests(withTarget: self)
         shiftedState = true
         shiftButton.setShiftLocked(shiftedState)
     }
     
     // puts any ShiftableButton objects into shift mode
-    private func setButtonsToShifted(shift:Bool) {
+    private func setButtonsToShifted(_ shift:Bool) {
         for v in view.subviews {
             if let sb = v as? ShiftableButton {
                 sb.setShifted(shift)
@@ -262,9 +262,9 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
     private func initializeButtons() {
         initializeShiftButtonStates()
         setCalcButtonDelegates()
-        shiftButton.setTitle("\u{21EA}", forState: [.ShiftLocked, .Shifted])    // UPWARDS WHITE ARROW FROM BAR
-        shiftButton.setTitle("\u{21E7}", forState: .Normal)                     // UPWARDS WHITE ARROW
-        shiftButton.setTitleColor(UIColor.redColor(), forState: [.ShiftLocked, .Shifted]) 
+        shiftButton.setTitle("\u{21EA}", for: [.ShiftLocked, .Shifted])    // UPWARDS WHITE ARROW FROM BAR
+        shiftButton.setTitle("\u{21E7}", for: UIControlState())                     // UPWARDS WHITE ARROW
+        shiftButton.setTitleColor(UIColor.red(), for: [.ShiftLocked, .Shifted]) 
     }
     
     // Calculator buttons can cooperate with the ButtonEventInspection protocol
@@ -282,12 +282,12 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
     private func initializeShiftButtonStates() {
         for v in view.subviews {
             if let sb = v as? ShiftableButton {
-                sb.setTitleColor(UIColor.redColor(), forState: .Shifted)
+                sb.setTitleColor(UIColor.red(), for: .Shifted)
                 sb.setShifted(false)
                 
                 if let titleText = sb.titleLabel?.text {
                     if let shiftedLabel = shiftLabels[titleText] {
-                        sb.setTitle(shiftedLabel, forState: .Shifted)
+                        sb.setTitle(shiftedLabel, for: .Shifted)
                     }
                 }
             }
@@ -318,14 +318,14 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
     // serializes an enum into a Dictionary which can be stored
     private enum formatMode: propertyListReadable {
         typealias ValueType=Int
-        case Fixed(Int)
-        case Sci(Int)
+        case fixed(Int)
+        case sci(Int)
         
         func propertyListRepresentation() -> [String:Int] {
             switch self {
-                case .Fixed(let f):
+                case .fixed(let f):
                     return ["Fixed":f]
-                case .Sci(let s):
+                case .sci(let s):
                     return ["Sci":s]
             }
         }
@@ -335,9 +335,9 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
             let (s,v) = val.first!
             switch s {
             case "Fixed":
-                self = formatMode.Fixed(v)
+                self = formatMode.fixed(v)
             case "Sci":
-                self = formatMode.Sci(v)
+                self = formatMode.sci(v)
             default:
                 return nil
             }
@@ -354,35 +354,35 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
     // the view controller to inspect key presses
     //
     private enum digitEntryModes {
-        case FormatFix
-        case FormatSci
-        case Normal
+        case formatFix
+        case formatSci
+        case normal
     }
     
     lazy var formatButtonBackgroundColor:UIColor={self.formatButton.backgroundColor!}()
-    private var entryMode:digitEntryModes = digitEntryModes.Normal {
+    private var entryMode:digitEntryModes = digitEntryModes.normal {
         didSet {
-            if entryMode != .Normal {
+            if entryMode != .normal {
                 formatButtonBackgroundColor = formatButton.backgroundColor!
-                formatButton.backgroundColor = UIColor.blackColor()
+                formatButton.backgroundColor = UIColor.black()
             } else {
                 formatButton.backgroundColor = formatButtonBackgroundColor
             }
         }
     }
 
-    @IBAction func setFormat(sender: ShiftableButton) {
+    @IBAction func setFormat(_ sender: ShiftableButton) {
         if !sender.shifted {
-            entryMode = digitEntryModes.FormatFix
+            entryMode = digitEntryModes.formatFix
         } else {
-            entryMode = digitEntryModes.FormatSci
+            entryMode = digitEntryModes.formatSci
         }
     }
     
     // This is the ButtonEventInspection protocol function that allows us to
     // inspect a button event and conditionally suppress any action
-    func actionShouldNotBePerformed(action: Selector, from source: AnyObject?, to target: AnyObject?, forEvent event: UIEvent?) -> Bool {
-        if (entryMode == .Normal || source is CalculatorDigits) {
+    func actionShouldNotBePerformed(_ action: Selector, from source: AnyObject?, to target: AnyObject?, forEvent event: UIEvent?) -> Bool {
+        if (entryMode == .normal || source is CalculatorDigits) {
             return false
         } else {
             setEntryModeNormal()
@@ -391,7 +391,7 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
     }
     
     private func setEntryModeNormal() {
-        entryMode = digitEntryModes.Normal
+        entryMode = digitEntryModes.normal
         shiftedState=false
     }
     
@@ -409,14 +409,14 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
     // to the current format settings. This string representation is
     // placed in the display textField.
     //
-    private var outputFormat:formatMode = formatMode.Fixed(2)
+    private var outputFormat:formatMode = formatMode.fixed(2)
     private var displayRegister:Double=0
     private var displayValue: Double? {
         get {
             if userIsInTheMiddleOfTypingANumber {
-                let f = NSNumberFormatter()
+                let f = NumberFormatter()
                 f.usesGroupingSeparator=true
-                if let num=f.numberFromString(display.text!) {
+                if let num=f.number(from: display.text!) {
                     return num.doubleValue
                 } else {
                     return nil
@@ -438,25 +438,25 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
         }
     }
     
-    private lazy var displayFormatter: NSNumberFormatter = {
-        let formatter = NSNumberFormatter()
-        formatter.roundingMode = .RoundHalfDown
+    private lazy var displayFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.roundingMode = .roundHalfDown
         return formatter
     }()
     
-    private func formatDouble(val: Double, format: formatMode) -> String {
+    private func formatDouble(_ val: Double, format: formatMode) -> String {
         var output:String
         switch format {
-            case .Fixed(let digits):
-                displayFormatter.numberStyle = .DecimalStyle
+            case .fixed(let digits):
+                displayFormatter.numberStyle = .decimal
                 displayFormatter.maximumFractionDigits = digits
                 displayFormatter.minimumFractionDigits = digits
-                output = displayFormatter.stringFromNumber(val)!
-            case .Sci(let digits):
-                displayFormatter.numberStyle = .ScientificStyle
+                output = displayFormatter.string(from: val)!
+            case .sci(let digits):
+                displayFormatter.numberStyle = .scientific
                 displayFormatter.maximumFractionDigits = digits
                 displayFormatter.minimumFractionDigits = digits
-                output = displayFormatter.stringFromNumber(val)!
+                output = displayFormatter.string(from: val)!
          }
         return output
     }

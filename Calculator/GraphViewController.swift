@@ -36,7 +36,7 @@ class GraphViewController: UIViewController, GraphViewDataSource, UIGestureRecog
         // you can reveal the master view by swiping from the left edge...
         if let svc = splitViewController as? GlobalUISplitViewController {
             swipeFromLeftEdge = UIScreenEdgePanGestureRecognizer(target: svc, action: #selector(svc.showMaster))
-            swipeFromLeftEdge.edges = .Left
+            swipeFromLeftEdge.edges = .left
             graphView.addGestureRecognizer(swipeFromLeftEdge)
         }
         
@@ -46,7 +46,7 @@ class GraphViewController: UIViewController, GraphViewDataSource, UIGestureRecog
         super.viewDidLoad()
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         graphView.cancelAnimation()
     }
@@ -57,7 +57,7 @@ class GraphViewController: UIViewController, GraphViewDataSource, UIGestureRecog
         }
     }
         
-    func functionValue(sender: GraphView, atXEquals: Double) -> Double? {
+    func functionValue(_ sender: GraphView, atXEquals: Double) -> Double? {
         if let result = graphBrain.setVariable("M", value: atXEquals) {
             if result.isNormal || result.isZero {
                 return result
