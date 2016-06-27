@@ -9,7 +9,7 @@
 import UIKit
 
 protocol GraphViewDataSource: class {
-    func functionValue(_ atXEquals: Double) -> Double?
+    func functionValue(atXEquals x: Double) -> Double?
 }
 
 protocol graphAnimation: class {

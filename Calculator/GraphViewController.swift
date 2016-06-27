@@ -57,8 +57,8 @@ class GraphViewController: UIViewController, GraphViewDataSource, UIGestureRecog
         }
     }
         
-    func functionValue(_ atXEquals: Double) -> Double? {
-        if let result = graphBrain.setVariable("M", value: atXEquals) {
+    func functionValue(atXEquals x: Double) -> Double? {
+        if let result = graphBrain.set(variableName: "M", toValue: x) {
             if result.isNormal || result.isZero {
                 return result
             }

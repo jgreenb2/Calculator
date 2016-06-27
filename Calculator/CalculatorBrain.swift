@@ -111,30 +111,30 @@ class CalculatorBrain {
     // initialize by setting all of the operations
     // that the calculator can do
     init() {
-        func learnOp(_ op: Op) {
+        func learn(op: Op) {
             knownOps[op.description] = op
         }
-        learnOp(Op.binaryOperation(OperatorSymbols.Multiplication,      *               ))
-        learnOp(Op.binaryOperation(OperatorSymbols.Subtraction,         {$1 - $0}       ))
-        learnOp(Op.binaryOperation(OperatorSymbols.Addition,            +               ))
-        learnOp(Op.binaryOperation(OperatorSymbols.Division,            {$1 / $0}       ))
-        learnOp(Op.unaryOperation(OperatorSymbols.SquareRoot,           sqrt            ))
-        learnOp(Op.unaryOperation(OperatorSymbols.Sin,                  calcSin         ))
-        learnOp(Op.unaryOperation(OperatorSymbols.ASin,                 calcASin        ))
-        learnOp(Op.unaryOperation(OperatorSymbols.Cos,                  calcCos         ))
-        learnOp(Op.unaryOperation(OperatorSymbols.ACos,                 calcACos        ))
-        learnOp(Op.unaryOperation(OperatorSymbols.Tan,                  calcTan         ))
-        learnOp(Op.unaryOperation(OperatorSymbols.ATan,                 calcATan        ))
-        learnOp(Op.symbolicConstant(OperatorSymbols.Pi,                 M_PI            ))
-        learnOp(Op.unaryOperation(OperatorSymbols.PlusMinus,            { -1 * $0 }     ))
-        learnOp(Op.unaryOperation(OperatorSymbols.eToX,                 { exp($0) }     ))
-        learnOp(Op.unaryOperation(OperatorSymbols.tenToX,               { pow(10,$0) }  ))
-        learnOp(Op.unaryOperation(OperatorSymbols.NaturalLog,           { log($0) }     ))
-        learnOp(Op.unaryOperation(OperatorSymbols.Base10Log,            { log10($0) }   ))
-        learnOp(Op.unaryOperation(OperatorSymbols.XCubed,               { $0*$0*$0 }    ))
-        learnOp(Op.unaryOperation(OperatorSymbols.XInv,                 { 1/$0 }        ))
-        learnOp(Op.unaryOperation(OperatorSymbols.XSquared,             { $0*$0 }       ))
-        learnOp(Op.binaryOperation(OperatorSymbols.yToX,                { pow($1,$0) }  ))
+        learn(op: Op.binaryOperation(OperatorSymbols.Multiplication,      *               ))
+        learn(op: Op.binaryOperation(OperatorSymbols.Subtraction,         {$1 - $0}       ))
+        learn(op: Op.binaryOperation(OperatorSymbols.Addition,            +               ))
+        learn(op: Op.binaryOperation(OperatorSymbols.Division,            {$1 / $0}       ))
+        learn(op: Op.unaryOperation(OperatorSymbols.SquareRoot,           sqrt            ))
+        learn(op: Op.unaryOperation(OperatorSymbols.Sin,                  calcSin         ))
+        learn(op: Op.unaryOperation(OperatorSymbols.ASin,                 calcASin        ))
+        learn(op: Op.unaryOperation(OperatorSymbols.Cos,                  calcCos         ))
+        learn(op: Op.unaryOperation(OperatorSymbols.ACos,                 calcACos        ))
+        learn(op: Op.unaryOperation(OperatorSymbols.Tan,                  calcTan         ))
+        learn(op: Op.unaryOperation(OperatorSymbols.ATan,                 calcATan        ))
+        learn(op: Op.symbolicConstant(OperatorSymbols.Pi,                 M_PI            ))
+        learn(op: Op.unaryOperation(OperatorSymbols.PlusMinus,            { -1 * $0 }     ))
+        learn(op: Op.unaryOperation(OperatorSymbols.eToX,                 { exp($0) }     ))
+        learn(op: Op.unaryOperation(OperatorSymbols.tenToX,               { pow(10,$0) }  ))
+        learn(op: Op.unaryOperation(OperatorSymbols.NaturalLog,           { log($0) }     ))
+        learn(op: Op.unaryOperation(OperatorSymbols.Base10Log,            { log10($0) }   ))
+        learn(op: Op.unaryOperation(OperatorSymbols.XCubed,               { $0*$0*$0 }    ))
+        learn(op: Op.unaryOperation(OperatorSymbols.XInv,                 { 1/$0 }        ))
+        learn(op: Op.unaryOperation(OperatorSymbols.XSquared,             { $0*$0 }       ))
+        learn(op: Op.binaryOperation(OperatorSymbols.yToX,                { pow($1,$0) }  ))
         
 
         alternateOperatorDescription[OperatorSymbols.eToX] = ("exp", postfix: false)
@@ -176,27 +176,27 @@ class CalculatorBrain {
     
     // push an operand on the stack and return the
     // new evaluation
-    func pushNumber(_ number: Double) -> Double? {
+    func push(number: Double) -> Double? {
         opStack.append(Op.number(number))
         return evaluate()
     }
     
     // push a variable on the stack and return the
     // new evaluation
-    func pushNumber(_ variable: String) -> Double? {
-        opStack.append(Op.variable(variable,{self.variableValues[$0]}))
+    func push(variableName: String) -> Double? {
+        opStack.append(Op.variable(variableName,{self.variableValues[$0]}))
         return evaluate()
     }
     
     // set a variable to a value and re-evaluate the stack
-    func setVariable(_ symbol: String, value: Double?) -> Double? {
-        variableValues[symbol] = value
+    func set(variableName: String, toValue v: Double?) -> Double? {
+        variableValues[variableName] = v
         return evaluate()
     }
     
     // perform an operation and re-evaluate the stack
-    func performOperation(_ symbol: String) -> Double? {
-        if let operation = knownOps[symbol] {
+    func perform(operationName: String) -> Double? {
+        if let operation = knownOps[operationName] {
             opStack.append(operation)
         }
         return evaluate()
@@ -208,7 +208,7 @@ class CalculatorBrain {
         if ((undoStack.cur()! as [Op]).last?.description == OperatorSymbols.PlusMinus) {
             return undo()
         } else {
-            return performOperation(OperatorSymbols.PlusMinus)
+            return perform(operationName: OperatorSymbols.PlusMinus)
         }
     }
     
@@ -317,9 +317,9 @@ class CalculatorBrain {
             operation = alternate.name
         }
         if expression1.precedence < operatorPrecedence {
-            expression = addParens(expression1.result)+operation+expression2.result
+            expression = addParens(toString: expression1.result)+operation+expression2.result
         } else if expression2.precedence < operatorPrecedence {
-            expression = expression1.result+operation+addParens(expression2.result)
+            expression = expression1.result+operation+addParens(toString: expression2.result)
         } else {
             expression = expression1.result+operation+expression2.result
         }
@@ -330,18 +330,18 @@ class CalculatorBrain {
         var formattedExpr: String
         if let alternate = alternateOperatorDescription[operation] {
             if alternate.postfix {
-                formattedExpr = addParens(expression.result)+alternate.name
+                formattedExpr = addParens(toString: expression.result)+alternate.name
             } else {
-                formattedExpr = alternate.name+addParens(expression.result)
+                formattedExpr = alternate.name+addParens(toString: expression.result)
             }
         } else {
-            formattedExpr = operation+addParens(expression.result)
+            formattedExpr = operation+addParens(toString: expression.result)
         }
         return formattedExpr
     }
     
     // utility function to add parentheses
-    func addParens(_ s: String) -> String {
+    private func addParens(toString s: String) -> String {
         return "("+s+")"
     }
     

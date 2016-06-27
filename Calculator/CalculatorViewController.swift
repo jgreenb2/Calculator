@@ -178,7 +178,7 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
         } else {
             operation = sender.currentTitle
         }
-        displayValue = brain.performOperation(operation!)
+        displayValue = brain.perform(operationName: operation!)
         if !shiftButton.shiftLocked {
             shiftedState=false
         }
@@ -186,11 +186,8 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
 
     // store current value in variable "M"
     @IBAction func memSet() {
-        if userIsInTheMiddleOfTypingANumber {
-            displayValue = brain.setVariable("M", value: displayValue)
-        } else {
-            displayValue = brain.setVariable("M", value: displayRegister)
-        }
+        let v = (userIsInTheMiddleOfTypingANumber ? displayValue : displayRegister)
+        displayValue = brain.set(variableName: "M", toValue: v)
         userIsInTheMiddleOfTypingANumber=false
     }
 
@@ -199,13 +196,13 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
         if userIsInTheMiddleOfTypingANumber {
             enter()
         }
-        displayValue = brain.pushNumber("M")
+        displayValue = brain.push(variableName: "M")
     }
     
     // process enter key
     @IBAction func enter() {
         if displayValue != nil {
-            displayValue = brain.pushNumber(displayValue!)
+            displayValue = brain.push(number: displayValue!)
         }
         userIsInTheMiddleOfTypingANumber = false
     }
