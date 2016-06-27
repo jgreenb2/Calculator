@@ -22,16 +22,16 @@ class GraphViewController: UIViewController, GraphViewDataSource, UIGestureRecog
     
     override func viewDidLoad() {
         // add pan, pinch and tap recognizers
-        let panGraphRecognizer = UIPanGestureRecognizer(target: graphView, action: #selector(graphView.moveOrigin(_:)))
+        let panGraphRecognizer = UIPanGestureRecognizer(target: graphView, action: #selector(graphView.moveOrigin(byGesture:)))
         graphView.addGestureRecognizer(panGraphRecognizer)
-        graphView.addGestureRecognizer(UIPinchGestureRecognizer(target: graphView, action: #selector(graphView.scaleGraph(_:))))
-        let tapRecognizer = UITapGestureRecognizer(target: graphView, action: #selector(graphView.jumpToOrigin(_:)))
+        graphView.addGestureRecognizer(UIPinchGestureRecognizer(target: graphView, action: #selector(graphView.scaleGraph(byGesture:))))
+        let tapRecognizer = UITapGestureRecognizer(target: graphView, action: #selector(graphView.jumpToOrigin(byGesture:)))
         tapRecognizer.numberOfTapsRequired = 2
         graphView.addGestureRecognizer(tapRecognizer)
         
         // set the animator that implements inertial scrolling to use the screen
         // associated with the graphView
-        graphView.animator().setScreen(graphView.window?.screen)
+        graphView.animator().set(screen: graphView.window?.screen)
         
         // you can reveal the master view by swiping from the left edge...
         if let svc = splitViewController as? GlobalUISplitViewController {
@@ -57,7 +57,7 @@ class GraphViewController: UIViewController, GraphViewDataSource, UIGestureRecog
         }
     }
         
-    func functionValue(_ sender: GraphView, atXEquals: Double) -> Double? {
+    func functionValue(_ atXEquals: Double) -> Double? {
         if let result = graphBrain.setVariable("M", value: atXEquals) {
             if result.isNormal || result.isZero {
                 return result

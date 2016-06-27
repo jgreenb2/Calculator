@@ -30,7 +30,7 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
     
     private var degMode = true {
         didSet {
-            setDegButtonTitle(degMode)
+            setDegButtonTitle(toDegree: degMode)
         }
     }
    
@@ -125,7 +125,7 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
     }
     
     // the key label displays the current mode
-    private func setDegButtonTitle(_ mode:Bool) {
+    private func setDegButtonTitle(toDegree mode:Bool) {
         if mode {
             degModeButton.setTitle("Deg", for: UIControlState())
         } else {
@@ -429,7 +429,7 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
         set {
             if let v = newValue {
                 displayRegister = v
-                display.text = formatDouble(v, format: outputFormat)
+                display.text = formatDouble(doubleValue: v, format: outputFormat)
                 userIsInTheMiddleOfTypingANumber = false
             } else {
                 display.text = "0.0"
@@ -444,7 +444,7 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
         return formatter
     }()
     
-    private func formatDouble(_ val: Double, format: formatMode) -> String {
+    private func formatDouble(doubleValue val: Double, format: formatMode) -> String {
         var output:String
         switch format {
             case .fixed(let digits):

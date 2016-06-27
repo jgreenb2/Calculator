@@ -18,7 +18,7 @@
 import UIKit
 
 protocol Animation {
-    func animationTick(_ dt:CFTimeInterval)
+    func animationTick(tickDelta:CFTimeInterval)
     var animationIdentifier:String { get }
     
 }
@@ -34,25 +34,25 @@ class Animator {
     
     
     private init(screen:UIScreen) {
-        setDisplayLinkScreen(screen)
+        setDisplayLink(screen: screen)
     }
     
-    func setScreen(_ screen:UIScreen?) {
+    func set(screen:UIScreen?) {
         guard let screen = screen else { return }
         guard let displayLink = displayLink else { return }
         
         displayLink.isPaused = true
         displayLink.remove(from: RunLoop.main(), forMode: RunLoopMode.commonModes.rawValue)
-        setDisplayLinkScreen(screen)
+        setDisplayLink(screen: screen)
     }
     
-    private func setDisplayLinkScreen(_ screen:UIScreen) {
+    private func setDisplayLink(screen:UIScreen) {
         displayLink = screen.displayLink(withTarget: self, selector: #selector(self.animationTick(_:)))
         displayLink?.isPaused = true
         displayLink?.add(to: RunLoop.main(), forMode: RunLoopMode.commonModes.rawValue)
     }
     
-    func addAnimation(_ animation:Animation?) {
+    func add(animation:Animation?) {
         guard let animation = animation else { return }
         guard animations.index(forKey: animation.animationIdentifier) == nil else { return }
 
@@ -62,7 +62,7 @@ class Animator {
         }
     }
     
-    func removeAnimation(_ animation:Animation?) {
+    func remove(animation:Animation?) {
         guard let animation = animation else { return }
         
         animations.removeValue(forKey: animation.animationIdentifier)
@@ -74,7 +74,7 @@ class Animator {
     @objc func animationTick(_ displayLink: CADisplayLink) {
         let dt = displayLink.duration
         for (_, anim) in animations {
-            anim.animationTick(dt)
+            anim.animationTick(tickDelta: dt)
         }
     }
 }
