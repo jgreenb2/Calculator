@@ -102,7 +102,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         var i:CGFloat = 0
         while ( i < rect.width) {
             let x = ScreenToX(i)
-            if let y = dataSource?.functionValue(x) {
+            if let y = dataSource?.functionValue(atXEquals: x) {
                 if !prevValueUndefined {
                     curve.addLine(to: XYToPoint(x,y))
                 } else {
