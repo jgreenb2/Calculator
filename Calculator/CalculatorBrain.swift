@@ -105,7 +105,7 @@ class CalculatorBrain {
                 repeat {
                     let op = self.cur()!.map {$0.description}
                     stringDescription.append(op)
-                } while self.next() != nil
+                } while self.prev() != nil
                 while self.next() != nil {}
                 
                 return stringDescription
@@ -125,7 +125,7 @@ class CalculatorBrain {
      - returns: an UndoStack
      */
     private func undoStackFromStringRep(_ strings: [[String]]) -> UndoStack {
-        let newUndoStack = UndoStack(N: strings.count)
+        let newUndoStack = UndoStack(N: Constants.undoLevels)
         for opAsString in strings.reversed() {
             var newOpStack = [Op]()
             for s in opAsString {
@@ -136,7 +136,10 @@ class CalculatorBrain {
         return newUndoStack
     }
 
-    private var undoStack = UndoStack(N: 10)   // N levels of undo/redo
+    struct Constants {
+        static let undoLevels = 10
+    }
+    private var undoStack = UndoStack(N: Constants.undoLevels)   // N levels of undo/redo
     
     // the operator stack, operator and variable dictionarys
     private var opStack = [Op]() {
