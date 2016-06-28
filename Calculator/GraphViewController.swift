@@ -22,21 +22,21 @@ class GraphViewController: UIViewController, GraphViewDataSource, UIGestureRecog
     
     override func viewDidLoad() {
         // add pan, pinch and tap recognizers
-        let panGraphRecognizer = UIPanGestureRecognizer(target: graphView, action: #selector(graphView.moveOrigin(_:)))
+        let panGraphRecognizer = UIPanGestureRecognizer(target: graphView, action: #selector(graphView.moveOrigin(byGesture:)))
         graphView.addGestureRecognizer(panGraphRecognizer)
-        graphView.addGestureRecognizer(UIPinchGestureRecognizer(target: graphView, action: #selector(graphView.scaleGraph(_:))))
-        let tapRecognizer = UITapGestureRecognizer(target: graphView, action: #selector(graphView.jumpToOrigin(_:)))
+        graphView.addGestureRecognizer(UIPinchGestureRecognizer(target: graphView, action: #selector(graphView.scaleGraph(byGesture:))))
+        let tapRecognizer = UITapGestureRecognizer(target: graphView, action: #selector(graphView.jumpToOrigin(byGesture:)))
         tapRecognizer.numberOfTapsRequired = 2
         graphView.addGestureRecognizer(tapRecognizer)
         
         // set the animator that implements inertial scrolling to use the screen
         // associated with the graphView
-        graphView.animator().setScreen(graphView.window?.screen)
+        graphView.animator().set(screen: graphView.window?.screen)
         
         // you can reveal the master view by swiping from the left edge...
         if let svc = splitViewController as? GlobalUISplitViewController {
             swipeFromLeftEdge = UIScreenEdgePanGestureRecognizer(target: svc, action: #selector(svc.showMaster))
-            swipeFromLeftEdge.edges = .Left
+            swipeFromLeftEdge.edges = .left
             graphView.addGestureRecognizer(swipeFromLeftEdge)
         }
         
@@ -49,13 +49,13 @@ class GraphViewController: UIViewController, GraphViewDataSource, UIGestureRecog
     }
     
     // if we have just segued to the graphView, then mark the current graphView plotData as invalid
-    func navigationController(navigationController: UINavigationController, didShowViewController viewController: UIViewController, animated: Bool) {
+    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
         if viewController is GraphViewController {
             graphView.plotData.stale = true
         }
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         graphView.cancelAnimation()
     }
@@ -65,9 +65,9 @@ class GraphViewController: UIViewController, GraphViewDataSource, UIGestureRecog
             graphView.dataSource = self
         }
     }
-    
-    func functionValue(sender: GraphView, atXEquals: Double) -> Double? {
-        if let result = graphBrain.setVariable("M", value: atXEquals) {
+        
+    func functionValue(atXEquals x: Double) -> Double? {
+        if let result = graphBrain.set(variableName: "M", toValue: x) {
             if result.isNormal || result.isZero {
                 return result
             }

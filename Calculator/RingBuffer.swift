@@ -30,11 +30,11 @@ class RingBuffer<T> {
         pEnd = 0
         
         size = N
-        buffer = [T?](count: N, repeatedValue: nil)
+        buffer = [T?](repeating: nil, count: N)
         buffer.reserveCapacity(N)
     }
     
-    func addAtCurrentPosition(item: T) {
+    func addAtCurrentPosition(_ item: T) {
         pWrite = inc(pRead)
         pRead = pWrite
         pEnd = pWrite
@@ -42,7 +42,7 @@ class RingBuffer<T> {
         buffer[pWrite]=item
     }
     
-    func appendToEnd(item: T) {
+    func appendToEnd(_ item: T) {
         pEnd = inc(pEnd)
         pBeg = inc(pBeg)
         pWrite = pEnd
@@ -62,7 +62,7 @@ class RingBuffer<T> {
         while self.next() != nil {}
     }
     
-    func prependToBeginning(item: T) {
+    func prependToBeginning(_ item: T) {
         pBeg = dec(pBeg)
         pEnd = dec(pEnd)
         pWrite = pBeg
@@ -96,14 +96,14 @@ class RingBuffer<T> {
     func clear() {
         pWrite = -1
         pRead = -1
-        buffer = [T?](count: size, repeatedValue: nil)
+        buffer = [T?](repeating: nil, count: size)
     }
     
-    private func inc(i: Int) -> Int {
+    private func inc(_ i: Int) -> Int {
         return (i + 1) % size
     }
     
-    private func dec(i: Int) -> Int {
+    private func dec(_ i: Int) -> Int {
         if (i - 1) < 0 {
             return size-1
         } else {
