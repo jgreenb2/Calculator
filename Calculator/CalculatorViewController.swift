@@ -261,7 +261,7 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
         setCalcButtonDelegates()
         shiftButton.setTitle("\u{21EA}", for: [.ShiftLocked, .Shifted])    // UPWARDS WHITE ARROW FROM BAR
         shiftButton.setTitle("\u{21E7}", for: UIControlState())                     // UPWARDS WHITE ARROW
-        shiftButton.setTitleColor(UIColor.red(), for: [.ShiftLocked, .Shifted]) 
+        shiftButton.setTitleColor(#colorLiteral(red: 1, green: 0, blue: 0, alpha: 1), for: [.ShiftLocked, .Shifted]) 
     }
     
     // Calculator buttons can cooperate with the ButtonEventInspection protocol
@@ -279,7 +279,7 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
     private func initializeShiftButtonStates() {
         for v in view.subviews {
             if let sb = v as? ShiftableButton {
-                sb.setTitleColor(UIColor.red(), for: .Shifted)
+                sb.setTitleColor(#colorLiteral(red: 1, green: 0, blue: 0, alpha: 1), for: .Shifted)
                 sb.setShifted(false)
                 
                 if let titleText = sb.titleLabel?.text {
@@ -361,7 +361,7 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
         didSet {
             if entryMode != .normal {
                 formatButtonBackgroundColor = formatButton.backgroundColor!
-                formatButton.backgroundColor = UIColor.black()
+                formatButton.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
             } else {
                 formatButton.backgroundColor = formatButtonBackgroundColor
             }

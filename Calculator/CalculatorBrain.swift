@@ -41,7 +41,7 @@ class CalculatorBrain {
     }
     typealias AlternateName = (name: String, postfix: Bool)
     private var alternateOperatorDescription = [String:AlternateName]()
-    
+
     private enum Op: CustomStringConvertible {
         case number(Double)
         case symbolicConstant(String,Double)

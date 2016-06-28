@@ -72,9 +72,9 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     var lineWidth: CGFloat = 1 { didSet { setNeedsDisplay() } }
     
     @IBInspectable
-    var axesColor: UIColor = UIColor.blue() { didSet { setNeedsDisplay() } }
+    var axesColor:UIColor = #colorLiteral(red: 0, green: 0, blue: 1, alpha: 1) { didSet { setNeedsDisplay() } }
     @IBInspectable
-    var lineColor: UIColor = UIColor.red() { didSet { setNeedsDisplay() } }
+    var lineColor:UIColor = #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1) { didSet { setNeedsDisplay() } }
     
     @IBInspectable
     var minX:Double = -10
