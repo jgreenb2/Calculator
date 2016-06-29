@@ -54,8 +54,8 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     var graphOrigin:CGPoint? {
         didSet {
             if graphOrigin != nil {
-                (minX,maxX) = newXRange(density.x, origin: graphCenter)
-                (minY,maxY) = newYRange(density.y, origin: graphCenter)
+                (minX,maxX) = newXRange(pointsPerUnit: density.x, origin: graphCenter)
+                (minY,maxY) = newYRange(pointsPerUnit: density.y, origin: graphCenter)
                 setNeedsDisplay()
              }
         }
@@ -91,8 +91,8 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     /// in function space.
     private var density: (x: CGFloat, y: CGFloat) = (25,25) {
         didSet {
-            (minX,maxX) = newXRange(density.x, origin: graphCenter)
-            (minY,maxY) = newYRange(density.y, origin: graphCenter)
+            (minX,maxX) = newXRange(pointsPerUnit: density.x, origin: graphCenter)
+            (minY,maxY) = newYRange(pointsPerUnit: density.y, origin: graphCenter)
         }
     }
     
@@ -104,7 +104,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
      
      - returns: vertical range
      */
-    private func newYRange(_ yDensity: CGFloat, origin: CGPoint) -> (yMin:Double, yMax:Double) {
+    private func newYRange(pointsPerUnit yDensity: CGFloat, origin: CGPoint) -> (yMin:Double, yMax:Double) {
         return (Double(-origin.y/yDensity), Double((bounds.maxY-origin.y)/yDensity))
     }
     
@@ -116,7 +116,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
      
      - returns: horizontal range
      */
-    private func newXRange(_ xDensity: CGFloat, origin: CGPoint) -> (xMin:Double, xMax:Double) {
+    private func newXRange(pointsPerUnit xDensity: CGFloat, origin: CGPoint) -> (xMin:Double, xMax:Double) {
         return (Double(-origin.x/xDensity), Double((bounds.maxX-origin.x)/xDensity))
     }
     
@@ -174,10 +174,10 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         let increment = 1/contentScaleFactor
         
         // retrieve the data that will be plotted
-        funcData(&plotData,
-                 dataSize: Int(nPoints*contentScaleFactor),
-                 xrange: xrange,
-                 dx: Double(increment/density.x))
+        updateFunctionData(dataToBeUpdated: &plotData,
+                           dataSize: Int(nPoints*contentScaleFactor),
+                           xrange: xrange,
+                           deltaX: Double(increment/density.x))
         
         // do the drawing but be
         // careful NOT to draw lines to or from 
@@ -216,7 +216,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
      - parameter xrange:   An inclusive x-axis interval
      - parameter dx:       The x-axis increment
      */
-    private func funcData(_ plotData:inout PlotData, dataSize: Int, xrange: Interval, dx: Double) {
+    private func updateFunctionData(dataToBeUpdated plotData:inout PlotData, dataSize: Int, xrange: Interval, deltaX dx: Double) {
         struct staticVars {
             static var size = 0
             static var dx:Double = 0
@@ -245,7 +245,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
             
         } else if xrange.x0 < plotData.interval.x0 {
             var x = plotData.interval.x0 - dx
-            while x >= plotData.interval.x0 - roundToDx(plotData.interval.x0 - xrange.x0, dx: dx) {
+            while x >= roundToDx(xrange.x0, dx: dx) {
                 plotData.data.prependToBeginning(dataSource?.functionValue(atXEquals: x))
                 plotData.interval -= dx                
                 x -= dx
@@ -255,7 +255,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
             
          } else if xrange.xf > plotData.interval.xf {
             var x = plotData.interval.xf + dx
-            while x <= plotData.interval.xf + roundToDx(xrange.xf - plotData.interval.xf, dx: dx) {
+            while x <= roundToDx(xrange.xf, dx: dx) {
                 plotData.data.appendToEnd(dataSource?.functionValue(atXEquals: x))
                 plotData.interval += dx
                 x += dx
