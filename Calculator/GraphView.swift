@@ -123,14 +123,8 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     // MARK: - Plotting
     lazy var axes:AxesDrawer = { AxesDrawer(color: self.axesColor, contentScaleFactor: self.contentScaleFactor) }()
     override func draw(_ rect: CGRect) {
-        let axes = AxesDrawer(color: axesColor, contentScaleFactor: contentScaleFactor)
-        if simplePlot {
-            axes.drawAxesInRect(bounds, origin: graphCenter, pointsPerUnit: density, drawHashMarks: false)
-            plotFunction(inRect: rect,simple: true)
-        } else {
-            axes.drawAxesInRect(bounds, origin: graphCenter, pointsPerUnit: density, drawHashMarks: true)
-            plotFunction(inRect: rect,simple: false)
-        }
+        axes.drawAxesInRect(bounds, origin: graphCenter, pointsPerUnit: density, drawHashMarks: !simplePlot)
+        plotFunction(inRect: rect,simple: simplePlot)
     }
     
     weak var dataSource: GraphViewDataSource?
