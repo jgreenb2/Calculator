@@ -27,8 +27,9 @@ class GlobalUISplitViewController: UISplitViewController, UISplitViewControllerD
         let minimumWidth = min(view.bounds.width,view.bounds.height);
         minimumPrimaryColumnWidth = minimumWidth / 2;
         maximumPrimaryColumnWidth = minimumWidth;
+        
     }
-    
+
     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
         return true
     }  

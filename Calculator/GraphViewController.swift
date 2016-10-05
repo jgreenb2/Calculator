@@ -41,8 +41,11 @@ class GraphViewController: UIViewController, GraphViewDataSource, UIGestureRecog
         }
         
         // ...or by using the bar button
-        navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
-        navigationItem.leftItemsSupplementBackButton = true
+        // not clear why this is only needed in the iPad wide view
+        if traitCollection.horizontalSizeClass == UIUserInterfaceSizeClass.regular {
+            navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
+            navigationItem.leftItemsSupplementBackButton = true
+        }
         
         navigationController?.delegate = self
         super.viewDidLoad()
