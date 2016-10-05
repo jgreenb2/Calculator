@@ -41,7 +41,7 @@ class GraphViewController: UIViewController, GraphViewDataSource, UIGestureRecog
         }
         
         // ...or by using the bar button
-        navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem()
+        navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
         navigationItem.leftItemsSupplementBackButton = true
         
         navigationController?.delegate = self

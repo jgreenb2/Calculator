@@ -9,7 +9,7 @@
 // various button classes used for the calculator keys
 
 protocol ButtonEventInspection: class {
-    func actionShouldNotBePerformed(_ action: Selector, from source: AnyObject?, to target: AnyObject?, forEvent event: UIEvent? ) -> Bool
+    func actionShouldNotBePerformed(_ action: Selector, from source: Any?, to target: Any?, forEvent event: UIEvent? ) -> Bool
 }
 
 import UIKit
@@ -19,7 +19,7 @@ class CalculatorButton: UIButton {
     
     // catch all actions and check with the delegate to see
     // if it should be performed
-    override func sendAction(_ action: Selector, to target: AnyObject?, for event: UIEvent?) {
+    override func sendAction(_ action: Selector, to target: Any?, for event: UIEvent?) {
         if delegate != nil {
             if delegate!.actionShouldNotBePerformed(action, from: self, to: target, forEvent: event) {
                 return

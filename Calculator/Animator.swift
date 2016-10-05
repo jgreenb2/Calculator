@@ -28,7 +28,7 @@ class Animator {
     var animations=[String:Animation]()
 
     static let sharedInstance: Animator = {
-        let instance = Animator(screen: UIScreen.main())
+        let instance = Animator(screen: UIScreen.main)
         return instance
     }()
     
@@ -42,14 +42,14 @@ class Animator {
         guard let displayLink = displayLink else { return }
         
         displayLink.isPaused = true
-        displayLink.remove(from: RunLoop.main(), forMode: RunLoopMode.commonModes.rawValue)
+        displayLink.remove(from: RunLoop.main, forMode: RunLoopMode(rawValue: RunLoopMode.commonModes.rawValue))
         setDisplayLink(screen)
     }
     
     private func setDisplayLink(_ screen:UIScreen) {
         displayLink = screen.displayLink(withTarget: self, selector: #selector(self.animationTick(_:)))
         displayLink?.isPaused = true
-        displayLink?.add(to: RunLoop.main(), forMode: RunLoopMode.commonModes.rawValue)
+        displayLink?.add(to: RunLoop.main, forMode: RunLoopMode(rawValue: RunLoopMode.commonModes.rawValue))
     }
     
     func add(animation:Animation?) {

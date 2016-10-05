@@ -192,9 +192,9 @@ class CalculatorBrain {
     }
     
     
-    var program: AnyObject {
+    var program: Any {
         get {
-            return opStack.map {$0.description}
+            return opStack.map {$0.description} as Any
         }
         set {
             if let opSymbols = newValue as? Array<String> {
@@ -426,7 +426,7 @@ class CalculatorBrain {
     }
     
     func saveProgram() {
-        let defaults = UserDefaults.standard()
+        let defaults = UserDefaults.standard
         defaults.set(program, forKey: SavedProgramKeys.programKey)
         defaults.set(undoStack.description, forKey: SavedProgramKeys.undoStackKey)
         defaults.set(variableValues, forKey: SavedProgramKeys.variablesKey)
@@ -434,7 +434,7 @@ class CalculatorBrain {
     }
     
     func loadProgram()-> Double? {
-        let defaults = UserDefaults.standard()
+        let defaults = UserDefaults.standard
         if let restoredVariables = defaults.dictionary(forKey: SavedProgramKeys.variablesKey) as? variableDict {
             variableValues = restoredVariables
         }

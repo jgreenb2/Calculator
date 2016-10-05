@@ -69,14 +69,14 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
     // formatMode conforms to the propertyListReadable protocol which allows
     // it to be serialized for storage.
     private func loadDisplayModes() {
-        let defaults = UserDefaults.standard()
+        let defaults = UserDefaults.standard
         if let format = formatMode(propertyListRepresentation: defaults.dictionary(forKey: DefaultKeys.fixSciKey) as? [String:Int]) {
             outputFormat = format
         }
     }
     
     private func saveDisplayModes() {
-        let defaults = UserDefaults.standard()
+        let defaults = UserDefaults.standard
         defaults.set(outputFormat.propertyListRepresentation(), forKey: DefaultKeys.fixSciKey)
     }
 
@@ -378,7 +378,7 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
     
     // This is the ButtonEventInspection protocol function that allows us to
     // inspect a button event and conditionally suppress any action
-    func actionShouldNotBePerformed(_ action: Selector, from source: AnyObject?, to target: AnyObject?, forEvent event: UIEvent?) -> Bool {
+    func actionShouldNotBePerformed(_ action: Selector, from source: Any?, to target: Any?, forEvent event: UIEvent?) -> Bool {
         if (entryMode == .normal || source is CalculatorDigits) {
             return false
         } else {
@@ -437,7 +437,7 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
     
     private lazy var displayFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
-        formatter.roundingMode = .roundHalfDown
+        formatter.roundingMode = .halfDown
         return formatter
     }()
     
@@ -448,12 +448,12 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
                 displayFormatter.numberStyle = .decimal
                 displayFormatter.maximumFractionDigits = digits
                 displayFormatter.minimumFractionDigits = digits
-                output = displayFormatter.string(from: val)!
+                output = displayFormatter.string(from: NSNumber(value: val))!
             case .sci(let digits):
                 displayFormatter.numberStyle = .scientific
                 displayFormatter.maximumFractionDigits = digits
                 displayFormatter.minimumFractionDigits = digits
-                output = displayFormatter.string(from: val)!
+                output = displayFormatter.string(from: NSNumber(value: val))!
          }
         return output
     }

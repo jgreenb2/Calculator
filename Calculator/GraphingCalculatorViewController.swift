@@ -15,8 +15,8 @@ class GraphingCalculatorViewController: CalculatorViewController {
         static let segueToGraph = "Show Graph"
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
-        var destination = segue.destinationViewController as UIViewController
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        var destination = segue.destination as UIViewController
         if let navController = destination as? UINavigationController {
             destination = navController.visibleViewController!
         }
@@ -27,7 +27,7 @@ class GraphingCalculatorViewController: CalculatorViewController {
                     graphViewController.graphBrain.program = brain.program
                     graphViewController.graphBrain.degMode(brain.degMode)
                     var infixRep = graphViewController.graphBrain.description
-                    let lastComma = infixRep.range(of: ",", options: NSString.CompareOptions.backwardsSearch)
+                    let lastComma = infixRep.range(of: ",", options: NSString.CompareOptions.backwards)
                     if let lastCommaIndex = lastComma?.upperBound {
                         infixRep = infixRep.substring(from: lastCommaIndex)
                     }

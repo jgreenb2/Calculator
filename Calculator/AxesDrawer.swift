@@ -16,7 +16,7 @@ class AxesDrawer
         static let HashmarkSize: CGFloat = 6
     }
     
-    var color = UIColor.blue()
+    var color = UIColor.blue
     var minimumPointsPerHashmark: CGFloat = 40
     var contentScaleFactor: CGFloat = 1 // set this from UIView's contentScaleFactor to position axes with maximum accuracy
     
@@ -84,22 +84,22 @@ class AxesDrawer
 
             // radiate the bbox out until the hashmarks are further out than the bounds
             while !bbox.contains(bounds)
-            {
-                let labelX = formatterX.string(from: (origin.x-bbox.minX)/pointsPerUnitX)!
+            {   
+                let labelX = formatterX.string(from: NSNumber(value: Float((origin.x-bbox.minX)/pointsPerUnitX)))!
                 if let leftHashmarkPoint = alignedPoint(bbox.minX, y: origin.y, insideBounds:bounds) {
                     drawHashmarkAtLocation(leftHashmarkPoint, .top("-\(labelX)"))
                 }
                 if let rightHashmarkPoint = alignedPoint(bbox.maxX, y: origin.y, insideBounds:bounds) {
                     drawHashmarkAtLocation(rightHashmarkPoint, .top(labelX))
                 }
-                let labelY = formatterY.string(from: (origin.y-bbox.minY)/pointsPerUnitY)!
+                let labelY = formatterY.string(from: NSNumber(value: Float((origin.y-bbox.minY)/pointsPerUnitY)))!
                 if let topHashmarkPoint = alignedPoint(origin.x, y: bbox.minY, insideBounds:bounds) {
                     drawHashmarkAtLocation(topHashmarkPoint, .left(labelY))
                 }
                 if let bottomHashmarkPoint = alignedPoint(origin.x, y: bbox.maxY, insideBounds:bounds) {
                     drawHashmarkAtLocation(bottomHashmarkPoint, .left("-\(labelY)"))
                 }
-                bbox.insetInPlace(dx: -pointsPerHashmarkX, dy: -pointsPerHashmarkY)
+                bbox = bbox.insetBy(dx: -pointsPerHashmarkX, dy: -pointsPerHashmarkY)
             }
         }
     }
@@ -174,25 +174,25 @@ class AxesDrawer
         
         func drawAnchoredToPoint(_ location: CGPoint, color: UIColor) {
             let attributes = [
-                NSFontAttributeName : UIFont.preferredFont(forTextStyle: UIFontTextStyleFootnote),
+                NSFontAttributeName : UIFont.preferredFont(forTextStyle: UIFontTextStyle.footnote),
                 NSForegroundColorAttributeName : color
             ]
             var textRect = CGRect(center: location, size: text.size(attributes: attributes))
             switch self {
-                case top: textRect.origin.y += textRect.size.height / 2 + AnchoredText.VerticalOffset
-                case left: textRect.origin.x += textRect.size.width / 2 + AnchoredText.HorizontalOffset
-                case bottom: textRect.origin.y -= textRect.size.height / 2 + AnchoredText.VerticalOffset
-                case right: textRect.origin.x -= textRect.size.width / 2 + AnchoredText.HorizontalOffset
+                case .top: textRect.origin.y += textRect.size.height / 2 + AnchoredText.VerticalOffset
+                case .left: textRect.origin.x += textRect.size.width / 2 + AnchoredText.HorizontalOffset
+                case .bottom: textRect.origin.y -= textRect.size.height / 2 + AnchoredText.VerticalOffset
+                case .right: textRect.origin.x -= textRect.size.width / 2 + AnchoredText.HorizontalOffset
             }
             text.draw(in: textRect, withAttributes: attributes)
         }
 
         var text: String {
             switch self {
-                case left(let text): return text
-                case right(let text): return text
-                case top(let text): return text
-                case bottom(let text): return text
+                case .left(let text): return text
+                case .right(let text): return text
+                case .top(let text): return text
+                case .bottom(let text): return text
             }
         }
     }

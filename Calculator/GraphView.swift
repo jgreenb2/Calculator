@@ -134,11 +134,11 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         to generate a plot
      */
     struct PlotData {
-        private var data:RingBuffer<Double?>
-        private var interval:Interval
+        fileprivate var data:RingBuffer<Double?>
+        fileprivate var interval:Interval
         var stale=true
         
-        private init(npoints: Int, xrange: Interval) {
+        fileprivate init(npoints: Int, xrange: Interval) {
             data = RingBuffer(N: npoints)
             interval = xrange
         }
@@ -375,7 +375,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
        in points/second
      */
     func finishPanGesture(withVelocity v: CGPoint) {
-        if let delta = beginPanTime?.timeIntervalUntilNow where delta < maxSwipeTime {
+        if let delta = beginPanTime?.timeIntervalUntilNow , delta < maxSwipeTime {
             simplePlot = true
             startInertialAnimation(withVelocity: v)
         }
@@ -426,7 +426,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
         case .changed:
             // if we don't have exactly 2 touchpoints we
             // don't know what's going on
-            if pinch.numberOfTouches() == 2 {
+            if pinch.numberOfTouches == 2 {
                 simplePlot = true
                 // get the touchpoints
                 let touch1 = pinch.location(ofTouch: 0, in: self)

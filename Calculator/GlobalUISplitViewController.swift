@@ -42,7 +42,7 @@ class GlobalUISplitViewController: UISplitViewController, UISplitViewControllerD
 
 
 
-func delay(_ delay:Double, closure:()->()) {
+func delay(_ delay:Double, closure:@escaping ()->()) {
    let later = DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
-   DispatchQueue.main.after(when: later, execute: closure)
+   DispatchQueue.main.asyncAfter(deadline: later, execute: closure)
 }
