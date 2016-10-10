@@ -24,7 +24,7 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="300" verticalCompressionResistancePriority="1000" text="=" textAlignment="right" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pHm-sv-KmD" customClass="CalculatorDisplay" customModule="Calculator" customModuleProvider="target">
@@ -2376,7 +2376,7 @@
                         <viewControllerLayoutGuide type="bottom" id="DBW-Wk-UgG"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8Iu-8v-E9R">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Z8f-h9-V5G" customClass="GraphView" customModule="Calculator" customModuleProvider="target">
@@ -2441,10 +2441,10 @@
             </objects>
             <point key="canvasLocation" x="1061" y="794"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Calc-->
         <scene sceneID="Twm-bh-a2E">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="SsP-id-Bfq" sceneMemberID="viewController">
+                <navigationController title="Calc" automaticallyAdjustsScrollViewInsets="NO" id="SsP-id-Bfq" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="EU9-KH-Ibu">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
