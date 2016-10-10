@@ -13,9 +13,6 @@ import UIKit
 class GlobalUISplitViewController: UISplitViewController, UISplitViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
-        presentsWithGesture = false // MUST be set before splitViewController delegate is set
-        
-        self.delegate = self
         // for wide displays we use PrimaryOverlay as the display mode
         //
         // a trivial delay keeps iOS from being confused and issuing an unmatched begin/end
@@ -30,10 +27,6 @@ class GlobalUISplitViewController: UISplitViewController, UISplitViewControllerD
         
     }
 
-    func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
-        return true
-    }  
-    
     func showMaster() {
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
             self.preferredDisplayMode = .primaryOverlay

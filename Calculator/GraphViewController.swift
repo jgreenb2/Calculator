@@ -33,20 +33,6 @@ class GraphViewController: UIViewController, GraphViewDataSource, UIGestureRecog
         // associated with the graphView
         graphView.animator().set(screen: graphView.window?.screen)
         
-        // you can reveal the master view by swiping from the left edge...
-        if let svc = splitViewController as? GlobalUISplitViewController {
-            swipeFromLeftEdge = UIScreenEdgePanGestureRecognizer(target: svc, action: #selector(svc.showMaster))
-            swipeFromLeftEdge.edges = .left
-            graphView.addGestureRecognizer(swipeFromLeftEdge)
-        }
-        
-        // ...or by using the bar button
-        // not clear why this is only needed in the iPad wide view
-        if traitCollection.horizontalSizeClass == UIUserInterfaceSizeClass.regular {
-            navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
-            navigationItem.leftItemsSupplementBackButton = true
-        }
-        
         navigationController?.delegate = self
         super.viewDidLoad()
     }
