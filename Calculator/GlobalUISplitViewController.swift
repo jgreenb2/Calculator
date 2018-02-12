@@ -34,7 +34,7 @@ class GlobalUISplitViewController: UISplitViewController, UISplitViewControllerD
         return true
     }  
     
-    func showMaster() {
+    @objc func showMaster() {
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
             self.preferredDisplayMode = .primaryOverlay
             }, completion: nil)

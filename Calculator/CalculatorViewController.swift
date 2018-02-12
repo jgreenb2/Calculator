@@ -136,8 +136,8 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
     // process the +/- key
     @IBAction func changeSign() {
         if userIsInTheMiddleOfTypingANumber {
-            if display.text?.characters.first == "-" {
-                display.text = String((display.text!).characters.dropFirst())
+            if display.text?.first == "-" {
+                display.text = String((display.text!).dropFirst())
             } else {
                 display.text = "-" + display.text!
             }
@@ -149,11 +149,11 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
     // erase one digit if still entering, else clear the display
     @IBAction func backspace() {
         if userIsInTheMiddleOfTypingANumber {
-            switch (display.text!).characters.count {
+            switch (display.text!).count {
                 case 1:
                     displayValue=0
                 default:
-                     display.text = String((display.text!).characters.dropLast())
+                     display.text = String((display.text!).dropLast())
             }
         } else if displayValue != 0 {
             displayValue = 0
@@ -234,7 +234,7 @@ class CalculatorViewController: UIViewController, ButtonEventInspection {
         perform(#selector(self.toggleShift), with: nil, afterDelay: 0.25)
     }
     
-    func toggleShift() {
+    @objc func toggleShift() {
         shiftedState = !shiftedState
     }
     

@@ -60,7 +60,7 @@ class GraphViewController: UIViewController, GraphViewDataSource, UIGestureRecog
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        graphView.cancelAnimation()
+        graphView?.cancelAnimation()
     }
     
     @IBOutlet weak var graphView: GraphView! {

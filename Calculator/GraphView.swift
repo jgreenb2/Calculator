@@ -348,7 +348,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
     var beginPanTime:Date?
     let maxSwipeTime = 0.3
 
-    func moveOrigin(byGesture pan: UIPanGestureRecognizer) {
+    @objc func moveOrigin(byGesture pan: UIPanGestureRecognizer) {
         switch pan.state {
         case .began:
             beginPanTime = Date()
@@ -421,7 +421,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
      
      - parameter gesture: the pinch/zoom gesture recognizer
      */
-    func scaleGraph(byGesture pinch: UIPinchGestureRecognizer) {
+    @objc func scaleGraph(byGesture pinch: UIPinchGestureRecognizer) {
         switch pinch.state {
         case .changed:
             // if we don't have exactly 2 touchpoints we
@@ -438,7 +438,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
                 // compute the slope of the line
                 let rise = Double(touch1.y - touch2.y)
                 let run = Double(touch1.x - touch2.x)
-                var theta = atan2(rise,run) * (180.0/M_PI)
+                var theta = atan2(rise,run) * (180.0/Double.pi)
                 if theta > 90.0 {
                     theta -= 180.0
                 } else if theta < -90.0 {
@@ -492,7 +492,7 @@ class GraphView: UIView, UIGestureRecognizerDelegate, graphAnimation {
      
      - parameter gesture: the tap gesture
      */
-    func jumpToOrigin(byGesture tap: UITapGestureRecognizer) {
+    @objc func jumpToOrigin(byGesture tap: UITapGestureRecognizer) {
         if tap.state == .ended {
             graphOrigin = tap.location(in: self)
         }

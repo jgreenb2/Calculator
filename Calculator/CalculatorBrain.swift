@@ -9,7 +9,7 @@
 import Foundation
 
 class CalculatorBrain {
-    let degPerRad = 180.0/M_PI
+    let degPerRad = 180.0/Double.pi
     var degMode = true
     
     /*  the basic operator type
@@ -171,7 +171,7 @@ class CalculatorBrain {
         learn(Op.unaryOperation(OperatorSymbols.ACos,                 calcACos        ))
         learn(Op.unaryOperation(OperatorSymbols.Tan,                  calcTan         ))
         learn(Op.unaryOperation(OperatorSymbols.ATan,                 calcATan        ))
-        learn(Op.symbolicConstant(OperatorSymbols.Pi,                 M_PI            ))
+        learn(Op.symbolicConstant(OperatorSymbols.Pi,                 .pi             ))
         learn(Op.unaryOperation(OperatorSymbols.PlusMinus,            { -1 * $0 }     ))
         learn(Op.unaryOperation(OperatorSymbols.eToX,                 { exp($0) }     ))
         learn(Op.unaryOperation(OperatorSymbols.tenToX,               { pow(10,$0) }  ))
